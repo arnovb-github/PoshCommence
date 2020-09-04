@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="PowershellStandard.Library" Version="5.1.1" />
+    <Reference Include="Vovin.CmcLibNet">
+      <HintPath>.\Dlls\Vovin.CmcLibNet.dll</HintPath>
+    </Reference>  
+  </ItemGroup>
+
+</Project>
