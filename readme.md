@@ -6,4 +6,11 @@ This is all in an experimental stage. None of this code is production-ready.
 
 Usage: `using module <path>\PSCommenceModules.dll`
 
-Note that `Import-Module` may not work, because the assembly exposes classes.
+`Get-CmcFieldValues` returns `PSCommenceModules.CommenceField[]`, i.e. a list of `CommenceField` objects for every database row.
+
+Sample usage:
+```powershell
+Get-CmcFieldValues CategoryName Field1Name, Field2Name | ForEach-Object {
+    $_.FieldValue
+}
+```
