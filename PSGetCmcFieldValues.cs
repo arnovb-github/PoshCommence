@@ -61,7 +61,6 @@ namespace PSCommenceModules
             }
             protected override void ProcessRecord()
             {
-                const string delim = "%%";
                 var rows = Helper.GetCmcFieldValues(categoryName,
                     fieldNames,
                     filters,
@@ -81,14 +80,10 @@ namespace PSCommenceModules
                 }
                 if (relatedColumns != null)
                 {
-                    var r = relatedColumns.Select(s => s.ConnectionName + delim 
-                                + s.ToCategory + delim
-                                + s.FieldName);
-                                
+                    var r = relatedColumns.Select(s => s.ColumnName);
                     columnNames = columnNames.Concat(r).ToList();
                 }
 
-                List<List<CommenceField>> retval = new List<List<CommenceField>>();
                 foreach (var row in rows)
                 {
                     List<CommenceField> l = new List<CommenceField>();
@@ -104,11 +99,9 @@ namespace PSCommenceModules
                             row[i])
                             );
                     }
-                    retval.Add(l);
-                    // do not WriteObject just yet. 
-                    // We could, it would be equivalent to WriteObject(retval, true) outside the loop
+                    WriteObject(l, true); // return and enumerate
                 }
-                WriteObject(retval, false); // return a reference to the entire retval collection
+
             }
         }
 
@@ -177,6 +170,7 @@ namespace PSCommenceModules
 
     public class RelatedColumn
     {
+        string delim = "%%";
         public RelatedColumn() {}
         public RelatedColumn(string c, string t, string f)
         {
@@ -187,5 +181,9 @@ namespace PSCommenceModules
         public string ConnectionName { get; set; }
         public string ToCategory { get; set; }
         public string FieldName { get; set; }
+
+        // create a columnname
+        internal string ColumnName => '%'+ ConnectionName + delim  + ToCategory + delim + FieldName + '%';
+
     }
 }
