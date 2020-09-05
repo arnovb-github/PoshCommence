@@ -99,7 +99,7 @@ namespace PSCommenceModules
                             row[i])
                             );
                     }
-                    WriteObject(l, true); // return and enumerate
+                    WriteObject(l, false); // return and do not enumerate. I.e. pass every row separately.
                 }
 
             }
