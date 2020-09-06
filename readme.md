@@ -44,9 +44,10 @@ $rc2.FieldName = 'emailBusiness' # from the Tutorial database
 
 It is up to you how you want to code this. Using [strong-typing](https://en.wikipedia.org/wiki/Strong_and_weak_typing) for defining related columns is mandatory, this is by design.
 
+Usage:
 `Get-CmcFieldValues CategoryName Field1Name, Field2Name -RelatedColumns $rc1, $rc2`
 
-So, we can read columns from a category with ease. You can also supply filters with `-Filters`. For every filtertype there is a cmdlet:
+You can also supply filters with `-Filters`. For every filtertype there is a cmdlet:
 
 `Get-CmcFilterF [-ClauseNumber] <int> [-FieldName] <string> [-Qualifier] <FilterQualifier> [-FieldValue] <string> [[-FieldValue2] <string>] [-MatchCase] [-Except] [-OrFilter] [<CommonParameters>]`
 
