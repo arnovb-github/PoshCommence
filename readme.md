@@ -6,6 +6,9 @@ This is all in an experimental stage. None of this code is production-ready.
 
 Usage: `using module <path>\PSCommenceModules.dll` (`using` statements must be on the top of a script)
 
+[^1]
+[^1]: You can also use `Import-Module` (at least in PS 5.1). I still recommend `using module` because that way any classes exposed by the module are guaranteed to be visible. I read somewhere that with `Import-Module` that is not always the case, but it may have to do with clases defined in PS modules(`. psm1` files)
+
 `Get-CmcFieldValues` returns `PSCommenceModules.CommenceField[]`, i.e. a list of `CommenceField` objects for every database row. A `CommenceField` object has 3 properties: `CategoryName`, `FieldName` and `FieldValue`.
 
 Sample usage:
