@@ -15,9 +15,9 @@ Get-CmcFieldValues CategoryName FieldName | ForEach-Object {
 }
 ```
 
-That is a silly `'Hello, world'` example.
+That is just a 'Hello, world' example.
 
-There is more to `Get-CmcFieldValues`; you can provide an array of direct fields and related fields. The complete syntax is:
+There is more to `Get-CmcFieldValues`, the complete syntax is:
 
 `Get-CmcFieldValues [-CategoryOrViewName] <string> [[-FieldNames] <string[]>] [-UseView] [-UseThids] [-Filters <ICursorFilter[]>] [-RelatedColumns <RelatedColumn[]>] [<CommonParameters>]`
 
@@ -25,7 +25,7 @@ Providing an array of direct fields is as simple as doing:
 
 `Get-CmcFieldValues CategoryName Field1Name, Field2Name`
 
-Providing (an array of) related columns involves some more work. You have to define them.
+Providing (an array of) related columns involves some more work. You have to explicitly define them like this:
 
 ```powershell
 $rc = New-Object -TypeName PSCommenceModules.RelatedColumn
@@ -65,3 +65,7 @@ For brevity I used the `int` value of the filterqualifier. In the real world you
 Important: you specify the filter conjunction in the filter. It defaults to `AND`, specify `-OrFilter` for `OR`. This is different from how you do it in Commence.
 
 Please note: these cmcdlets are just conveniece methods, they do not check for correctness of the parameters.
+
+If you specify a View instead of a category, you have to specify `-UseView`.
+
+If you want THIDs, specify `-UseThids`. (This only works on category-cursors.)
