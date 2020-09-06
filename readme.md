@@ -4,14 +4,14 @@ A collection of Powershell cmdlets for use with Commence RM. Requires [Vovin.Cmc
 
 This is all in an experimental stage. None of this code is production-ready.
 
-Usage: `using module <path>\PSCommenceModules.dll`
+Usage: `using module <path>\PSCommenceModules.dll` (`using` statements must be on the top of a script)
 
-`Get-CmcFieldValues` returns `PSCommenceModules.CommenceField[]`, i.e. a list of `CommenceField` objects for every database row.
+`Get-CmcFieldValues` returns `PSCommenceModules.CommenceField[]`, i.e. a list of `CommenceField` objects for every database row. A `CommenceField` object has 3 properties: `CategoryName`, `FieldName` and `FieldValue`.
 
 Sample usage:
 ```powershell
 Get-CmcFieldValues CategoryName FieldName | ForEach-Object {
-    $_.FieldValue # returns all fieldvalues for the row
+    $_.FieldValue # returns all fieldvalues for all rows
 }
 ```
 
@@ -25,26 +25,28 @@ Providing an array of direct fields is as simple as doing:
 
 `Get-CmcFieldValues CategoryName Field1Name, Field2Name`
 
-Providing (an array of) related columns involves some more work. You have to explicitly define them like this:
+If you specify a View instead of a category, you have to specify `-UseView`.
+
+If you want THIDs, specify `-UseThids`. (This only works on category-cursors.)
+
+Providing (an array of) related columns involves some more work. (Please note: that are the columns you would set by the cursor.SetRelatedColumn() method when you program against the Commence API durectly.) You have to explicitly define them like this:
 
 ```powershell
-$rc = New-Object -TypeName PSCommenceModules.RelatedColumn
-$rc.Connection = 'Relates to'
-$rc.ToCategory = 'Contact'
-$rc.FieldName = 'accountKey'
 $rc1 = New-Object -TypeName PSCommenceModules.RelatedColumn
-$rc1.Connection = 'Relates to'
-$rc1.ToCategory = 'Contact'
-$rc1.FieldName = 'emailBusiness'
+$rc1.Connection = 'Relates to' # from the Tutorial database
+$rc1.ToCategory = 'Contact' # from the Tutorial database
+$rc1.FieldName = 'accountKey' # from the Tutorial database
+$rc2 = New-Object -TypeName PSCommenceModules.RelatedColumn
+$rc2.Connection = 'Relates to' # from the Tutorial database
+$rc2.ToCategory = 'Contact' # from the Tutorial database
+$rc2.FieldName = 'emailBusiness' # from the Tutorial database
 ```
 
-It is up to you how you want to code this. Using strong-typing for defining related columns is mandatory, this is by design.
+It is up to you how you want to code this. Using [strong-typing](https://en.wikipedia.org/wiki/Strong_and_weak_typing) for defining related columns is mandatory, this is by design.
 
-`Get-CmcFieldValues CategoryName Field1Name, Field2Name -RelatedColumns $rc, $rc1`
+`Get-CmcFieldValues CategoryName Field1Name, Field2Name -RelatedColumns $rc1, $rc2`
 
-So, we can read columns from a category with ease. How about filters?
-
-For every filtertype there is a cmdlet:
+So, we can read columns from a category with ease. You can also supply filters with `-Filters`. For every filtertype there is a cmdlet:
 
 `Get-CmcFilterF [-ClauseNumber] <int> [-FieldName] <string> [-Qualifier] <FilterQualifier> [-FieldValue] <string> [[-FieldValue2] <string>] [-MatchCase] [-Except] [-OrFilter] [<CommonParameters>]`
 
@@ -65,7 +67,3 @@ For brevity I used the `int` value of the filterqualifier. In the real world you
 Important: you specify the filter conjunction in the filter. It defaults to `AND`, specify `-OrFilter` for `OR`. This is different from how you do it in Commence.
 
 Please note: these cmcdlets are just conveniece methods, they do not check for correctness of the parameters.
-
-If you specify a View instead of a category, you have to specify `-UseView`.
-
-If you want THIDs, specify `-UseThids`. (This only works on category-cursors.)
