@@ -64,11 +64,17 @@ You can also supply filters with `-Filters`. For every filtertype there is a cmd
 So getting a Field filter would be:
 
 ```powershell
-$filter = Get-CmcFilterF 1 Name 0 test -Verbose -Except -MatchCase
+$filter = Get-CmcFilterF 1 Name 0 test -Except -MatchCase -Verbose
 ```
 
-For brevity I used the `int` value of the filterqualifier. In the real world you should use the actual enum value, in this case `[Vovin.CmcLibNet.Database.FilterQualifier]::Contains`.
+For brevity I used the `int` value (0) of the filterqualifier. In the real world you should use the actual enum value, in this case `[Vovin.CmcLibNet.Database.FilterQualifier]::Contains`.
 
 Important: you specify the filter conjunction in the filter. It defaults to `AND`, specify `-OrFilter` for `OR`. This is different from how you do it in Commence.
 
-Please note: these cmcdlets are just conveniece methods, they do **not** check for correctness of the parameters.
+Please note: these cmcdlets are just convenience methods, they do **not** check for correctness of the parameters.
+
+There is a CmdLet to try out filters. 
+
+`Resolve-CmcFilter [-Category] <string> [-Filter] <ICursorFilter> [<CommonParameters>]`
+
+This will tell you if the filter *technically* works on the specified category (as in: Commence is technically okay with this filter, regardless of results). It is recommended you do not use this cmdlet in a production environment, because it is a very resource-expensive call.

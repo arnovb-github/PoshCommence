@@ -5,7 +5,6 @@ using Vovin.CmcLibNet.Database;
 
 namespace PSCommenceModules
 {
-    // bla
     public class PSCommenceModules
     {
         [Cmdlet(VerbsCommon.Get, "CmcFieldValues")]
