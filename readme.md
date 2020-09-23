@@ -10,14 +10,19 @@ Usage: `using module <path>\PSCommenceModules.dll` (`using` statements must be o
 
 `Get-CmcFieldValues` returns `PSCommenceModules.CommenceField[]`, i.e. a list of `CommenceField` objects for every database row. A `CommenceField` object has 3 properties: `CategoryName`, `FieldName` and `FieldValue`.
 
-Sample usage:
+Sample usage for 1 field:
+```powershell
+Get-CmcFieldValues CategoryName FieldName
+```
+This will return the fieldvalues for `FieldName`.
+
+When you request more than one field, the values are wrapped into objects:
+
 ```powershell
 Get-CmcFieldValues CategoryName FieldName | ForEach-Object {
     $_.FieldValue # returns all fieldvalues for all rows
 }
 ```
-
-That is just a 'Hello, world' example.
 
 There is more to `Get-CmcFieldValues`, the complete syntax is:
 
@@ -61,7 +66,7 @@ You can also supply filters with `-Filters`. For every filtertype there is a cmd
 
 `Get-CmcFilterCTCF [-ClauseNumber] <int> [-Connection] <string> [-Category] <string> [-FieldName] <string> [-Qualifier] <FilterQualifier> [-FieldValue] <string> [[-FieldValue2] <string>] [-MatchCase] [-Except] [-OrFilter] [<CommonParameters>]`
 
-So getting a Field filter would be:
+So getting a Field filter could be:
 
 ```powershell
 $filter = Get-CmcFilterF 1 Name 0 test -Except -MatchCase -Verbose
@@ -73,7 +78,7 @@ Important: you specify the filter conjunction in the filter. It defaults to `AND
 
 Please note: these cmcdlets are just convenience methods, they do **not** check for correctness of the parameters.
 
-There is a CmdLet to try out filters. 
+There is a cmdlet to try out filters. 
 
 `Resolve-CmcFilter [-Category] <string> [-Filter] <ICursorFilter> [<CommonParameters>]`
 

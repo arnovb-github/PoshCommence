@@ -60,12 +60,6 @@ namespace PSCommenceModules
             }
             protected override void ProcessRecord()
             {
-                var rows = Helper.GetCmcFieldValues(categoryName,
-                    fieldNames,
-                    filters,
-                    relatedColumns,
-                    useView,
-                    UseThids);
 
                 // assemble all the columnnames
                 var columnNames = new List<string>();
@@ -83,22 +77,39 @@ namespace PSCommenceModules
                     columnNames = columnNames.Concat(r).ToList();
                 }
 
+                // do the data reading
+                var rows = Helper.GetCmcFieldValues(categoryName,
+                    fieldNames,
+                    filters,
+                    relatedColumns,
+                    useView,
+                    useThids);
+
                 foreach (var row in rows)
                 {
-                    List<CommenceField> l = new List<CommenceField>();
-                    // enrich the output by assembling the fieldvalues into proper objects
-                    // because you never know when it comes in handy
-                    // Explicit declaration of CommenceField isn't strictly needed,
-                    // We could also have used just an anonymous type
-                    for (int i = 0; i < row.Count; i++)  // does not take into account the useThids, in which case we get an extra column
+                    // if user requested just a single field, return their values
+                    if (fieldNames.Length == 1)
                     {
-                        l.Add(new CommenceField(
-                            categoryName,
-                            columnNames[i],
-                            row[i])
-                            );
+                        WriteObject(row[0], false); // 0 means either the rowvalue or the thid, depending on -UseThids
                     }
-                    WriteObject(l, false); // return and do not enumerate. I.e. pass every row separately.
+                    // if more than 1 field was requested, wrap the fieldvalues in objects
+                    else 
+                    {
+                        List<CommenceField> l = new List<CommenceField>();
+                        // enrich the output by assembling the fieldvalues into proper objects
+                        // because you never know when it comes in handy
+                        // Explicit declaration of CommenceField isn't strictly needed,
+                        // We could also have used just an anonymous type
+                        for (int i = 0; i < row.Count; i++)  // does not take into account the useThids, in which case we get an extra column
+                        {
+                            l.Add(new CommenceField(
+                                categoryName,
+                                columnNames[i],
+                                row[i])
+                                );
+                        }
+                        WriteObject(l, false); // return and do not enumerate. I.e. pass every row separately.
+                    }
                 }
 
             }
