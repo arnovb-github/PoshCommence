@@ -18,7 +18,7 @@ namespace PSCommenceModules
             set { categoryName = value; }
             }
             private string[] fieldNames;
-            [Parameter(Position = 1)]
+            [Parameter(Position = 1, Mandatory = true)]
             public string[] FieldNames
             {
                 get { return fieldNames; }
@@ -27,7 +27,7 @@ namespace PSCommenceModules
 
             // use this to pass in a viewname
             private bool useView;
-            [Parameter(Position = 2)]
+            [Parameter()]
             public SwitchParameter UseView
             {
                 get { return useView; }
@@ -36,7 +36,7 @@ namespace PSCommenceModules
             
             // thids switch parameter
             private bool useThids;
-            [Parameter(Position = 3)]
+            [Parameter()]
             public SwitchParameter UseThids
             {
                 get { return useThids; }
@@ -88,9 +88,10 @@ namespace PSCommenceModules
                 foreach (var row in rows)
                 {
                     // if user requested just a single field, return their values
-                    if (fieldNames.Length == 1)
+                    if (!UseView && fieldNames.Length == 1)
                     {
                         WriteObject(row[0], false); // 0 means either the rowvalue or the thid, depending on -UseThids
+                        WriteVerbose($"Fieldvalue is {row[0]}. If the UseThids flag is on, you will either see a RowId (local category) or a THid (shared category).");
                     }
                     // if more than 1 field was requested, wrap the fieldvalues in objects
                     else 
@@ -109,6 +110,7 @@ namespace PSCommenceModules
                                 );
                         }
                         WriteObject(l, false); // return and do not enumerate. I.e. pass every row separately.
+                        WriteVerbose($"Commence row contains several values returned as {l.GetType()}. Use foreach to iterate over them.");
                     }
                 }
 
