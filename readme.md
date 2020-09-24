@@ -6,13 +6,15 @@ This is all in an experimental stage. None of this code is production-ready.
 
 Usage: `using module <path>\PSCommenceModules.dll` (`using` statements must be at the top of a script).
 
-`Get-CmcFieldValues` returns a list of `CommenceField` objects for every database row. It has 3 properties: `CategoryName`, `FieldName` and `FieldValue`.
+`Get-CmcFieldValues` returns a list of `CommenceField` objects for every database row. Think of it as a table:
 
 | | | | | 
 | - | - | - | - | 
 | row 0 | CommenceField 0 | CommenceField 1 | ... |
 | row 1 | CommenceField 0 | CommenceField 1 | ... |
 | row 2 | CommenceField 0 | CommenceField 1 | ... |
+
+A `CommenceField` has these properties: `CategoryName`, `FieldName` and `FieldValue`. 
 
 Example:
 
