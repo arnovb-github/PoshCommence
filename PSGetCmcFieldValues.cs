@@ -87,33 +87,22 @@ namespace PSCommenceModules
 
                 foreach (var row in rows)
                 {
-                    // if user requested just a single field, return their values
-                    if (!UseView && fieldNames.Length == 1)
+                    List<CommenceField> l = new List<CommenceField>();
+                    // enrich the output by assembling the fieldvalues into proper objects
+                    // because you never know when it comes in handy
+                    // Explicit declaration of CommenceField isn't strictly needed,
+                    // We could also have used just an anonymous type
+                    for (int i = 0; i < row.Count; i++)
                     {
-                        WriteObject(row[0], false); // 0 means either the rowvalue or the thid, depending on -UseThids
-                        WriteVerbose($"Fieldvalue is {row[0]}. If the UseThids flag is on, you will either see a RowId (local category) or a THid (shared category).");
+                        l.Add(new CommenceField(
+                            categoryName, // a little pointless, but it may come in handy when comparing results from several calls
+                            columnNames[i],
+                            row[i])
+                            );
                     }
-                    // if more than 1 field was requested, wrap the fieldvalues in objects
-                    else 
-                    {
-                        List<CommenceField> l = new List<CommenceField>();
-                        // enrich the output by assembling the fieldvalues into proper objects
-                        // because you never know when it comes in handy
-                        // Explicit declaration of CommenceField isn't strictly needed,
-                        // We could also have used just an anonymous type
-                        for (int i = 0; i < row.Count; i++)  // does not take into account the useThids, in which case we get an extra column
-                        {
-                            l.Add(new CommenceField(
-                                categoryName,
-                                columnNames[i],
-                                row[i])
-                                );
-                        }
-                        WriteObject(l, false); // return and do not enumerate. I.e. pass every row separately.
-                        WriteVerbose($"Commence row contains several values returned as {l.GetType()}. Use foreach to iterate over them.");
-                    }
+                    WriteObject(l, false); // return and do not enumerate. I.e. pass every row separately.
+                    WriteVerbose($"Commence row contains values returned as {l.GetType()}. Use foreach to iterate over them.");
                 }
-
             }
         }
 
