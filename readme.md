@@ -57,7 +57,7 @@ Important: connection names are case-sensitive in Commence!
 Usage:
 `Get-CmcFieldValues CategoryName FieldName1, FieldName2 -RelatedColumns $rc1, $rc2`
 
-Note: you cannot yet specify only related columns, you need at least 1 direct column (simply ignore it).
+Note: you cannot yet specify only related columns, you need to specify at least 1 direct column (simply ignore it).
 
 You can also supply filters with `-Filters`. For every filtertype there is a cmdlet:
 
