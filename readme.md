@@ -85,6 +85,6 @@ The `Get-CmcFilter*` cmcdlets are just for convenience. They do **not** check fo
 
 This will tell you if the filter *technically* works on the specified category (as in: Commence accepts this filter as valid, regardless of results). Using this cmdlet in a production environment is not recommended, because it is very resource-expensive.
 
-There is also the `Get-CmcFieldValue` cmdlet for getting just a single field. It is like the singular, baby brother of `Get-CmcFieldValues`. It only supports direct fields, and does not support filtering. It does support using views, so you can do any filtering in Commence. You can use it if you are only interested in a single field.
+There is also the `Get-CmcFieldValue` cmdlet for getting just a single field. It is like the singular, baby brother of `Get-CmcFieldValues`. It only supports direct fields, and does not support filtering or THIDs. It does support using views, so you can do any filtering in Commence. You can use it if you are only interested in a single field.
 
 `Get-CmcFieldValue [-CategoryOrViewName] <string> [[-FieldName] <string>] [-UseView] [<CommonParameters>]`
