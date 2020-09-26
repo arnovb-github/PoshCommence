@@ -8,7 +8,7 @@
 
 # Exclude .NET assemblies from source
 *.dll
-!./Vovin.CmcLibNet.dll 
+!Vovin.CmcLibNet.dll 
 
 ### VisualStudioCode ###
 .vscode/*
