@@ -7,7 +7,7 @@
   <ItemGroup>
     <PackageReference Include="PowershellStandard.Library" Version="5.1.1" />
     <Reference Include="Vovin.CmcLibNet">
-      <HintPath>.\Dlls\Vovin.CmcLibNet.dll</HintPath>
+      <HintPath>.\Vovin.CmcLibNet.dll</HintPath>
     </Reference>  
   </ItemGroup>
 
