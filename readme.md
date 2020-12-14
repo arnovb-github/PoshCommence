@@ -1,18 +1,20 @@
 # PSCommenceModules
 
-A collection of Powershell cmdlets for use with Commence RM. Requires [Vovin.CmcLibNet](https://github.com/arnovb-github/CmcLibNet). (Binary included in the project.)
+## Overview ##
+A collection of Powershell cmdlets for use with Commence RM. Requires [Vovin.CmcLibNet](https://github.com/arnovb-github/CmcLibNet). You can think of these as convenience methods, since _Vovin.CmcLibNet_ can also be used directly in any PowerShell script.
 
 This is all in an experimental stage. None of this code is production-ready.
 
 Usage: `using module <path>\PSCommenceModules.dll` (`using` statements must be at the top of a script).
 
+## Getting multiple field values ##
 `Get-CmcFieldValues` returns a list of `CommenceField` objects for every database row. Think of it as a table:
 
 | | | | | 
 | - | - | - | - | 
-| row 0 | CommenceField 0 | CommenceField 1 | ... |
-| row 1 | CommenceField 0 | CommenceField 1 | ... |
-| row 2 | CommenceField 0 | CommenceField 1 | ... |
+| row 0 | FieldValue 0 | FieldValue 1 | ... |
+| row 1 | FieldValue 0 | FieldValue 1 | ... |
+| row 2 | FieldValue 0 | FieldValue 1 | ... |
 
 A `CommenceField` has these properties: `CategoryName`, `FieldName` and `FieldValue`. 
 
@@ -28,10 +30,13 @@ The complete syntax of `Get-CmcFieldValues` is:
 
 `Get-CmcFieldValues [-CategoryOrViewName] <string> [[-FieldNames] <string[]>] [-UseView] [-UseThids] [-Filters <ICursorFilter[]>] [-RelatedColumns <RelatedColumn[]>] [<CommonParameters>]`
 
+### Use a view ###
 If you specify a Commence viewname instead of a categoryname, use the `-UseView` switch. Note that you still have to specify which fields you want from the view.
 
+### Get THIDs ###
 If you want THIDs, specify the `-UseThids` switch. You get an additional `CommenceField` object with fieldname 'THID' for every row. This switch does not work on views.
 
+### Related columns ###
 Providing related columns involves some more work. These are the columns you would set by the `cursor.SetRelatedColumn(…)` method when you program against the Commence API.
 You have to explicitly define them:
 
@@ -60,6 +65,7 @@ Usage:
 
 Note: you cannot yet specify only related columns, you need to specify at least 1 direct column (simply ignore it).
 
+### Filters ###
 You can also supply filters with `-Filters`. For every filtertype there is a cmdlet:
 
 `Get-CmcFilterF [-ClauseNumber] <int> [-FieldName] <string> [-Qualifier] <FilterQualifier> [-FieldValue] <string> [[-FieldValue2] <string>] [-MatchCase] [-Except] [-OrFilter] [<CommonParameters>]`
@@ -86,6 +92,20 @@ The `Get-CmcFilter…` cmcdlets do **not** check for correctness of the paramete
 
 This will tell you if the filter *technically* works on the specified category (as in: Commence accepts this filter as valid, regardless of results). Using this cmdlet in a production environment is not recommended, because it is very resource-expensive.
 
+## Getting values from a single field ##
 There is also the `Get-CmcFieldValue` cmdlet. It is like the baby brother of `Get-CmcFieldValues` (note the singular vs plural). You would use it when you quickly want to get the values of a single field, without the overhead that `Get-CmcFieldValues` creates. It only supports direct fields, and does not support filtering or THIDs. It does support using views, so you can still use filters, just set them in Commence.
 
 `Get-CmcFieldValue [-CategoryOrViewName] <string> [[-FieldName] <string>] [-UseView] [<CommonParameters>]`
+
+## Count connected items ##
+This can be useful for example when the database specifies at most a single connection, but multiple connections exist. (Commence does not always enforce that setting).
+
+`Get-CmcConnectedItemCount [-FromCategory] <string> [-ConnectionName] <string> [-ToCategory] <string> [[-FromItem] <string>] [<CommonParameters>]`
+
+Example of finding all items that have more than 1 connection to the target category (_Tutorial database_):
+
+```powershell
+Get-CmcConnectedItemCount Account 'Relates to' Contact | Where-Object { $_.Count -gt 1 } | Select-Object -Property Itemname, Count
+```
+
+You can check the connection count for a known item by specifying the itemname as the `-FromItem` parameter. It does not (yet?) accept clarified itemnames. A return value of `-1` means that the item was not found.
