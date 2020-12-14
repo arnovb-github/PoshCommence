@@ -49,11 +49,12 @@ namespace PSCommenceModules
                 if (string.IsNullOrEmpty(fromItem))
                 {
                     int numItems = db.GetItemCount(fromCategory);
-                    for (int i = 1; i <= numItems; i++)
+                    for (int i = 1; i <= numItems; i++) // DDE-call indexes in Commence are 1-based
                     {
                         db.ViewCategory(fromCategory);
                         db.ClarifyItemNames("TRUE");
                         List<string> itemNames = db.GetItemNames(fromCategory);
+                        // since this not rely on string values, it should be reliable
                         connectedItemCount = db.ViewConnectedCount(i, connectionName, toCategory);
                         WriteObject(new
                         {
@@ -67,7 +68,12 @@ namespace PSCommenceModules
                     }
                 }
                 else
-                { // we have a specific item to test for
+                { 
+                    // We received a specific item to test for.
+                    // Depending on how crazy its values, we may get -1, 
+                    // meaning Commence could not handle it.
+                    // A typical example would be 'Earvin "Magic" Johnson', 
+                    // that will choke the DDE call on the inner quotes.
                     connectedItemCount = db.GetConnectedItemCount(fromCategory, fromItem, connectionName, toCategory);
                     WriteObject(new
                     {
