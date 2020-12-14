@@ -10,7 +10,7 @@ Usage: `using module <path>\PSCommenceModules.dll` (`using` statements must be a
 ## Getting multiple field values ##
 `Get-CmcFieldValues` returns a list of `CommenceField` objects for every database row. Think of it as a table:
 
-| | | | | 
+| Category | FieldName 1 | FieldName 2 | ... | 
 | - | - | - | - | 
 | row 0 | FieldValue 0 | FieldValue 1 | ... |
 | row 1 | FieldValue 0 | FieldValue 1 | ... |
