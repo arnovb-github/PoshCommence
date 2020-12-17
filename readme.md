@@ -82,7 +82,7 @@ So getting a Field filter could be:
 $filter = Get-CmcFilterF 1 Name 0 test -Except -MatchCase -Verbose
 ```
 
-For brevity I used the `int` value 0 for the filterqualifier. In the real world you should use its constant value, in this case `[Vovin.CmcLibNet.Database.FilterQualifier]::Contains`.
+For brevity I used the `int` value 0 for the filterqualifier. In the real world you should use its constant value, in this case `[Vovin.CmcLibNet.Database.FilterQualifier]::Contains`. It is not immediately obvious that you have access to that namespace, but you do. That is a hard thing to get your head around, so I created the `Show-CmcFilterQualifiers` cmdlet. It will show you all qualifiers and their numerical equivalents.
 
 **Important**: You specify any filter conjunction in the filters themselves. The default is **AND**. Set the `-OrFilter` switch for **OR**. There is no need to specify the filter conjunction separately. This is different from how you do it in Commence!
 
@@ -90,7 +90,7 @@ The `Get-CmcFilter…` cmcdlets do **not** check for correctness of the paramete
 
 `Resolve-CmcFilter [-Category] <string> [-Filter] <ICursorFilter> [<CommonParameters>]`
 
-This will tell you if the filter *technically* works on the specified category (as in: Commence accepts this filter as valid, regardless of results). Using this cmdlet in a production environment is not recommended, because it is very resource-expensive.
+This will tell you if Commence accepts the filter as valid, regardless of results. Using this cmdlet in a production environment is not recommended, because it is very resource-expensive.
 
 ## Getting values from a single field ##
 There is also the `Get-CmcFieldValue` cmdlet. It is like the baby brother of `Get-CmcFieldValues` (note the singular vs plural). You would use it when you quickly want to get the values of a single field, without the overhead that `Get-CmcFieldValues` creates. It only supports direct fields, and does not support filtering or THIDs. It does support using views, so you can still use filters, just set them in Commence.
@@ -102,7 +102,7 @@ This can be useful for example when the database specifies at most a single conn
 
 `Get-CmcConnectedItemCount [-FromCategory] <string> [-ConnectionName] <string> [-ToCategory] <string> [[-FromItem] <string>] [<CommonParameters>]`
 
-Example of finding all items that have more than 1 connection to the target category (_Tutorial database_):
+Example of finding all items in the _Account_ category that have more than 1 connection to the _Contact_ category (using the _Tutorial database_):
 
 ```powershell
 Get-CmcConnectedItemCount Account 'Relates to' Contact | Where-Object { $_.Count -gt 1 } | Select-Object -Property Itemname, Count
