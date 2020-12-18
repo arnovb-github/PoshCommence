@@ -109,3 +109,41 @@ Get-CmcConnectedItemCount Account 'Relates to' Contact | Where-Object { $_.Count
 ```
 
 You can check the connection count for a known item by specifying the itemname as the `-FromItem` parameter. It does not (yet?) accept clarified itemnames. A return value of `-1` means that the item was not found.
+
+## Getting name and paths ##
+Get the name of the currently active Commence database:
+
+`Get-CmcDatabaseName [<CommonParameters>]`
+
+Get the Commence log file:
+
+`Get-CmcLogFile [<CommonParameters>]`
+
+This will return a `System.IO.FileInfo` object.
+
+Example of use:
+```powershell
+Get-Content (Get-CmcLogFile).FullName
+```
+
+Get the Commence ini file:
+
+`Get-CmcIniFile [<CommonParameters>]`
+
+Example of use:
+```powershell
+Get-Content (Get-CmcIniFile).FullName
+```
+
+Get the database directory:
+
+`Get-CmcDatabaseDirectory [<CommonParameters>]`
+
+This will return a `System.IO.DirectoryInfo` object.
+
+## Debugging ##
+Some Cmdlets make _Vovin.CmcLibNet_ issue DDE commands to Commence. These can be extraordinarily hard to debug. Display the last DDE error thrown in Commence with:
+
+`Get-CmcLastDDEError [<CommonParameters>]`
+
+I do not have an immediate use case to show, but combined with the Commence Help files it may be useful nonetheless.
