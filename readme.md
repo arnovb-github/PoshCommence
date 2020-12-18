@@ -141,6 +141,11 @@ Get the database directory:
 
 This will return a `System.IO.DirectoryInfo` object.
 
+Example of use:
+```powershell
+"The full database path is " + (Get-CmcDatabaseDirectory).FullName
+```
+
 ## Debugging ##
 Some Cmdlets make _Vovin.CmcLibNet_ issue DDE commands to Commence. These can be extraordinarily hard to debug. Display the last DDE error thrown in Commence with:
 
