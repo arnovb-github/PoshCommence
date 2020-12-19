@@ -7,7 +7,7 @@ namespace PSCommenceModules
 {
 
     [Cmdlet(VerbsCommon.Get, "CmcFieldValues")]
-    public class GetCmcFields : PSCmdlet
+    public class GetCmcFieldValues : PSCmdlet
     {
         private string categoryName;
         [Parameter(Position = 0, Mandatory = true)]

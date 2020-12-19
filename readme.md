@@ -110,7 +110,7 @@ Get-CmcConnectedItemCount Account 'Relates to' Contact | Where-Object { $_.Count
 
 You can check the connection count for a known item by specifying the itemname as the `-FromItem` parameter. It does not (yet?) accept clarified itemnames. A return value of `-1` means that the item was not found.
 
-## Getting name and paths ##
+## Exploring the database ##
 Get the name of the currently active Commence database:
 
 `Get-CmcDatabaseName [<CommonParameters>]`
@@ -144,6 +144,23 @@ This will return a `System.IO.DirectoryInfo` object.
 Example of use:
 ```powershell
 "The full database path is " + (Get-CmcDatabaseDirectory).FullName
+```
+
+List all categories:
+`Get-CmcCategories [<CommonParameters>]`
+
+Example of use:
+```powershell
+`Get-CmcCategories | Select-Object -Property Name`
+```
+
+List all fields in a category:
+
+`Get-CmcFields [-CategoryName] <string> [<CommonParameters>]`
+
+Example of use:
+```powershell
+`Get-CmcFields Account | Select-Object -Property Name`
 ```
 
 ## Debugging ##
