@@ -23,7 +23,8 @@ This will return a `System.IO.FileInfo` object.
 
 Example:
 ```powershell
-Get-Content (Get-CmcLogFile).FullName -Tail 50 # get last 50 lines of log file
+# get last 50 lines of log file
+Get-Content (Get-CmcLogFile).FullName -Tail 50
 ```
 
 Get the Commence _data.ini_ file:
@@ -32,7 +33,8 @@ Get the Commence _data.ini_ file:
 
 Example:
 ```powershell
-Get-Content (Get-CmcIniFile).FullName  # get contents of data.ini
+# get contents of data.ini
+Get-Content (Get-CmcIniFile).FullName 
 ```
 
 Get the database directory:
@@ -52,7 +54,8 @@ List all categories:
 
 Example:
 ```powershell
-Get-CmcCategories | Select-Object -Property Name # list the category names
+# list the category names
+Get-CmcCategories | Select-Object -Property Name 
 ```
 
 List all fields in a category:
@@ -61,7 +64,8 @@ List all fields in a category:
 
 Example:
 ```powershell
-`Get-CmcFields Account | Where-Object { $_.Type -eq 'Name' }` # get the Name field for category Account
+# get the Name field for category Account
+`Get-CmcFields Account | Where-Object { $_.Type -eq 'Name' }` 
 ```
 
 ## Getting multiple field values ##
@@ -78,8 +82,9 @@ A `CommenceField` has properties: `CategoryName`, `FieldName` and `FieldValue`.
 Example:
 
 ```powershell
+# return all fieldvalues for all rows
 Get-CmcFieldValues CategoryName FieldName1, FieldName2 | ForEach-Object {
-    $_.FieldValue # returns all fieldvalues for all rows
+    $_.FieldValue 
 }
 ```
 
