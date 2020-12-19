@@ -23,7 +23,7 @@ This will return a `System.IO.FileInfo` object.
 
 Example:
 ```powershell
-Get-Content (Get-CmcLogFile).FullName -Tail 50 # show last 50 lines of log file
+Get-Content (Get-CmcLogFile).FullName -Tail 50 # get last 50 lines of log file
 ```
 
 Get the Commence _data.ini_ file:
@@ -32,7 +32,7 @@ Get the Commence _data.ini_ file:
 
 Example:
 ```powershell
-Get-Content (Get-CmcIniFile).FullName
+Get-Content (Get-CmcIniFile).FullName  # get contents of data.ini
 ```
 
 Get the database directory:
@@ -52,7 +52,7 @@ List all categories:
 
 Example:
 ```powershell
-`Get-CmcCategories | Select-Object -Property Name`
+Get-CmcCategories | Select-Object -Property Name # list the category names
 ```
 
 List all fields in a category:
@@ -61,7 +61,7 @@ List all fields in a category:
 
 Example:
 ```powershell
-`Get-CmcFields Account | Where-Object { $_.Type -eq 'Name' }` # Get the Name field for category Account
+`Get-CmcFields Account | Where-Object { $_.Type -eq 'Name' }` # get the Name field for category Account
 ```
 
 ## Getting multiple field values ##
