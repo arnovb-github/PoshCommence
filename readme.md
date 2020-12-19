@@ -23,8 +23,8 @@ This will return a `System.IO.FileInfo` object.
 
 Example:
 ```powershell
-# get last 50 lines of log file
-Get-Content (Get-CmcLogFile).FullName -Tail 50
+# get last 10 lines of log file
+Get-Content (Get-CmcLogFile).FullName -Tail 10
 ```
 
 Get the Commence _data.ini_ file:
@@ -170,7 +170,7 @@ Example of finding all items in the _Account_ category that have more than 1 con
 Get-CmcConnectedItemCount Account 'Relates to' Contact | Where-Object { $_.Count -gt 1 } | Select-Object -Property Itemname, Count
 ```
 
-You can check the connection count for a known item by specifying the itemname as the `-FromItem` parameter. It does not (yet?) accept clarified itemnames. A return value of `-1` means that the item was not found.
+You can check the connection count for a known item by specifying the itemname as the `-FromItem` parameter. It does not (yet) accept clarified itemnames. A return value of `-1` means that the item was not found.
 
 ## Debugging ##
 Some Cmdlets make _Vovin.CmcLibNet_ issue DDE commands to Commence. These can be extraordinarily hard to debug. Display the last DDE error thrown in Commence with:

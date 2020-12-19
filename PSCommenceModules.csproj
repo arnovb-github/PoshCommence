@@ -2,6 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <Authors>Arno van Boven</Authors>
+    <Company>Vovin IT Services</Company>
+    <Product>Posh Commence Modules</Product>
+    <Copyright>© 2020 - Vovin IT Services</Copyright>
+    <PackageProjectUrl>https://github.com/arnovb-github/PSCommenceModules</PackageProjectUrl>
+    <Description>Powershell cmdlets for Commence RM</Description>
+    <Tags>Commence RM;Vovin;CmcLibNet</Tags>
   </PropertyGroup>
 
   <ItemGroup>
