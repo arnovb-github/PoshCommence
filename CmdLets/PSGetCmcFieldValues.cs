@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using PSCommenceModules.Base;
+using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 using Vovin.CmcLibNet.Database;
 
-namespace PSCommenceModules
+namespace PSCommenceModules.CmdLets
 {
 
     [Cmdlet(VerbsCommon.Get, "CmcFieldValues")]
@@ -77,7 +78,7 @@ namespace PSCommenceModules
             }
 
             // do the data reading
-            var rows = Helper.GetCmcFieldValues(categoryName,
+            var rows = CursorReader.GetCmcFieldValues(categoryName,
                 fieldNames,
                 filters,
                 relatedColumns,

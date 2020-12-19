@@ -1,6 +1,7 @@
+using PSCommenceModules.Base;
 using System.Management.Automation;
 
-namespace PSCommenceModules
+namespace PSCommenceModules.CmdLets
 {
     [Cmdlet(VerbsCommon.Get, "CmcLogFile")]
     public class GetCmcLogFile  : PSCmdlet

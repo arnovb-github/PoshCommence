@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Vovin.CmcLibNet.Database;
 using Vovin.CmcLibNet.Database.Metadata;
 
-namespace PSCommenceModules
+namespace PSCommenceModules.CmdLets
 {
     [Cmdlet(VerbsCommon.Get, "CmcFields")]
     public class GetCmcFields  : PSCmdlet

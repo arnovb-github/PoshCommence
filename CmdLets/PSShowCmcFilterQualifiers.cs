@@ -3,7 +3,7 @@ using System.Management.Automation;
 using System.Text;
 using Vovin.CmcLibNet.Database;
 
-namespace PSCommenceModules
+namespace PSCommenceModules.CmdLets
 {
 
     [Cmdlet(VerbsCommon.Show, "CmcFilterQualifiers")]

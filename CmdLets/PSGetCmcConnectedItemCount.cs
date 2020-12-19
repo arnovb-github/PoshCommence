@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Management.Automation;
 using Vovin.CmcLibNet;
 
-namespace PSCommenceModules
+namespace PSCommenceModules.CmdLets
 {
 
     [Cmdlet(VerbsCommon.Get, "CmcConnectedItemCount")]

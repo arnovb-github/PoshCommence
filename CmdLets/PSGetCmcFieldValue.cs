@@ -1,7 +1,8 @@
+using PSCommenceModules.Base;
 using System.Collections.Generic;
 using System.Management.Automation;
 
-namespace PSCommenceModules
+namespace PSCommenceModules.CmdLets
 {
 
     [Cmdlet(VerbsCommon.Get, "CmcFieldValue")]
@@ -34,7 +35,7 @@ namespace PSCommenceModules
         protected override void ProcessRecord()
         {
             // do the data reading
-            var rows = Helper.GetCmcFieldValues(categoryName,
+            var rows = CursorReader.GetCmcFieldValues(categoryName,
                 new List<string>() { fieldName },
                 null,
                 null,

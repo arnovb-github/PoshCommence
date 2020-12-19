@@ -1,8 +1,9 @@
+using PSCommenceModules.Base.Extensions;
 using System.Management.Automation;
 using Vovin.CmcLibNet.Attributes;
 using Vovin.CmcLibNet.Database;
 
-namespace PSCommenceModules
+namespace PSCommenceModules.CmdLets
 {
     [Cmdlet(VerbsCommon.Get, "CmcFilterF")]
     public class GetFilterF  : PSCmdlet

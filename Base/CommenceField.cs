@@ -1,4 +1,4 @@
-namespace PSCommenceModules
+namespace PSCommenceModules.Base
 {
     public class CommenceField
     {

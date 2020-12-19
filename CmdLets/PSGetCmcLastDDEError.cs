@@ -1,7 +1,7 @@
 using System.Management.Automation;
 using Vovin.CmcLibNet.Database;
 
-namespace PSCommenceModules
+namespace PSCommenceModules.CmdLets
 {
     [Cmdlet(VerbsCommon.Get, "CmcLastDDEError")]
     public class GetCmcLastDDEError  : PSCmdlet

@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Vovin.CmcLibNet.Database;
 
-namespace PSCommenceModules
+namespace PSCommenceModules.Base
 {
-    internal static class Helper
+    internal static class CursorReader
     {
         // notice we do not do any error checking
         // we just let the error pass through to Powershell
