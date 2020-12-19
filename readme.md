@@ -1,22 +1,78 @@
-# PSCommenceModules
+# PSCommenceModules #
 
 ## Overview ##
 A collection of Powershell cmdlets for use with Commence RM. Requires [Vovin.CmcLibNet](https://github.com/arnovb-github/CmcLibNet). You can think of these as convenience methods, since _Vovin.CmcLibNet_ can also be used directly in any PowerShell script.
 
 This is all in an experimental stage. None of this code is production-ready.
 
-Usage: `using module <path>\PSCommenceModules.dll` (`using` statements must be at the top of a script).
+Usage: compile the code and use it in any Powershell script by including `using module <path>\PSCommenceModules.dll` at the top of your script.
+
+(I used VS Code to write the code, so it is just a matter of pulling the repository and then do `dotnet build` from the terminal.)
+
+## Exploring the database ##
+Get the name of the currently active Commence database:
+
+`Get-CmcDatabaseName [<CommonParameters>]`
+
+Get the Commence active.log file:
+
+`Get-CmcLogFile [<CommonParameters>]`
+
+This will return a `System.IO.FileInfo` object.
+
+Example of use:
+```powershell
+Get-Content (Get-CmcLogFile).FullName
+```
+
+Get the Commence data.ini file:
+
+`Get-CmcIniFile [<CommonParameters>]`
+
+Example of use:
+```powershell
+Get-Content (Get-CmcIniFile).FullName
+```
+
+Get the database directory:
+
+`Get-CmcDatabaseDirectory [<CommonParameters>]`
+
+This will return a `System.IO.DirectoryInfo` object.
+
+Example of use:
+```powershell
+"The full database path is " + (Get-CmcDatabaseDirectory).FullName
+```
+
+List all categories:
+
+`Get-CmcCategories [<CommonParameters>]`
+
+Example of use:
+```powershell
+`Get-CmcCategories | Select-Object -Property Name`
+```
+
+List all fields in a category:
+
+`Get-CmcFields [-CategoryName] <string> [<CommonParameters>]`
+
+Example of use:
+```powershell
+`Get-CmcFields Account | Where-Object { $_.Type -eq 'Name' }` # give me the Name field for category Account
+```
 
 ## Getting multiple field values ##
 `Get-CmcFieldValues` returns a list of `CommenceField` objects for every database row. Think of it as a table:
 
 | Category | FieldName 1 | FieldName 2 | ... | 
 | - | - | - | - | 
-| row 0 | FieldValue 0 | FieldValue 1 | ... |
-| row 1 | FieldValue 0 | FieldValue 1 | ... |
-| row 2 | FieldValue 0 | FieldValue 1 | ... |
+| row 1 | FieldValue 1 | FieldValue 2 | ... |
+| row 2 | FieldValue 1 | FieldValue 2 | ... |
+| row 3 | FieldValue 1 | FieldValue 2 | ... |
 
-A `CommenceField` has these properties: `CategoryName`, `FieldName` and `FieldValue`. 
+A `CommenceField` has properties: `CategoryName`, `FieldName` and `FieldValue`. 
 
 Example:
 
@@ -109,60 +165,6 @@ Get-CmcConnectedItemCount Account 'Relates to' Contact | Where-Object { $_.Count
 ```
 
 You can check the connection count for a known item by specifying the itemname as the `-FromItem` parameter. It does not (yet?) accept clarified itemnames. A return value of `-1` means that the item was not found.
-
-## Exploring the database ##
-Get the name of the currently active Commence database:
-
-`Get-CmcDatabaseName [<CommonParameters>]`
-
-Get the Commence active.log file:
-
-`Get-CmcLogFile [<CommonParameters>]`
-
-This will return a `System.IO.FileInfo` object.
-
-Example of use:
-```powershell
-Get-Content (Get-CmcLogFile).FullName
-```
-
-Get the Commence data.ini file:
-
-`Get-CmcIniFile [<CommonParameters>]`
-
-Example of use:
-```powershell
-Get-Content (Get-CmcIniFile).FullName
-```
-
-Get the database directory:
-
-`Get-CmcDatabaseDirectory [<CommonParameters>]`
-
-This will return a `System.IO.DirectoryInfo` object.
-
-Example of use:
-```powershell
-"The full database path is " + (Get-CmcDatabaseDirectory).FullName
-```
-
-List all categories:
-
-`Get-CmcCategories [<CommonParameters>]`
-
-Example of use:
-```powershell
-`Get-CmcCategories | Select-Object -Property Name`
-```
-
-List all fields in a category:
-
-`Get-CmcFields [-CategoryName] <string> [<CommonParameters>]`
-
-Example of use:
-```powershell
-`Get-CmcFields Account | Where-Object { $_.Type -eq 'Name' }` # give me the Name field for category Account
-```
 
 ## Debugging ##
 Some Cmdlets make _Vovin.CmcLibNet_ issue DDE commands to Commence. These can be extraordinarily hard to debug. Display the last DDE error thrown in Commence with:
