@@ -115,7 +115,7 @@ Get the name of the currently active Commence database:
 
 `Get-CmcDatabaseName [<CommonParameters>]`
 
-Get the Commence log file:
+Get the Commence active.log file:
 
 `Get-CmcLogFile [<CommonParameters>]`
 
@@ -126,7 +126,7 @@ Example of use:
 Get-Content (Get-CmcLogFile).FullName
 ```
 
-Get the Commence ini file:
+Get the Commence data.ini file:
 
 `Get-CmcIniFile [<CommonParameters>]`
 
@@ -161,7 +161,7 @@ List all fields in a category:
 
 Example of use:
 ```powershell
-`Get-CmcFields Account | Select-Object -Property Name`
+`Get-CmcFields Account | Where-Object { $_.Type -eq 'Name' }` # give me the Name field for category Account
 ```
 
 ## Debugging ##
