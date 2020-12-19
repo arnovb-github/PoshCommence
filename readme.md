@@ -8,7 +8,7 @@ This is all experimental.
 ## How to use ##
 Usage: compile the code and use it in any Powershell script by including `using module <path>\PSCommenceModules.dll` at the top of your script.
 
-(Compile tip: use VS code and pull the repository, then run `dotnet build` from the terminal.)
+(Compile tip: using [VS Code](https://code.visualstudio.com), it is as simple as pulling the repository, then run `dotnet build` from the terminal.)
 
 ## Exploring the database ##
 Get the name of the currently active Commence database:
@@ -21,16 +21,16 @@ Get the Commence _active.log_ file:
 
 This will return a `System.IO.FileInfo` object.
 
-Example of use:
+Example:
 ```powershell
-Get-Content (Get-CmcLogFile).FullName
+Get-Content (Get-CmcLogFile).FullName -Tail 50 # show last 50 lines of log file
 ```
 
 Get the Commence _data.ini_ file:
 
 `Get-CmcIniFile [<CommonParameters>]`
 
-Example of use:
+Example:
 ```powershell
 Get-Content (Get-CmcIniFile).FullName
 ```
@@ -41,7 +41,7 @@ Get the database directory:
 
 This will return a `System.IO.DirectoryInfo` object.
 
-Example of use:
+Example:
 ```powershell
 "The full database path is " + (Get-CmcDatabaseDirectory).FullName
 ```
@@ -50,7 +50,7 @@ List all categories:
 
 `Get-CmcCategories [<CommonParameters>]`
 
-Example of use:
+Example:
 ```powershell
 `Get-CmcCategories | Select-Object -Property Name`
 ```
@@ -59,9 +59,9 @@ List all fields in a category:
 
 `Get-CmcFields [-CategoryName] <string> [<CommonParameters>]`
 
-Example of use:
+Example:
 ```powershell
-`Get-CmcFields Account | Where-Object { $_.Type -eq 'Name' }` # give me the Name field for category Account
+`Get-CmcFields Account | Where-Object { $_.Type -eq 'Name' }` # Get the Name field for category Account
 ```
 
 ## Getting multiple field values ##
