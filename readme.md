@@ -5,8 +5,6 @@ A collection of Powershell cmdlets for use with Commence RM. Requires [Vovin.Cmc
 
 This is all experimental.
 
-There is no plan to these cmdlets; I botched them together when I had the need to get something (more) quickly while working on a larger project that involved Commence and Powershell. There is no reason whatsoever for not creating native Powershell cmdlets to do this. They would work also perfecly fine. The only reason for doing them in C# is that I am more comfortable with it.
-
 ## How to use ##
 Usage: compile the code and use it in any Powershell script by including `using module <path>\PSCommenceModules.dll` at the top of your script.
 
