@@ -147,6 +147,7 @@ Example of use:
 ```
 
 List all categories:
+
 `Get-CmcCategories [<CommonParameters>]`
 
 Example of use:
