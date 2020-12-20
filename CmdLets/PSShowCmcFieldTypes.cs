@@ -5,12 +5,12 @@ using Vovin.CmcLibNet.Database;
 namespace PSCommenceModules.CmdLets
 {
 
-    [Cmdlet(VerbsCommon.Show, "CmcFilterQualifiers")]
-    public class ShowCmcFilterQualifiers : PSCmdlet
+    [Cmdlet(VerbsCommon.Show, "CmcFieldTypes")]
+    public class ShowCmcCmcFieldTypes : PSCmdlet
     {
         protected override void ProcessRecord()
         {
-            foreach (var o in EnumHelper.ListEnum<FilterQualifier>())
+            foreach (var o in EnumHelper.ListEnum<CommenceFieldType>())
             {
                 WriteObject(o);
             }
