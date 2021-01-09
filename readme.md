@@ -11,9 +11,9 @@ I botch these together whenever I find I have to do too much work in PS to get w
 This is a binary assembly, but it could all have been done in just PS. I am simply more familiar with C# than PS and I wanted to play around with writing C# code in VS Code rather than Visual Studio.
 
 ## How to use ##
-Compile the code and use it in any Powershell script by including `using module <path>\PSCommenceModules.dll` at the top of your script.
+Compile the code and use it in any Powershell script by including `using module <path>\PSCommenceModules.dll` at the top of your script, or put it in your local _Modules_ folder so it is always available from the CLI.
 
-(Compile tip: using [VS Code](https://code.visualstudio.com), it is as simple as pulling the repository, then run `dotnet build` from the terminal.)
+(Tip: using [VS Code](https://code.visualstudio.com), compiling is as simple as pulling the repository (to get the code), then run `dotnet build` from the terminal (to compile the assembly).)
 
 ## Exploring the database ##
 Get the name of the currently active Commence database:
