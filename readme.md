@@ -38,6 +38,8 @@ Get the Commence _data.ini_ file:
 
 `Get-CmcIniFile [<CommonParameters>]`
 
+This will return a `System.IO.FileInfo` object.
+
 Example:
 ```powershell
 # get contents of data.ini
