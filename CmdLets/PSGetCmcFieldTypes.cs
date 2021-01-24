@@ -5,8 +5,8 @@ using Vovin.CmcLibNet.Database;
 namespace PSCommenceModules.CmdLets
 {
 
-    [Cmdlet(VerbsCommon.Show, "CmcFieldTypes")]
-    public class ShowCmcCmcFieldTypes : PSCmdlet
+    [Cmdlet(VerbsCommon.Get, "CmcFieldTypes")]
+    public class GetCmcCmcFieldTypes : PSCmdlet
     {
         protected override void ProcessRecord()
         {

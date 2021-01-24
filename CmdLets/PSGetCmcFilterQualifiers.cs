@@ -5,8 +5,8 @@ using Vovin.CmcLibNet.Database;
 namespace PSCommenceModules.CmdLets
 {
 
-    [Cmdlet(VerbsCommon.Show, "CmcFilterQualifiers")]
-    public class ShowCmcFilterQualifiers : PSCmdlet
+    [Cmdlet(VerbsCommon.Get, "CmcFilterQualifiers")]
+    public class GetCmcFilterQualifiers : PSCmdlet
     {
         protected override void ProcessRecord()
         {

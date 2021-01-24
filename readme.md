@@ -89,11 +89,11 @@ Or even as:
 Get-CmcFields Account | Where-Object { $_.Type -eq 11 } # 11 is the numerical identifier of the Name field
 ```
 
-Because this module requires _Vovin.CmcLibNet_ all of _Vovin.CmcLibNet_'s functionality gets pulled in. That may not be immediately obvious. For that reason, there is the `Show-CmcFieldTypes` cmdlet:
+Because this module requires _Vovin.CmcLibNet_ all of _Vovin.CmcLibNet_'s functionality gets pulled in. That may not be immediately obvious. For that reason, there is the `Get-CmcFieldTypes` cmdlet:
 
-`Show-CmcFieldTypes [<CommonParameters>]`
+`Get-CmcFieldTypes [<CommonParameters>]`
 
-It shows both the names and the associated numbers for field types you can use.
+It returns both the names and the associated numbers for field types you can use.
 
 ## Getting multiple field values ##
 `Get-CmcFieldValues` returns a list of `CommenceField` objects for every database row. Think of it as a table:
@@ -171,7 +171,7 @@ So getting a Field filter could be:
 $filter = Get-CmcFilterF 1 Name 0 test -Except -MatchCase -Verbose
 ```
 
-For brevity I used the `int` value `0` for the filterqualifier. In the real world you should use its constant value, in this case `[Vovin.CmcLibNet.Database.FilterQualifier]::Contains`. It may not be immediately obvious that you have access to that namespace, but you do. That is a hard thing to get your head around, so I created the `Show-CmcFilterQualifiers` cmdlet. It will show you all qualifiers and their numerical equivalents.
+For brevity I used the `int` value `0` for the filterqualifier. In the real world you should use its constant value, in this case `[Vovin.CmcLibNet.Database.FilterQualifier]::Contains`. It may not be immediately obvious that you have access to that namespace, but you do. That is a hard thing to get your head around, so I created the `Get-CmcFilterQualifiers` cmdlet. It returns all qualifiers and their numerical equivalents.
 
 **Important**: You specify any filter conjunction in the filters themselves. The default is **AND**. Set the `-OrFilter` switch for **OR**. There is no need to specify the filter conjunction separately. This is different from how you do it in Commence!
 
