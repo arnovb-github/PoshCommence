@@ -1,7 +1,7 @@
 # Posh Commence CmdLets #
 
 ## Overview ##
-A collection of Powershell cmdlets for use with Commence RM®. Requires [Vovin.CmcLibNet](https://github.com/arnovb-github/CmcLibNet). You can think of these as convenience methods, since _Vovin.CmcLibNet_ can also be used directly in PowerShell.
+A collection of Powershell cmdlets for use with the Commence RM API. Requires [Vovin.CmcLibNet](https://www.nuget.org/packages/Vovin.CmcLibNet/). You can think of these as convenience methods, since _Vovin.CmcLibNet_ can also be used directly in PowerShell.
 
 This is all experimental.
 
@@ -10,11 +10,7 @@ I botch these together whenever I find I have to do too much work in PS to get w
 
 This is a binary assembly, but it could all have been done in just PS. I am simply more familiar with C# than PS and I wanted to play around with writing C# code in VS Code rather than Visual Studio.
 
-## How to use ##
-Compile the code and use it in any Powershell script by including `using module <path>\PSCommenceModules.dll` at the top of your script, or put it in your local _Modules_ folder so it is always available from the CLI.
-
-(Tip: using [VS Code](https://code.visualstudio.com), compiling is as simple as pulling the repository (to get the code), then run `dotnet build` from the terminal (to compile the assembly).)
-
+# CmdLets #
 ## Exploring the database ##
 Get the name of the currently active Commence database:
 
@@ -95,7 +91,7 @@ Because this module requires _Vovin.CmcLibNet_ all of _Vovin.CmcLibNet_'s functi
 
 It returns both the names and the associated numbers for field types you can use.
 
-## Getting multiple field values ##
+## Getting field values ##
 `Get-CmcFieldValues` returns a list of `CommenceField` objects for every database row. Think of it as a table:
 
 | Category | FieldName 1 | FieldName 2 | ... | 
@@ -165,7 +161,7 @@ You can also supply filters with `-Filters`. For every filtertype there is a cmd
 
 `Get-CmcFilterCTCF [-ClauseNumber] <int> [-Connection] <string> [-Category] <string> [-FieldName] <string> [-Qualifier] <FilterQualifier> [-FieldValue] <string> [[-FieldValue2] <string>] [-MatchCase] [-Except] [-OrFilter] [<CommonParameters>]`
 
-So getting a Field filter could be:
+So getting a `Field (F)` filter could be:
 
 ```powershell
 $filter = Get-CmcFilterF 1 Name 0 test -Except -MatchCase -Verbose
