@@ -1,22 +1,21 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <!-- <TargetFramework>netstandard2.0</TargetFramework> -->
+    <TargetFramework>net472</TargetFramework>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <Authors>Arno van Boven</Authors>
     <Company>Vovin IT Services</Company>
     <Product>Posh Commence Modules</Product>
-    <Copyright>© 2020 - Vovin IT Services</Copyright>
+    <Copyright>© 2020 - 2021 - Vovin IT Services</Copyright>
     <PackageProjectUrl>https://github.com/arnovb-github/PSCommenceModules</PackageProjectUrl>
     <Description>Powershell cmdlets for Commence RM</Description>
-    <Tags>Commence RM;Vovin;CmcLibNet</Tags>
+    <Tags>Commence RM Vovin CmcLibNet</Tags>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="PowershellStandard.Library" Version="5.1.1" />
-    <Reference Include="Vovin.CmcLibNet">
-      <HintPath>.\Vovin.CmcLibNet.dll</HintPath>
-    </Reference>  
+    <PackageReference Include="Vovin.CmcLibNet" Version="1.0.0" />
   </ItemGroup>
 
 </Project>
