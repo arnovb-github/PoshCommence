@@ -6,7 +6,7 @@ namespace PSCommenceModules.CmdLets
 {
 
     [Cmdlet(VerbsCommon.Get, "CmcFieldTypes")]
-    public class GetCmcCmcFieldTypes : PSCmdlet
+    public class GetCmcFieldTypes : PSCmdlet
     {
         protected override void ProcessRecord()
         {

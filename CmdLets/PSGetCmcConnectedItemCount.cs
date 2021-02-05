@@ -106,11 +106,7 @@ namespace PSCommenceModules.CmdLets
                     WriteVerbose("A count of -1 means an error occurred while trying to receive the count from Commence.\n"
                         + "This is likely caused by one or more of the arguments being invalid.\n"
                         + "Note that connection- and viewnames in Commence are case-sensitive!\n\n"
-                        + "Another cause may be that the arguments contain characters that break DDE commands.\n\n"
-                        + "In that case you options are:\n"
-                        + "-talk to the [Vovin.CmcLibNet] library directly,\n"
-                        + " with the 'EncodeDDEArguments' property of [Vovin.CmcLibNet.Database.CommenceDatabase] set to 'false',\n"
-                        + "-talk to Commence natively.");
+                        + "Another cause may be that the arguments contain characters that break DDE commands.\n\n");
                     return;
                 }
             }

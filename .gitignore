@@ -6,10 +6,6 @@
 # Exclude packaged modules
 *.zip
 
-# Exclude .NET assemblies from source
-*.dll
-!Vovin.CmcLibNet.dll 
-
 ### VisualStudioCode ###
 .vscode/*
 !.vscode/settings.json
@@ -377,4 +373,8 @@ MigrationBackup/
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
 
+
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,visualstudio,powershell
+
+# custom
+BuildReleaseAndDeployLocally.ps1
