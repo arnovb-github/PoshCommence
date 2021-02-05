@@ -91,6 +91,11 @@ Because this module requires _Vovin.CmcLibNet_ all of _Vovin.CmcLibNet_'s functi
 
 It returns both the names and the associated numbers for field types you can use.
 
+List all connections for a category:
+`Get-CmcConnections [-CategoryName] <string> [<CommonParameters>]`
+
+This is self-explanatory. One thing to note is that connection names in Commence are case-sensitive.
+
 ## Getting field values ##
 `Get-CmcFieldValues` returns a list of `CommenceField` objects for every database row. Think of it as a table:
 
@@ -213,7 +218,7 @@ $filters = @((Get-CmcFilterF 1 accountKey 0 Wing),
 # perform the export
 Export-CmcCategory Account accounts.json -ExportFormat 1 -Filters $filters -FieldNames accountKey, Address, City, zipPostal, Country, 'Relates to Employee'
 ```
-Note that for brevity I used `1` to indicate I wanted Json format. The fully qualified value is `[Vovin.CmcLibNet.Export.ExportFomat]::Json`. You can use the `Get-CmcExportFormats` CmdLet to get the full list of available formats. If you are not interested in connected values you can specify `-SkipConnectedItems`, which will significantly boost performance.
+Note that for brevity I used `1` to indicate I wanted Json format. The fully qualified value is `[Vovin.CmcLibNet.Export.ExportFomat]::Json`. You can use the `Get-CmcExportFormats [<CommonParameters>]` CmdLet to get the full list of available formats. If you are not interested in connected values you can specify `-SkipConnectedItems`, which will significantly boost performance.
 
 ## Debugging ##
 Some Cmdlets make _Vovin.CmcLibNet_ issue DDE commands to Commence. These can be extraordinarily hard to debug. Display the last DDE error thrown in Commence with:
