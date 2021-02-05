@@ -195,6 +195,26 @@ Get-CmcConnectedItemCount Account 'Relates to' Contact | Where-Object { $_.Count
 
 You can check the connection count for a known item by specifying the itemname as the `-FromItem` parameter. It does not (yet) accept clarified itemnames. A return value of `-1` means that the item was not found.
 
+## Exporting ##
+The `Export-CmcCategory` CmdLet allows you to do simple exporting directly from the command-line. For advanced exporting see [Vovin.CmcLibNet](https://github.com/arnovb-github/CmcLibNet). 
+
+`Export-CmcCategory [-CategoryName] <string> [-Path] <string> [-ExportFormat <ExportFormat>] [-Filters <ICursorFilter[]>] [-FieldNames <string[]>] [-SkipConnectedItems] [<CommonParameters>]`
+
+Simple example (_Tutorial database_): export the entire _Account_ category to  file _account.xml_.
+```powershell
+Export-CmcCategory Account accounts.xml
+```
+
+Advanced example: export address fields and list of Sales person of items in _Account_ that have 'Wing' in their name or are connected to _salesTeam_ item 'Team 1' to a Json file.
+```powershell
+# create array of filters
+$filters = @((Get-CmcFilterF 1 accountKey 0 Wing),
+            (Get-CmcFilterCTI 2 'Relates to' 'salesTeam' 'Team 1' -OrFilter))
+# perform the export
+Export-CmcCategory Account accounts.json -ExportFormat 1 -Filters $filters -FieldNames accountKey, Address, City, zipPostal, Country, 'Relates to Employee'
+```
+Note that for brevity I used `1` to indicate I wanted Json format. The fully qualified value is `[Vovin.CmcLibNet.Export.ExportFomat]::Json`. You can use the `Get-CmcExportFormats` CmdLet to get the full list of available formats. If you are not interested in connected values you can specify `-SkipConnectedItems`, which will significantly boost performance.
+
 ## Debugging ##
 Some Cmdlets make _Vovin.CmcLibNet_ issue DDE commands to Commence. These can be extraordinarily hard to debug. Display the last DDE error thrown in Commence with:
 
