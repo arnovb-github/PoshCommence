@@ -7,7 +7,6 @@ namespace PSCommenceModules.Base
 {
     internal static class CommenceExporter
     {
-
         internal static void ExportCategory(string name, IEnumerable<ICursorFilter> filters, string path, IExportSettings options)
         {
 
@@ -23,7 +22,7 @@ namespace PSCommenceModules.Base
             ee.Close(); // does nothing, not needed
         }
 
-        internal static void ExportCursor(string categoryName, IEnumerable<ICursorFilter> filters, string[] fieldNames, string path, IExportSettings exportOptions)
+        internal static void ExportCursor(string categoryName, IEnumerable<ICursorFilter> filters, string[] fieldNames, string path, IExportSettings options)
         {
             // we got fieldnames, so we have to create a custom cursor
             using (var db = new CommenceDatabase())
@@ -39,8 +38,15 @@ namespace PSCommenceModules.Base
                     }
                     cur.Filters.Apply();
                 }
-                cur.ExportToFile(path, exportOptions);
+                cur.ExportToFile(path, options);
             }
+        }
+
+        internal static void ExportView(string viewName, string path, IExportSettings options)
+        {
+            ExportEngine ee = new ExportEngine();
+            ee.ExportView(viewName, path, options);
+            ee.Close(); // does nothing, not needed
         }
     }
 }

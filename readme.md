@@ -220,6 +220,10 @@ Export-CmcCategory Account accounts.json -ExportFormat 1 -Filters $filters -Fiel
 ```
 Note that for brevity I used `1` to indicate I wanted Json format. The fully qualified value is `[Vovin.CmcLibNet.Export.ExportFomat]::Json`. You can use the `Get-CmcExportFormats [<CommonParameters>]` cmdlet to get the full list of available formats. If you are not interested in connected values you can specify `-SkipConnectedItems`, which will significantly boost performance. The `-UseThids` switch will give you thids. You can use it if you know what they are :).
 
+The `Export-CmcView` will export a view as-is (provided the view supports exporting, not all viewtypes in Commence do). Notice that the column order may not be retained, connected values may come last. This is by design. View names in Commence are case-sensitive!
+
+`Export-CmcView [-ViewName] <string> [-Path] <string> [-ExportFormat <ExportFormat>] [<CommonParameters>]`
+
 ## Debugging ##
 Some Cmdlets make _Vovin.CmcLibNet_ issue DDE commands to Commence. These can be extraordinarily hard to debug. Display the last DDE error thrown in Commence with:
 
