@@ -60,7 +60,6 @@ namespace PSCommenceModules.CmdLets
             set { _fieldNames = value; }
         }
 
-        private bool _skipConnectedItems;
         [Parameter()]
         public SwitchParameter SkipConnectedItems
         {
@@ -68,7 +67,6 @@ namespace PSCommenceModules.CmdLets
             set { _exportOptions.SkipConnectedItems = value; }
         }
 
-        private bool _useThids;
         [Parameter()]
         public SwitchParameter UseThids
         {
