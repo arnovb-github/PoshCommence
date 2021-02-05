@@ -67,6 +67,14 @@ namespace PSCommenceModules.CmdLets
             get { return _exportOptions.SkipConnectedItems; }
             set { _exportOptions.SkipConnectedItems = value; }
         }
+
+        private bool _useThids;
+        [Parameter()]
+        public SwitchParameter UseThids
+        {
+            get { return _exportOptions.UseThids; }
+            set { _exportOptions.UseThids = value; }
+        }
         
         protected override void ProcessRecord()
         {
