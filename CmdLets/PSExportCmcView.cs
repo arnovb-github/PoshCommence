@@ -1,19 +1,9 @@
 using PSCommenceModules.Base;
 using System.Management.Automation;
-using System.Collections.Generic;
-using Vovin.CmcLibNet.Database;
 using Vovin.CmcLibNet.Export;
-
 
 namespace PSCommenceModules.CmdLets
 {
-    /*  This CmdLet comprises a limited set of export features as exposed by Vovin.CmcLibNet.
-        For the complete experience refer to the Vovin.CmcLibNet documentation.
-        The most notable difference is that you cannot define related fields.
-        Also, some advanced options are not available because the list of parameters
-        would become very long.
-        This is exporting done quick and dirty by design.
-    */
     [Cmdlet(VerbsData.Export, "CmcView")]
     public class ExportCmcView : PSCmdlet
     {
