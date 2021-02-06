@@ -8,7 +8,7 @@ This is all experimental.
 ## Background ##
 I botch these together whenever I find I have to do too much work in PS to get what I want. For example, in a project I was working on I needed to retrieve the Name field values for a category repeatedly. Just a few lines of code, but a single CmdLet is even easier.
 
-This is a binary assembly, but it could all have been done in just PS. I am simply more familiar with C# than PS and I wanted to play around with writing C# code in VS Code rather than Visual Studio.
+This is a binary assembly. It could all have been done in plain PS, I just wanted to play around with doing it in C# code using VS Code.
 
 # CmdLets #
 ## Exploring the database ##
@@ -70,7 +70,7 @@ List all fields in a category:
 Example:
 ```powershell
 # get the Name field for category Account
-Get-CmcFields Account | Where-Object { $_.Type -eq 'Name' }
+Get-CmcFields Account | Where-Object { $_.Type -eq Name }
 ```
 The `Name` argument here has special meaning. It is in fact part of an enumeration in _Vovin.CmcLibNet_. You could (and probably should) also have written this as:
 
@@ -94,7 +94,7 @@ It returns both the names and the associated numbers for field types you can use
 List all connections for a category:
 `Get-CmcConnections [-CategoryName] <string> [<CommonParameters>]`
 
-This is self-explanatory. One thing to note is that connection names in Commence are case-sensitive.
+This is self-explanatory. Note that connection names in Commence are case-sensitive.
 
 ## Getting field values ##
 `Get-CmcFieldValues` returns a list of `CommenceField` objects for every database row. Think of it as a table:
@@ -127,7 +127,7 @@ If you specify a Commence viewname instead of a categoryname, use the `-UseView`
 If you want THIDs, specify the `-UseThids` switch. You get an additional `CommenceField` object with fieldname 'THID' for every row. This switch does not work on views.
 
 ### Related columns ###
-Providing related columns involves some more work. These are the columns you would set by the `cursor.SetRelatedColumn(…)` method when you program against the Commence API directly.
+Providing related columns involves some more work. These are the columns you would set by the `cursor.SetRelatedColumn(…)` method in the Commence API.
 You have to explicitly define them:
 
 ```powershell
@@ -166,24 +166,24 @@ You can also supply filters with `-Filters`. For every filtertype there is a cmd
 
 `Get-CmcFilterCTCF [-ClauseNumber] <int> [-Connection] <string> [-Category] <string> [-FieldName] <string> [-Qualifier] <FilterQualifier> [-FieldValue] <string> [[-FieldValue2] <string>] [-MatchCase] [-Except] [-OrFilter] [<CommonParameters>]`
 
-So getting a `Field (F)` filter could be:
+Set the first filter a a `Field (F)` filter for items where the Name field does not contain 'test', case-sensitive:
 
 ```powershell
 $filter = Get-CmcFilterF 1 Name 0 test -Except -MatchCase -Verbose
 ```
 
-For brevity I used the `int` value `0` for the filterqualifier. In the real world you should use its constant value, in this case `[Vovin.CmcLibNet.Database.FilterQualifier]::Contains`. It may not be immediately obvious that you have access to that namespace, but you do. That is a hard thing to get your head around, so I created the `Get-CmcFilterQualifiers` cmdlet. It returns all qualifiers and their numerical equivalents.
+For brevity I used the `int` value `0` for the filter qualifier. In the real world you should use its `enum` value, in this case `[Vovin.CmcLibNet.Database.FilterQualifier]::Contains`. `Vovin.CmcLibNet` is an assembly that is used by this module. That may not be immediately obvious; use the `Get-CmcFilterQualifiers` cmdlet to view all qualifier options. It returns all qualifiers and their numerical equivalents. We could have also used `1` (_does noet contain_) and omit the `-Except` in this case.
 
-**Important**: You specify any filter conjunction in the filters themselves. The default is **AND**. Set the `-OrFilter` switch for **OR**. There is no need to specify the filter conjunction separately. This is different from how you do it in Commence!
+**Important**: You specify the filter conjunction in the filters themselves. The default is **AND**. Set the `-OrFilter` switch for **OR**. There is no need to specify the filter conjunction separately. __This is different from how you do it in Commence!__
 
 The `Get-CmcFilter…` cmcdlets do **not** check for correctness of the parameters, but there is a cmdlet to try out filters:
 
-`Resolve-CmcFilter [-Category] <string> [-Filter] <ICursorFilter> [<CommonParameters>]`
+`Test-CmcFilter [-Category] <string> [-Filter] <ICursorFilter> [<CommonParameters>]`
 
 This will tell you if Commence accepts the filter as valid, regardless of results. Using this cmdlet in a production environment is not recommended, because it is very resource-expensive.
 
 ## Getting values from a single field ##
-There is also the `Get-CmcFieldValue` cmdlet. It is like the baby brother of `Get-CmcFieldValues` (note the singular vs plural). You would use it when you quickly want to get the values of a single field, without the overhead that `Get-CmcFieldValues` creates. It only supports direct fields, and does not support filtering or THIDs. It does support using views, so you can still use filters, just set them in Commence.
+There is also the `Get-CmcFieldValue` cmdlet. It is like the little brother of `Get-CmcFieldValues` (note the singular vs plural). You would use it when you quickly want to get the values of a single field, without the overhead that `Get-CmcFieldValues` creates. It only supports direct fields, and does not support filtering or THIDs. It does support using views, so you can still use filters, just set them in Commence.
 
 `Get-CmcFieldValue [-CategoryOrViewName] <string> [[-FieldName] <string>] [-UseView] [<CommonParameters>]`
 

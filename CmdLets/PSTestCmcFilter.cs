@@ -6,8 +6,8 @@ namespace PSCommenceModules.CmdLets
     // try to apply a filter.
     // this is an expensive operation.
     // it is recommended you not use this in production code.
-    [Cmdlet(VerbsDiagnostic.Resolve, "CmcFilter")]
-    public class ResolveCmcFilter  : PSCmdlet
+    [Cmdlet(VerbsDiagnostic.Test, "CmcFilter")]
+    public class TestCmcFilter  : PSCmdlet
     {
         [Parameter(Position = 0, Mandatory = true)]
         public string Category { get; set; }
