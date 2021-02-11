@@ -28,7 +28,7 @@ namespace PSCommenceModules.CmdLets
 
         private string _path;
         [Parameter(Position = 1, Mandatory = true)]
-        public string Path
+        public string OutputPath
         {
         get { return _path; }
         set { _path = value; }
