@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using Vovin.CmcLibNet.Database;
 
-namespace PSCommenceModules.Base
+namespace PoshCommence.Base
 {
     internal static class PathFinder
     {

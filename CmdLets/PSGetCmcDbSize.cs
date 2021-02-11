@@ -3,7 +3,7 @@ using System.Linq;
 using System.Management.Automation;
 using Vovin.CmcLibNet.Database;
 
-namespace PSCommenceModules.CmdLets
+namespace PoshCommence.CmdLets
 {
     [Cmdlet(VerbsCommon.Get, "CmcDbSize")]
     public class GetCmcDbSize  : PSCmdlet

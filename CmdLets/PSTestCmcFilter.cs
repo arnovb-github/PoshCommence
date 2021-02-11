@@ -1,7 +1,7 @@
 using System.Management.Automation;
 using Vovin.CmcLibNet.Database;
 
-namespace PSCommenceModules.CmdLets
+namespace PoshCommence.CmdLets
 {
     // try to apply a filter.
     // this is an expensive operation.

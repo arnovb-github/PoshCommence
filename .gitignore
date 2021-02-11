@@ -378,3 +378,4 @@ MigrationBackup/
 
 # custom
 BuildReleaseAndDeployLocally.ps1
+docs/

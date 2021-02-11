@@ -1,4 +1,4 @@
-namespace PSCommenceModules.Base
+namespace PoshCommence.Base
 {
     public class RelatedColumn
     {

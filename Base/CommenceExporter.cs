@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Vovin.CmcLibNet.Database;
 using Vovin.CmcLibNet.Export;
 
-namespace PSCommenceModules.Base
+namespace PoshCommence.Base
 {
     internal static class CommenceExporter
     {

@@ -1,8 +1,8 @@
-using PSCommenceModules.Base;
+using PoshCommence.Base;
 using System.Management.Automation;
 using Vovin.CmcLibNet.Export;
 
-namespace PSCommenceModules.CmdLets
+namespace PoshCommence.CmdLets
 {
     [Cmdlet(VerbsData.Export, "CmcView")]
     public class ExportCmcView : PSCmdlet

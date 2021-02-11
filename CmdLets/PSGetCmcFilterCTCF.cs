@@ -1,9 +1,9 @@
-using PSCommenceModules.Base.Extensions;
+using PoshCommence.Base.Extensions;
 using System.Management.Automation;
 using Vovin.CmcLibNet.Attributes;
 using Vovin.CmcLibNet.Database;
 
-namespace PSCommenceModules.CmdLets
+namespace PoshCommence.CmdLets
 {
     [Cmdlet(VerbsCommon.Get, "CmcFilterCTCF")]
     public class GetFilterCTCF  : PSCmdlet

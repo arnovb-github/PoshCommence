@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 
-namespace PSCommenceModules.Base.Extensions
+namespace PoshCommence.Base.Extensions
 {
     public static class EnumExtensions
     {

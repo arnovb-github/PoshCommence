@@ -1,7 +1,7 @@
 using System.Management.Automation;
 using Vovin.CmcLibNet.Database;
 
-namespace PSCommenceModules.CmdLets
+namespace PoshCommence.CmdLets
 {
     [Cmdlet(VerbsCommon.Get, "CmcFilterCTCTI")]
     public class GetFilterCTCTI  : PSCmdlet

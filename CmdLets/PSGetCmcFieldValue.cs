@@ -1,8 +1,8 @@
-using PSCommenceModules.Base;
+using PoshCommence.Base;
 using System.Collections.Generic;
 using System.Management.Automation;
 
-namespace PSCommenceModules.CmdLets
+namespace PoshCommence.CmdLets
 {
 
     [Cmdlet(VerbsCommon.Get, "CmcFieldValue")]

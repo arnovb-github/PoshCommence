@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace  PSCommenceModules.Base
+namespace  PoshCommence.Base
 {
     public static class EnumHelper
     {

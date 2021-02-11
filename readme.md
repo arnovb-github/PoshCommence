@@ -1,7 +1,7 @@
-# Posh Commence CmdLets #
+# Powershell cmdlets for Commence RM #
 
 ## Overview ##
-A collection of Powershell cmdlets for use with the Commence RM API. Requires [Vovin.CmcLibNet](https://www.nuget.org/packages/Vovin.CmcLibNet/). You can think of these as convenience methods, since _Vovin.CmcLibNet_ can also be used directly in PowerShell.
+A collection of Powershell cmdlets for use with the Commence RM API. Requires [Vovin.CmcLibNet](https://www.nuget.org/packages/Vovin.CmcLibNet/). You can think of these as convenience methods, since _Vovin.CmcLibNet_ can also be used directly in PowerShell. It assumes a single running instance of Commence .
 
 This is all experimental.
 
@@ -131,12 +131,12 @@ Providing related columns involves some more work. These are the columns you wou
 You have to explicitly define them:
 
 ```powershell
-$rc1 = New-Object -TypeName PSCommenceModules.RelatedColumn
+$rc1 = New-Object -TypeName PoshCommence.RelatedColumn
 $rc1.Connection = 'Relates to' # from the Tutorial database
 $rc1.ToCategory = 'Contact' # from the Tutorial database
 $rc1.FieldName = 'accountKey' # from the Tutorial database
 
-$rc2 = New-Object -TypeName PSCommenceModules.RelatedColumn
+$rc2 = New-Object -TypeName PoshCommence.RelatedColumn
 $rc2.Connection = 'Relates to' # from the Tutorial database
 $rc2.ToCategory = 'Contact' # from the Tutorial database
 $rc2.FieldName = 'emailBusiness' # from the Tutorial database
@@ -145,7 +145,7 @@ $rc2.FieldName = 'emailBusiness' # from the Tutorial database
 You can also use this shorter syntax:
 
 ```powershell
-$rc1 = [PSCommenceModules.RelatedColumn]::New('Relates to', 'Contact','accountKey')
+$rc1 = [PoshCommence.RelatedColumn]::New('Relates to', 'Contact','accountKey')
 ```
 
 **Important**: connection names in Commence are case-sensitive!

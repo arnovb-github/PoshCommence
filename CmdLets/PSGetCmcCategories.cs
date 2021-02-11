@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Vovin.CmcLibNet.Database;
 using Vovin.CmcLibNet.Database.Metadata;
 
-namespace PSCommenceModules.CmdLets
+namespace PoshCommence.CmdLets
 {
     [Cmdlet(VerbsCommon.Get, "CmcCategories")]
     public class GetCmcCategories  : PSCmdlet

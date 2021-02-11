@@ -1,11 +1,11 @@
-using PSCommenceModules.Base;
+using PoshCommence.Base;
 using System.Management.Automation;
 using System.Collections.Generic;
 using Vovin.CmcLibNet.Database;
 using Vovin.CmcLibNet.Export;
 
 
-namespace PSCommenceModules.CmdLets
+namespace PoshCommence.CmdLets
 {
     /*  This CmdLet comprises a limited set of export features as exposed by Vovin.CmcLibNet.
         For the complete experience refer to the Vovin.CmcLibNet documentation.
