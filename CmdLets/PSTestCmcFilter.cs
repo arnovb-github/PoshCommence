@@ -4,8 +4,8 @@ using Vovin.CmcLibNet.Database;
 namespace PoshCommence.CmdLets
 {
     // try to apply a filter.
-    // this is an expensive operation.
-    // it is recommended you not use this in production code.
+    // This is an expensive operation,
+    // you should not use this in production code.
     [Cmdlet(VerbsDiagnostic.Test, "CmcFilter")]
     public class TestCmcFilter  : PSCmdlet
     {
