@@ -1,6 +1,5 @@
 using PoshCommence.Base;
 using System.Management.Automation;
-using System.Collections.Generic;
 using Vovin.CmcLibNet.Database;
 using Vovin.CmcLibNet.Export;
 
@@ -15,7 +14,7 @@ namespace PoshCommence.CmdLets
         This is exporting done quick and dirty by design.
     */
     [Cmdlet(VerbsData.Export, "CmcCategory")]
-    public class ExportCmcCategory : PSCmdlet
+    public class CmcExportCategory : PSCmdlet
     {
         private IExportSettings _exportOptions = new ExportSettings();
         private string _categoryName;

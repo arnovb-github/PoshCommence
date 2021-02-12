@@ -5,7 +5,7 @@ using Vovin.CmcLibNet.Export;
 namespace PoshCommence.CmdLets
 {
     [Cmdlet(VerbsData.Export, "CmcView")]
-    public class ExportCmcView : PSCmdlet
+    public class CmcExportView : PSCmdlet
     {
         private IExportSettings _exportOptions = new ExportSettings();
         private string _viewName;
