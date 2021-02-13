@@ -100,7 +100,7 @@ namespace PoshCommence.CmdLets
                         row[i])
                         );
                 }
-                WriteObject(l, false); // return and do not enumerate. I.e. pass every row separately.
+                WriteObject(l.ToArray(), false); // return and do not enumerate. I.e. pass every row separately.
                 WriteVerbose($"Commence row contains values returned as {l.GetType()}. Use foreach to iterate over them.");
             }
         }
