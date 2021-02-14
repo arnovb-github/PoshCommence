@@ -1,0 +1,1 @@
+Markdown documentation files for use with [PlatyPS](https://www.powershellgallery.com/packages/platyPS/).
