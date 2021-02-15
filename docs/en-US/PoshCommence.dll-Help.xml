@@ -97,7 +97,7 @@
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>OutputPath</maml:name>
           <maml:description>
-            <maml:para>{{ Fill OutputPath Description }}</maml:para>
+            <maml:para>Path and filename to export to.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -184,7 +184,7 @@
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>OutputPath</maml:name>
         <maml:description>
-          <maml:para>{{ Fill OutputPath Description }}</maml:para>
+          <maml:para>Path and filename to export to.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -235,7 +235,7 @@ $filters = @((Get-CmcFilterF 1 accountKey 0 Wing),
 # perform the export
 Export-CmcCategory Account accounts.json -ExportFormat Json -Filters $filters -FieldNames accountKey, Address, City, zipPostal, Country, 'Relates to Employee'</dev:code>
         <dev:remarks>
-          <maml:para>Advanced example (using Tutorial database ): export address fields and list of Sales person of items in Account that have 'Wing' in their name or are connected to salesTeam item 'Team 1' to a Json file.</maml:para>
+          <maml:para>Advanced example (using Tutorial database ): export address fields and list of Sales person of items in Account that have 'Wing' in their name or are connected to 'salesTeam' item 'Team 1' to a Json file.</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -800,7 +800,7 @@ Export-CmcCategory Account accounts.json -ExportFormat Json -Filters $filters -F
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>Get the size in bytes of all files combined in the running Commence database.</maml:para>
+      <maml:para>Get the size in bytes of all files combined in the running Commence database directory.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -836,7 +836,7 @@ Export-CmcCategory Account accounts.json -ExportFormat Json -Filters $filters -F
     <command:examples>
       <command:example>
         <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; (Get-CmcDbSize) / 1024</dev:code>
+        <dev:code>(Get-CmcDbSize) / 1024</dev:code>
         <dev:remarks>
           <maml:para>Gets the combined size in megabytes of all files in the running Commence database.</maml:para>
         </dev:remarks>
@@ -878,7 +878,7 @@ Export-CmcCategory Account accounts.json -ExportFormat Json -Filters $filters -F
           <maml:name>Vovin.CmcLibNet.Export.ExportFormat</maml:name>
         </dev:type>
         <maml:description>
-          <maml:para>Enum values of the available export formats</maml:para>
+          <maml:para>Enum values of the available export formats.</maml:para>
         </maml:description>
       </command:returnValue>
     </command:returnValues>
@@ -904,7 +904,7 @@ Export-CmcCategory Account accounts.json -ExportFormat Json -Filters $filters -F
       <command:verb>Get</command:verb>
       <command:noun>CmcFields</command:noun>
       <maml:description>
-        <maml:para>Get fieldnames form Commence category</maml:para>
+        <maml:para>Get fieldnames form Commence category.</maml:para>
       </maml:description>
     </command:details>
     <maml:description>
@@ -916,7 +916,7 @@ Export-CmcCategory Account accounts.json -ExportFormat Json -Filters $filters -F
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
           <maml:name>CategoryName</maml:name>
           <maml:description>
-            <maml:para>Commence category name</maml:para>
+            <maml:para>Commence category name.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -931,7 +931,7 @@ Export-CmcCategory Account accounts.json -ExportFormat Json -Filters $filters -F
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
         <maml:name>CategoryName</maml:name>
         <maml:description>
-          <maml:para>Commence category name</maml:para>
+          <maml:para>Commence category name.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -997,7 +997,7 @@ Export-CmcCategory Account accounts.json -ExportFormat Json -Filters $filters -F
       <command:verb>Get</command:verb>
       <command:noun>CmcFieldTypes</command:noun>
       <maml:description>
-        <maml:para>Get Commence field types</maml:para>
+        <maml:para>Get Commence field types.</maml:para>
       </maml:description>
     </command:details>
     <maml:description>
@@ -1345,7 +1345,7 @@ Export-CmcCategory Account accounts.json -ExportFormat Json -Filters $filters -F
     <command:returnValues>
       <command:returnValue>
         <dev:type>
-          <maml:name>PoshCommence.CommenceField[]</maml:name>
+          <maml:name>PoshCommence.CommenceField</maml:name>
         </dev:type>
         <maml:description>
           <maml:para></maml:para>
@@ -1709,7 +1709,7 @@ Get-CmcFieldValues Account -FieldNames $fields -Filters $filter -RelatedColumns 
     </command:returnValues>
     <maml:alertSet>
       <maml:alert>
-        <maml:para>The object-based approach to filtering in [Vovin.CmcLibNet] does not require setting the filter conjunction after the fact like you would when using the Commence RM API directly. You set the conjunction in the filter itself. It defaults to 'AND', use the `-OrFilter` switch for 'OR'. That will 'OR' the filters coming afterward, according to Commence's special grouping of filters, where for example 'OR' in filter 3 will 'OR' filter 4, but 'OR' in filter 4 will 'OR' the group of filters 5 to 8. The grouping is as follows: `[ [ [1] AndOr [2] ] AndOr [ [3] AndOr [4] ] ] AndOr [ [ [5] AndOr [6] ]  AndOr [ [7] AndOr [8] ] ]`. Have fun and good luck!</maml:para>
+        <maml:para>The object-based approach to filtering in `Vovin.CmcLibNet` does not require setting the filter conjunction after the fact like you would when using the Commence RM API directly. You set the conjunction in the filter itself. It defaults to 'AND', use the `-OrFilter` switch for 'OR'. That will 'OR' the filters coming afterward, according to Commence's special grouping of filters, where for example 'OR' in filter 3 will 'OR' filter 4, but 'OR' in filter 4 will 'OR' the group of filters 5 to 8. The grouping is as follows: `[ [ [1] AndOr [2] ] AndOr [ [3] AndOr [4] ] ] AndOr [ [ [5] AndOr [6] ]  AndOr [ [7] AndOr [8] ] ]`. Have fun and good luck!</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -1955,7 +1955,7 @@ Get-CmcFieldValues Account -FieldNames $fields -Filters $filter -RelatedColumns 
     <maml:alertSet>
       <maml:alert>
         <maml:para>Does not yet support clarified item names.</maml:para>
-        <maml:para>The object-based approach to filtering in [Vovin.CmcLibNet] does not require setting the filter conjunction after the fact like you would when using the Commence RM API directly. You set the conjunction in the filter itself. It defaults to 'AND', use the `-OrFilter` switch for 'OR'. That will 'OR' the filters coming afterward, according to Commence's special grouping of filters, where for example 'OR' in filter 3 will 'OR' filter 4, but 'OR' in filter 4 will 'OR' the group of filters 5 to 8. The grouping is as follows: `[ [ [1] AndOr [2] ] AndOr [ [3] AndOr [4] ] ] AndOr [ [ [5] AndOr [6] ]  AndOr [ [7] AndOr [8] ] ]`. Have fun and good luck!</maml:para>
+        <maml:para>The object-based approach to filtering in `Vovin.CmcLibNet` does not require setting the filter conjunction after the fact like you would when using the Commence RM API directly. You set the conjunction in the filter itself. It defaults to 'AND', use the `-OrFilter` switch for 'OR'. That will 'OR' the filters coming afterward, according to Commence's special grouping of filters, where for example 'OR' in filter 3 will 'OR' filter 4, but 'OR' in filter 4 will 'OR' the group of filters 5 to 8. The grouping is as follows: `[ [ [1] AndOr [2] ] AndOr [ [3] AndOr [4] ] ] AndOr [ [ [5] AndOr [6] ]  AndOr [ [7] AndOr [8] ] ]`. Have fun and good luck!</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -2153,7 +2153,7 @@ Get-CmcFieldValues Account -FieldNames $fields -Filters $filter -RelatedColumns 
     <maml:alertSet>
       <maml:alert>
         <maml:para>Does not yet support clarified item names.</maml:para>
-        <maml:para>The object-based approach to filtering in [Vovin.CmcLibNet] does not require setting the filter conjunction after the fact like you would when using the Commence RM API directly. You set the conjunction in the filter itself. It defaults to 'AND', use the `-OrFilter` switch for 'OR'. That will 'OR' the filters coming afterward, according to Commence's special grouping of filters, where for example 'OR' in filter 3 will 'OR' filter 4, but 'OR' in filter 4 will 'OR' the group of filters 5 to 8. The grouping is as follows: `[ [ [1] AndOr [2] ] AndOr [ [3] AndOr [4] ] ] AndOr [ [ [5] AndOr [6] ]  AndOr [ [7] AndOr [8] ] ]`. Have fun and good luck!</maml:para>
+        <maml:para>The object-based approach to filtering in `Vovin.CmcLibNet` does not require setting the filter conjunction after the fact like you would when using the Commence RM API directly. You set the conjunction in the filter itself. It defaults to 'AND', use the `-OrFilter` switch for 'OR'. That will 'OR' the filters coming afterward, according to Commence's special grouping of filters, where for example 'OR' in filter 3 will 'OR' filter 4, but 'OR' in filter 4 will 'OR' the group of filters 5 to 8. The grouping is as follows: `[ [ [1] AndOr [2] ] AndOr [ [3] AndOr [4] ] ] AndOr [ [ [5] AndOr [6] ]  AndOr [ [7] AndOr [8] ] ]`. Have fun and good luck!</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -2421,7 +2421,7 @@ Get-CmcFieldValues Account -FieldNames $fields -Filters $filter -RelatedColumns 
     </command:returnValues>
     <maml:alertSet>
       <maml:alert>
-        <maml:para>The object-based approach to filtering in [Vovin.CmcLibNet] does not require setting the filter conjunction after the fact like you would when using the Commence RM API directly. You set the conjunction in the filter itself. It defaults to 'AND', use the `-OrFilter` switch for 'OR'. That will 'OR' the filters coming afterward, according to Commence's special grouping of filters, where for example 'OR' in filter 3 will 'OR' filter 4, but 'OR' in filter 4 will 'OR' the group of filters 5 to 8. The grouping is as follows: `[ [ [1] AndOr [2] ] AndOr [ [3] AndOr [4] ] ] AndOr [ [ [5] AndOr [6] ]  AndOr [ [7] AndOr [8] ] ]`. Have fun and good luck!</maml:para>
+        <maml:para>The object-based approach to filtering in `Vovin.CmcLibNet` does not require setting the filter conjunction after the fact like you would when using the Commence RM API directly. You set the conjunction in the filter itself. It defaults to 'AND', use the `-OrFilter` switch for 'OR'. That will 'OR' the filters coming afterward, according to Commence's special grouping of filters, where for example 'OR' in filter 3 will 'OR' filter 4, but 'OR' in filter 4 will 'OR' the group of filters 5 to 8. The grouping is as follows: `[ [ [1] AndOr [2] ] AndOr [ [3] AndOr [4] ] ] AndOr [ [ [5] AndOr [6] ]  AndOr [ [7] AndOr [8] ] ]`. Have fun and good luck!</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
