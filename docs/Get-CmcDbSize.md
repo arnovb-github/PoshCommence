@@ -17,13 +17,13 @@ Get-CmcDbSize [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Get the size in bytes of all files combined in the running Commence database.
+Get the size in bytes of all files combined in the running Commence database directory.
 
 ## EXAMPLES
 
 ### Example 1
 ```powershell
-PS C:\> (Get-CmcDbSize) / 1024
+(Get-CmcDbSize) / 1024
 ```
 
 Gets the combined size in megabytes of all files in the running Commence database.

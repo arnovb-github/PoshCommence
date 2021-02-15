@@ -8,7 +8,7 @@ schema: 2.0.0
 # Get-CmcFieldTypes
 
 ## SYNOPSIS
-Get Commence field types
+Get Commence field types.
 
 ## SYNTAX
 

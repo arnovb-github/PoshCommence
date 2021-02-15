@@ -40,7 +40,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## OUTPUTS
 
 ### Vovin.CmcLibNet.Export.ExportFormat
-Enum values of the available export formats
+Enum values of the available export formats.
 
 ## NOTES
 Not all export formats may be implemented or suitable for use in Powershell.

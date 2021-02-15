@@ -147,7 +147,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## OUTPUTS
 
-### PoshCommence.CommenceField[]
+### PoshCommence.CommenceField
 ## NOTES
 
 ## RELATED LINKS

@@ -8,7 +8,7 @@ schema: 2.0.0
 # Get-CmcFields
 
 ## SYNOPSIS
-Get fieldnames form Commence category
+Get fieldnames form Commence category.
 
 ## SYNTAX
 
@@ -45,7 +45,7 @@ Get the Name field for category Account using the numerical value from the prede
 ## PARAMETERS
 
 ### -CategoryName
-Commence category name
+Commence category name.
 
 ```yaml
 Type: String
