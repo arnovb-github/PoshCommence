@@ -5,6 +5,8 @@ A collection of Powershell cmdlets for use with the Commence RM API. Requires [V
 
 This is all experimental.
 
+The most useful cmdlets are probably `Get-CmcFieldValues`, which allows you to extract fieldvalues without having to create a view in Commence and `Export-CmcCategory`, which allows you to export data without having to define an Export Template in Commence.
+
 ## Background ##
 I botch these together whenever I find I have to do too much work in PS to get what I want. For example, in a project I was working on I needed to retrieve the Name field values for a category repeatedly. Just a few lines of code, but a single CmdLet is even easier.
 
