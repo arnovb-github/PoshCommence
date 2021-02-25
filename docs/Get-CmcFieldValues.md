@@ -24,9 +24,7 @@ Gets the specfied fieldvalues from a Commence category.
 
 ### Example 1
 ```powershell
-Get-CmcFieldValues CategoryName FieldName1, FieldName2 | ForEach-Object {
-    $_.FieldValue 
-}
+Get-CmcFieldValues CategoryName FieldName1, FieldName2
 ```
 Gets all fieldvalues for fields FieldName1 and Fieldame2.
 

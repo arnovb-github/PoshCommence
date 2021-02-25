@@ -1,5 +1,6 @@
 ﻿using PoshCommence.Base;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Management.Automation;
 using Vovin.CmcLibNet.Database;
@@ -85,23 +86,13 @@ namespace PoshCommence.CmdLets
                 useView,
                 useThids);
 
+            PSObject responseObject = new PSObject();
             foreach (var row in rows)
             {
-                List<CommenceField> l = new List<CommenceField>();
-                // enrich the output by assembling the fieldvalues into proper objects
-                // because you never know when it comes in handy
-                // Explicit declaration of CommenceField isn't strictly needed,
-                // We could also have used just an anonymous type
-                for (int i = 0; i < row.Count; i++)
-                {
-                    l.Add(new CommenceField(
-                        categoryName, // a little pointless, but it may come in handy when comparing results from several calls
-                        columnNames[i],
-                        row[i])
-                        );
+                for (int i = 0; i < row.Count; i++) {
+                    responseObject.Members.Add(new PSNoteProperty(columnNames[i], row[i]));
                 }
-                WriteObject(l.ToArray(), false); // return and do not enumerate. I.e. pass every row separately.
-                WriteVerbose($"Commence row contains values returned as {l.GetType()}. Use foreach to iterate over them.");
+                WriteObject(responseObject);
             }
         }
     }

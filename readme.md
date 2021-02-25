@@ -103,23 +103,24 @@ List all connections for a category:
 This is self-explanatory. Note that connection names in Commence are case-sensitive.
 
 ## Getting field values ##
-`Get-CmcFieldValues` returns a list of `CommenceField` objects for every database row. Think of it as a table:
+`Get-CmcFieldValues` returns an object for every database row. Think of it as a hashtable with the fieldname and correspondig values(s):
 
-| Category | FieldName 1 | FieldName 2 | ... | 
-| - | - | - | - | 
-| row 1 | FieldValue 1 | FieldValue 2 | ... |
-| row 2 | FieldValue 1 | FieldValue 2 | ... |
-| row 3 | FieldValue 1 | FieldValue 2 | ... |
-
-A `CommenceField` has properties: `CategoryName`, `FieldName` and `FieldValue`. 
-
-Example:
+Example (_Tutororial database_):
 
 ```powershell
-# return all fieldvalues for all rows
-Get-CmcFieldValues CategoryName FieldName1, FieldName2 | ForEach-Object {
-    $_.FieldValue 
-}
+# return  fieldvalues for fields "accountKey" and "businessNumber"
+Get-CmcFieldValues Account accountKey, businessNumber
+```
+
+output:
+```
+accountKey                businessNumber
+----------                --------------
+Aviaonics Inc             330-555-1905
+Commence Corporation
+Concorde Aviation Ltd     412-555-7890
+First Class Inc           416-781-1209 
+... 
 ```
 
 The complete syntax of `Get-CmcFieldValues` is:
@@ -134,24 +135,12 @@ If you want THIDs, specify the `-UseThids` switch. You get an additional `Commen
 
 ### Related columns ###
 Providing related columns involves some more work. These are the columns you would set by the `cursor.SetRelatedColumn(…)` method in the Commence API.
-You have to explicitly define them:
 
 ```powershell
-$rc1 = New-Object -TypeName PoshCommence.RelatedColumn
-$rc1.Connection = 'Relates to' # from the Tutorial database
-$rc1.ToCategory = 'Contact' # from the Tutorial database
-$rc1.FieldName = 'accountKey' # from the Tutorial database
-
-$rc2 = New-Object -TypeName PoshCommence.RelatedColumn
-$rc2.Connection = 'Relates to' # from the Tutorial database
-$rc2.ToCategory = 'Contact' # from the Tutorial database
-$rc2.FieldName = 'emailBusiness' # from the Tutorial database
-```
-
-You can also use this shorter syntax:
-
-```powershell
+# create object directly
 $rc1 = [PoshCommence.RelatedColumn]::New('Relates to', 'Contact','accountKey')
+# or better: use the cmdlet for it
+$rc2 = Get-CmcRelatedColumn 'Relates to', 'Contact','emailBusiness'
 ```
 
 **Important**: connection names in Commence are case-sensitive!
@@ -187,11 +176,6 @@ The `Get-CmcFilter…` cmcdlets do **not** check for correctness of the paramete
 `Test-CmcFilter [-Category] <string> [-Filter] <ICursorFilter> [<CommonParameters>]`
 
 This will tell you if Commence accepts the filter as valid, regardless of results. Using this cmdlet in a production environment is not recommended, because it is very resource-expensive.
-
-## Getting values from a single field ##
-There is also the `Get-CmcFieldValue` cmdlet. It is like the little brother of `Get-CmcFieldValues` (note the singular vs plural). You would use it when you quickly want to get the values of a single field, without the overhead that `Get-CmcFieldValues` creates. It only supports direct fields, and does not support filtering or THIDs. It does support using views, so you can still use filters, just set them in Commence.
-
-`Get-CmcFieldValue [-CategoryOrViewName] <string> [[-FieldName] <string>] [-UseView] [<CommonParameters>]`
 
 ## Count connected items ##
 This can be useful for example when the database specifies at most a single connection, but multiple connections exist. (Commence does not always enforce that setting).
