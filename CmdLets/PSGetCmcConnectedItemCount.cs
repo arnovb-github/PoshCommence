@@ -41,6 +41,23 @@ namespace PoshCommence.CmdLets
             get { return fromItem; }
             set { fromItem = value; }
         }
+
+        private string clarifySeparator;
+        [Parameter(Position = 4)]
+        public string ClarifySeparator
+        {
+            get { return clarifySeparator; }
+            set { clarifySeparator = value; }
+        }
+
+        private string clarifyValue;
+        [Parameter(Position = 5)]
+        public string ClarifyValue
+        {
+            get { return clarifyValue; }
+            set { clarifyValue = value; }
+        }
+        
         // Vovin.CmcLibNet calls that use a DDE call swallow all errors
         // so this may return nothing       
         protected override void ProcessRecord()
@@ -85,17 +102,20 @@ namespace PoshCommence.CmdLets
                     // meaning Commence could not handle it.
                     // A typical example would be 'Earvin "Magic" Johnson', 
                     // that will choke the DDE call on the inner quotes.
+                    if (!string.IsNullOrEmpty(clarifyValue) && !string.IsNullOrEmpty(clarifySeparator)) {
+                        fromItem = db.GetClarifiedItemName(fromItem, clarifySeparator, clarifyValue);
+                        db.ClarifyItemNames("TRUE");
+                    }
                     connectedItemCount = db.GetConnectedItemCount(fromCategory, fromItem, connectionName, toCategory);
                     WriteObject(new
-                    {
-                        ItemName = fromItem,
-                        FromCategory = fromCategory,
-                        Connection = connectionName,
-                        ToCategory = toCategory,
-                        Count = connectedItemCount
-                    },
+                        {
+                            ItemName = fromItem,
+                            FromCategory = fromCategory,
+                            Connection = connectionName,
+                            ToCategory = toCategory,
+                            Count = connectedItemCount
+                        },
                         false);
-
                 }
                 if (connectedItemCount == -1) {
                     WriteError(new ErrorRecord(new Vovin.CmcLibNet.CommenceDDEException("Vovin.CmcLibNet was unable to get a valid result from Commence."),
