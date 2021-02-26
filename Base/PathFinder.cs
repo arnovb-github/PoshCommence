@@ -12,22 +12,22 @@ namespace PoshCommence.Base
                 return db.Name;
             }
         }
-        private static FileInfo GetLogFile()
-        {
-            string logFile = "active.log";
-            using (ICommenceDatabase db = new CommenceDatabase()) {
-                return new FileInfo(db.Path + Path.DirectorySeparatorChar + logFile);
-            }
-        }
 
-        private static FileInfo GetIniFile()
+        private static FileInfo GetFileInfoFromDatabasePath(string fileName)
         {
-            string iniFile = "data.ini";
             using (ICommenceDatabase db = new CommenceDatabase()) {
-                return new FileInfo(db.Path + Path.DirectorySeparatorChar + iniFile);
+                string filePath = db.Path + Path.DirectorySeparatorChar + fileName;
+                if (File.Exists(filePath))
+                {
+                    return new FileInfo(filePath);
+                }
+                else
+                {
+                    throw new FileNotFoundException();
+                }
             }
-        }
 
+        }
         private static DirectoryInfo GetDatabaseDirectory()
         {
             using (ICommenceDatabase db = new CommenceDatabase()) {
@@ -36,8 +36,8 @@ namespace PoshCommence.Base
         }
 
         internal static string DatabaseName => GetDatabaseName();
-        internal static FileInfo LogFile => GetLogFile();
-        internal static FileInfo IniFile => GetIniFile();
+        internal static FileInfo LogFile => GetFileInfoFromDatabasePath("active.log");
+        internal static FileInfo IniFile => GetFileInfoFromDatabasePath("data.ini");
         internal static DirectoryInfo DatabaseDirectory => GetDatabaseDirectory();
     }
 }
