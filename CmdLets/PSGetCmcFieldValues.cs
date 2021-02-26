@@ -86,10 +86,11 @@ namespace PoshCommence.CmdLets
                 useView,
                 useThids);
 
-            PSObject responseObject = new PSObject();
             foreach (var row in rows)
             {
+                PSObject responseObject = new PSObject();
                 for (int i = 0; i < row.Count; i++) {
+                    // PSNoteProperty: Serves as a property that is a simple name-value pair.
                     responseObject.Members.Add(new PSNoteProperty(columnNames[i], row[i]));
                 }
                 WriteObject(responseObject);

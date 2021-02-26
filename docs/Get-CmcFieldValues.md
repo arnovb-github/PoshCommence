@@ -44,6 +44,14 @@ Get-CmcFieldValues Account -FieldNames $fields -Filters $filter -RelatedColumns 
 
 Advanced example using filters and related columns.
 
+### Example 3
+```  powershell
+# Example for Tutorial dabase
+Get-CmcFieldValues 'Account Default' (Get-CmcFields Account).Name -UseThids -UseView | Out-GridView
+```
+
+Getting funky: show your own "Commence view" based on the "Account Default" view but with all available fields and the THID of all items in the "Account" category. This may appear a little silly, but a `GridView` allows for quick filtering on any field and toggling of fields.
+
 ## PARAMETERS
 
 ### -CategoryOrViewName
@@ -122,7 +130,7 @@ Accept wildcard characters: False
 ```
 
 ### -UseView
-Indicate that `-CategoryOrViewName` refers to a view name, not a category name.
+Indicate that the string passed to `-CategoryOrViewName` is a view name, not a category name.
 
 ```yaml
 Type: SwitchParameter
@@ -145,7 +153,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## OUTPUTS
 
-### PoshCommence.CommenceField
+### PSObject
 ## NOTES
 
 ## RELATED LINKS
