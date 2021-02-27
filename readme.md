@@ -75,27 +75,11 @@ List all fields in a category:
 
 Example:
 ```powershell
-# get the Name field for category Account
-Get-CmcFields Account | Where-Object { $_.Type -eq Name }
-```
-The `Name` argument here has special meaning. It is in fact part of an enumeration in _Vovin.CmcLibNet_. You could (and probably should) also have written this as:
-
-```powershell
-# get the Name field for category Account
-Get-CmcFields Account | Where-Object { $_.Type -eq [Vovin.CmcLibNet.Database.CommenceFieldType]::Name }
-```
-Or even as:
-
-```powershell
-# get the Name field for category Account
-Get-CmcFields Account | Where-Object { $_.Type -eq 11 } # 11 is the numerical identifier of the Name field
+# get info on the Name field for category Account
+Get-CmcFields Account | Where-Object { $_.Type -eq Name } # 'Name' is a fieldtype in Commence
 ```
 
-Because this module requires _Vovin.CmcLibNet_ all of _Vovin.CmcLibNet_'s functionality gets pulled in. That may not be immediately obvious. For that reason, there is the `Get-CmcFieldTypes` cmdlet:
-
-`Get-CmcFieldTypes [<CommonParameters>]`
-
-It returns both the names and the associated numbers for field types you can use.
+Use the `Get-CmcFieldTypes` cmdlet for getting the list of Commence field types
 
 List all connections for a category:
 `Get-CmcConnections [-CategoryName] <string> [<CommonParameters>]`
@@ -164,10 +148,8 @@ You can also supply filters with `-Filters`. For every filtertype there is a cmd
 Set the first filter a a `Field (F)` filter for items where the Name field does not contain 'test', case-sensitive:
 
 ```powershell
-$filter = Get-CmcFilterF 1 Name 0 test -Except -MatchCase -Verbose
+$filter = Get-CmcFilterF 1 Name Contains test -Except -MatchCase -Verbose
 ```
-
-For brevity I used the `int` value `0` for the filter qualifier. In the real world you should use its `enum` value, in this case `[Vovin.CmcLibNet.Database.FilterQualifier]::Contains`. `Vovin.CmcLibNet` is an assembly that is used by this module. That may not be immediately obvious; use the `Get-CmcFilterQualifiers` cmdlet to view all qualifier options. It returns all qualifiers and their numerical equivalents. We could have also used `1` (_does noet contain_) and omit the `-Except` in this case.
 
 **Important**: You specify the filter conjunction in the filters themselves. The default is **AND**. Set the `-OrFilter` switch for **OR**. There is no need to specify the filter conjunction separately. __This is different from how you do it in Commence!__
 
@@ -206,9 +188,9 @@ Advanced example: export address fields and list of Sales person of items in _Ac
 $filters = @((Get-CmcFilterF 1 accountKey 0 Wing),
             (Get-CmcFilterCTI 2 'Relates to' 'salesTeam' 'Team 1' -OrFilter))
 # perform the export
-Export-CmcCategory Account accounts.json -ExportFormat 1 -Filters $filters -FieldNames accountKey, Address, City, zipPostal, Country, 'Relates to Employee'
+Export-CmcCategory Account accounts.json -ExportFormat Json -Filters $filters -FieldNames accountKey, Address, City, zipPostal, Country, 'Relates to Employee'
 ```
-Note that for brevity I used `1` to indicate I wanted Json format. The fully qualified value is `[Vovin.CmcLibNet.Export.ExportFomat]::Json`. You can use the `Get-CmcExportFormats [<CommonParameters>]` cmdlet to get the full list of available formats. If you are not interested in connected values you can specify `-SkipConnectedItems`, which will significantly boost performance. The `-UseThids` switch will give you thids. You can use it if you know what they are :).
+If you are not interested in connected values you can specify `-SkipConnectedItems`, which will significantly boost performance. The `-UseThids` switch will give you thids. You can use it if you know what they are :).
 
 The `Export-CmcView` will export a view as-is (provided the view supports exporting, not all viewtypes in Commence do). Notice that the column order may not be retained, connected values may come last. This is by design. View names in Commence are case-sensitive!
 
