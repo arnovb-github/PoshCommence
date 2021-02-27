@@ -15,7 +15,7 @@ This is a binary assembly. It could all have been done in plain PS, I just wante
 # CmdLets #
 
 ## Getting help ##
-There is full `Get-Help` for every cmdlet, created with the great [PlatyPS](https://www.powershellgallery.com/packages/platyPS/) package.
+There is full `Get-Help` for every cmdlet, created with the [PlatyPS](https://www.powershellgallery.com/packages/platyPS/) package.
 
 ## Exploring the database ##
 Get the name of the currently active Commence database:
@@ -137,18 +137,18 @@ Note: you cannot yet specify only related columns, you need to specify at least 
 ### Filters ###
 You can also supply filters with `-Filters`. For every filtertype there is a cmdlet:
 
-`Get-CmcFilterF [-ClauseNumber] <int> [-FieldName] <string> [-Qualifier] <FilterQualifier> [-FieldValue] <string> [[-FieldValue2] <string>] [-MatchCase] [-Except] [-OrFilter] [<CommonParameters>]`
+`Get-CmcFilterF [-ClauseNumber] <Int32> [-FieldName] <String> [-Qualifier] {Contains | DoesNotContain | On | At | EqualTo | NotEqualTo | LessThan | GreaterThan | Between | True | False | Checked | NotChecked | Yes | No | Before | After | Blank | Shared | Local | One | Zero} [-FieldValue] <String> [[-FieldValue2] <String>] [-Except] [-MatchCase] [-OrFilter] [<CommonParameters>]`
 
-`Get-CmcFilterCTI [-ClauseNumber] <int> [-Connection] <string> [-Category] <string> [-Item] <string> [-Except] [-OrFilter] [<CommonParameters>]`
+`Get-CmcFilterCTI [-ClauseNumber] <Int32> [-Connection] <String> [-Category] <String> [-Item] <String> [-Except] [-OrFilter] [<CommonParameters>]`
 
-`Get-CmcFilterCTCTI [-ClauseNumber] <int> [-Connection] <string> [-Category] <string> [-Connection2] <string> [-Category2] <string> [-Item] <string> [-Except] [-OrFilter] [<CommonParameters>]`
+`Get-CmcFilterCTCTI [-ClauseNumber] <Int32> [-Connection] <String> [-Category] <String> [-Connection2] <String> [-Category2] <String> [-Item] <String> [-Except] [-OrFilter] [<CommonParameters>]`
 
-`Get-CmcFilterCTCF [-ClauseNumber] <int> [-Connection] <string> [-Category] <string> [-FieldName] <string> [-Qualifier] <FilterQualifier> [-FieldValue] <string> [[-FieldValue2] <string>] [-MatchCase] [-Except] [-OrFilter] [<CommonParameters>]`
+`Get-CmcFilterCTCF [-ClauseNumber] <Int32> [-Connection] <String> [-Category] <String> [-FieldName] <String> [-Qualifier] {Contains | DoesNotContain | On | At | EqualTo | NotEqualTo | LessThan | GreaterThan | Between | True | False | Checked | NotChecked | Yes | No | Before | After | Blank | Shared | Local | One | Zero} [-FieldValue] <String> [[-FieldValue2] <String>] [-Except] [-MatchCase] [-OrFilter] [<CommonParameters>]`
 
 Set the first filter a a `Field (F)` filter for items where the Name field does not contain 'test', case-sensitive:
 
 ```powershell
-$filter = Get-CmcFilterF 1 Name Contains test -Except -MatchCase -Verbose
+$filter = Get-CmcFilterF 1 accountKey Contains avi -Except -MatchCase -Verbose
 ```
 
 **Important**: You specify the filter conjunction in the filters themselves. The default is **AND**. Set the `-OrFilter` switch for **OR**. There is no need to specify the filter conjunction separately. __This is different from how you do it in Commence!__
@@ -175,7 +175,9 @@ You can check the connection count for a known item by specifying the itemname a
 ## Exporting ##
 The `Export-CmcCategory` cmdlet allows you to do simple exporting directly from the command-line. For advanced exporting see [Vovin.CmcLibNet](https://github.com/arnovb-github/CmcLibNet). 
 
-`Export-CmcCategory [-CategoryName] <string> [-Path] <string> [-ExportFormat <ExportFormat>] [-Filters <ICursorFilter[]>] [-FieldNames <string[]>] [-SkipConnectedItems] [-UseThids] [<CommonParameters>]`
+`Export-CmcCategory [-CategoryName] <String> [-ExportFormat {Xml | Json | Html | Text | Excel | GoogleSheets | Event 
+    }] [-FieldNames <String[]>] [-Filters <ICursorFilter[]>] [-SkipConnectedItems] [-UseThids] -OutputPath <String> [<C 
+    ommonParameters>]`
 
 Simple example (_Tutorial database_): export the entire _Account_ category to  file _account.xml_.
 ```powershell
