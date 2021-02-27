@@ -72,6 +72,13 @@ namespace PoshCommence.CmdLets
             get { return _exportOptions.UseThids; }
             set { _exportOptions.UseThids = value; }
         }
+
+        [Parameter()]           
+        public SwitchParameter PreserveAllConnections
+        {
+            get { return _exportOptions.PreserveAllConnections; }
+            set { _exportOptions.PreserveAllConnections = value; }
+        }        
         
         protected override void ProcessRecord()
         {

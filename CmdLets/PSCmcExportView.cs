@@ -29,6 +29,13 @@ namespace PoshCommence.CmdLets
             get { return _exportOptions.ExportFormat; }
             set { _exportOptions.ExportFormat = value; }
         }
+
+        [Parameter()]           
+        public SwitchParameter PreserveAllConnections
+        {
+            get { return _exportOptions.PreserveAllConnections; }
+            set { _exportOptions.PreserveAllConnections = value; }
+        } 
         
         protected override void ProcessRecord()
         {
