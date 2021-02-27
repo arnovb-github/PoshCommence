@@ -115,7 +115,7 @@ Accept wildcard characters: False
 ```
 
 ### -UseThids
-Include the Commence THID. Only works on categories, not views.
+Include the Commence THID. Ignored when `-UseView` is set.
 
 ```yaml
 Type: SwitchParameter

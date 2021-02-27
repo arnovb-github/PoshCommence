@@ -24,7 +24,7 @@ Get a related column definition for use in `Get-CmcFieldValues`.
 
 ### Example 1
 ```powershell
-PS C:\> Get-CmcRelatedColumn 'Relates to' Contact contactKey
+Get-CmcRelatedColumn 'Relates to' Contact contactKey
 ```
 
 Get a related column pointing to the 'contactKey' field in connection 'Relates to' to category 'Contact'.

@@ -41,6 +41,5 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ### System.String
 ## NOTES
-When Commence is not running, or more than one instance of Commence is running, this cmdlet will throw an error.
 
 ## RELATED LINKS

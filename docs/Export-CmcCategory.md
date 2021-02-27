@@ -38,7 +38,7 @@ $filters = @((Get-CmcFilterF 1 accountKey 0 Wing),
 Export-CmcCategory Account accounts.json -ExportFormat Json -Filters $filters -FieldNames accountKey, Address, City, zipPostal, Country, 'Relates to Employee'
 ```
 
-Advanced example (using _Tutorial database_): export address fields and list of Sales person of items in Account that have 'Wing' in their name or are connected to 'salesTeam' item 'Team 1' to a Json file.
+Advanced example (using _Tutorial database_): export address fields and list of Sales person of items in Account that have 'Wing' in their name or are connected to 'salesTeam' item 'Team 1' to a JSON file.
 
 ## PARAMETERS
 
