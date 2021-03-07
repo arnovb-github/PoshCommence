@@ -15,7 +15,7 @@
 
   <ItemGroup>
     <PackageReference Include="PowershellStandard.Library" Version="5.1.1" />
-    <PackageReference Include="Vovin.CmcLibNet" Version="1.0.0" />
+    <PackageReference Include="Vovin.CmcLibNet" Version="1.0.3" />
   </ItemGroup>
 
 </Project>

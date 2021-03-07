@@ -1,7 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.Management.Automation;
-using Vovin.CmcLibNet;
+using Vovin.CmcLibNet.Database;
 
 namespace PoshCommence.CmdLets
 {
@@ -62,7 +61,7 @@ namespace PoshCommence.CmdLets
         // so this may return nothing       
         protected override void ProcessRecord()
         {
-            var db = new Vovin.CmcLibNet.Database.CommenceDatabase();
+            var db = new CommenceDatabase();
             string result = db.ViewCategory(fromCategory); // if fromCategory is not found, nothing happens
             if (result.ToLower() != "ok") {
                 WriteError(new ErrorRecord(new Vovin.CmcLibNet.CommenceDDEException(result),
