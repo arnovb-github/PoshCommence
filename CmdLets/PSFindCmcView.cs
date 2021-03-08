@@ -22,6 +22,7 @@ namespace PoshCommence.CmdLets
 
         private string categoryName;
         [Parameter]
+        [ArgumentCompleter(typeof(CategoryNameArgumentCompleter))]
         public string Category
         {
             get { return categoryName; }
@@ -30,6 +31,7 @@ namespace PoshCommence.CmdLets
 
         private string viewType;
         [Parameter]
+        [ArgumentCompleter(typeof(ViewTypeArgumentCompleter))]
         public string Type
         {
             get { return viewType; }
@@ -47,12 +49,13 @@ namespace PoshCommence.CmdLets
         protected override void BeginProcessing()
         {
             base.BeginProcessing();
-            if (!ViewInfo.Ready() || force) {
-                ViewInfo.GetViewDefinitions();
-            }
+
         }
         protected override void ProcessRecord()
         {
+            if (!ViewInfo.Ready() || force) {
+                ViewInfo.GetViewDefinitions();
+            }
             WriteObject(ViewInfo.FindView(CreateFilterList()));
         }
 

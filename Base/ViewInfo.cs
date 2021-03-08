@@ -4,14 +4,16 @@ using System.Linq;
 using Vovin.CmcLibNet.Database;
 using Vovin.CmcLibNet.Database.Metadata;
 
-namespace PoshCommence.CmdLets
+namespace PoshCommence.Base
 {
-
-    internal static class ViewInfo
+   internal static class ViewInfo
     {
         private static List<IViewDef> viewList = new List<IViewDef>();
+        private static IEnumerable<string> viewTypes;
+        private static IEnumerable<string> categoryNames;
 
-        internal static List<string> Categories {get; private set;}
+        internal static IEnumerable<string> Categories => categoryNames;
+        internal static IEnumerable<string> ViewTypes => viewTypes;
         internal static IEnumerable<IViewDef> FindView(List<Func<IViewDef, bool>> filters)
         {
             if (filters is null) { return viewList; }
@@ -27,13 +29,16 @@ namespace PoshCommence.CmdLets
 
         internal static void GetViewDefinitions()
         {
+            viewList.Clear();
             using (var db = new CommenceDatabase()) {
-                Categories = db.GetCategoryNames();
+                categoryNames = db.GetCategoryNames();
                 foreach (string categoryName in Categories) {
                     foreach (string viewName in db.GetViewNames(categoryName)) {
                         viewList.Add(db.GetViewDefinition(viewName));
                     }
                 }
+                viewTypes = viewList.Select(s => s.Type).Distinct(); // store the type
+                categoryNames = categoryNames.Distinct();
             }
         }
 

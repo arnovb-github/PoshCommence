@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Management.Automation;
 using Vovin.CmcLibNet;
 using Vovin.CmcLibNet.Database;
+using Vovin.CmcLibNet.Database.Metadata;
 
 namespace PoshCommence.CmdLets
 {
@@ -11,12 +12,12 @@ namespace PoshCommence.CmdLets
     {
         private const string COMMENCE_PROCESS = "commence";
 
-        private string viewName;
+        private IViewDef view;
         [Parameter(Position = 0, Mandatory = true, ValueFromPipeline=true)]
-        public string Name
+        public IViewDef Name
         {
-            get { return viewName; }
-            set { viewName = value; }
+            get { return view; }
+            set { view = value; }
         }
 
         private bool newCopy;
@@ -31,13 +32,13 @@ namespace PoshCommence.CmdLets
         {
             using (var db = new CommenceDatabase())
             {
-                if (db.ShowView(viewName, newCopy)) 
+                if (db.ShowView(view.Name, newCopy)) 
                 {
                     ShowCommence(db.Name);
                 }
                 else
                 {
-                    throw new CommenceDDEException($"Commence could not open a view named '{viewName}'.");
+                    throw new CommenceDDEException($"Commence could not open a view named '{view.Name}'.");
                 }
             }
         }
