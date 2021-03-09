@@ -99,6 +99,7 @@ You can pipe results to `Open-CmcView`:
 ```powershell
 Find-CmcView 'All Accounts' | Open-CmcView
 ```
+Will open view 'All Accounts'.
 
 When you pipe more than one view to `Open-CmcView` it will open up to the first 10.
 
