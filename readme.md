@@ -90,7 +90,6 @@ This is self-explanatory. Note that connection names in Commence are case-sensit
 `Find-CmcView` returns all Commence views. You can filter the view list:
 
 ```powershell
-# return  fieldvalues for fields "accountKey" and "businessNumber"
 Find-CmcView abc -Category Acccount -Type Report
 ```
 
@@ -98,7 +97,6 @@ Will output view of type 'Report' in category 'Account' that containg 'abc' in t
 
 You can pipe results to `Open-CmcView`:
 ```powershell
-# return  fieldvalues for fields "accountKey" and "businessNumber"
 Find-CmcView 'All Accounts' | Open-CmcView
 ```
 
