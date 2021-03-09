@@ -120,7 +120,7 @@ Accept wildcard characters: False
 ```
 
 ### -PreserveAllConnections
-Ensure inclusion of all connected items. Involves a significant performance penalty. See [On PreserveAllConnections](#on-preserveallconnections).
+Ensure inclusion of all connected items. Involves a significant performance penalty.
 
 ```yaml
 Type: SwitchParameter
@@ -179,9 +179,6 @@ Writes to a file.
 
 ## NOTES
 Use this cmdlet for simple exports. For advanced exporting, see [Vovin.CmcLibNet](https://github.com/arnovb-github/CmcLibNet). 
-
-### On PreserveAllConnections
-Commence treats related data like any column in a cursor. It will just put a delimiter between connected values. The default number of characters that can be retrieved from a column is limited. While PoshCommence will use a value much greater than the Commence default, that buffer may still run out. You can you tell you hit the limit when your connected item data is getting oddly truncated. Use `-PreserveAllConnections` to ensure all connected data is included. This comes at a significant performance penalty, because this requires multiple reads of the Commence database.
 
 ## RELATED LINKS
 
