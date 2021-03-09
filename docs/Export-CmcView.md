@@ -13,7 +13,8 @@ Export a Commence view to file.
 ## SYNTAX
 
 ```
-Export-CmcView [-ViewName] <String> -OutputPath <String> [-ExportFormat <ExportFormat>] [<CommonParameters>]
+Export-CmcView [-ViewName] <String> [-OutputPath] <String> [-ExportFormat <ExportFormat>]
+ [-PreserveAllConnections] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -46,6 +47,36 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -OutputPath
+{{ Fill OutputPath Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: 1
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -PreserveAllConnections
+Ensure inclusion of all connected items. Involves a significant performance penalty. See [details](Export-CmcCategory.md#on-preserveallconnections).
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -ViewName
 Commence view name. Case-sensitive!
 
@@ -56,21 +87,6 @@ Aliases:
 
 Required: True
 Position: 0
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -OutputPath
-{{ Fill OutputPath Description }}
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

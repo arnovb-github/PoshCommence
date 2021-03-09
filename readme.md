@@ -86,6 +86,24 @@ List all connections for a category:
 
 This is self-explanatory. Note that connection names in Commence are case-sensitive.
 
+## Getting Views
+`Find-CmcView` returns all Commence views. You can filter the view list:
+
+```powershell
+# return  fieldvalues for fields "accountKey" and "businessNumber"
+Find-CmcView abc -Category Acccount -Type Report
+```
+
+Will output view of type 'Report' in category 'Account' that containg 'abc' in the name. All parameters support tab-completion.
+
+You can pipe results to `Open-CmcView`:
+```powershell
+# return  fieldvalues for fields "accountKey" and "businessNumber"
+Find-CmcView 'All Accounts' | Open-CmcView
+```
+
+When you pipe more than one view to `Open-CmcView` it will open up to the first 10.
+
 ## Getting field values ##
 `Get-CmcFieldValues` returns an object for every database row. Think of it as a hashtable with the fieldname and correspondig values(s):
 

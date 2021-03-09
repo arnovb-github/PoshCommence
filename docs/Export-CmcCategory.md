@@ -181,7 +181,7 @@ Writes to a file.
 Use this cmdlet for simple exports. For advanced exporting, see [Vovin.CmcLibNet](https://github.com/arnovb-github/CmcLibNet). 
 
 ### On PreserveAllConnections
-Commence treats related data like any column in a cursor. It will just put a delimiter between connected values. The default number of characters that can be retrieved from a column is limited. While PoshCommence will use a value much greater than the Commence default, that buffer may still run out. You can you tell you hit the limit when your connected item data iss oddly truncated. Use `-PreserveAllConnections` to ensure all connected data is included. This comes at a significant performance penalty, because this requires multiple reads of the Commence database.
+Commence treats related data like any column in a cursor. It will just put a delimiter between connected values. The default number of characters that can be retrieved from a column is limited. While PoshCommence will use a value much greater than the Commence default, that buffer may still run out. You can you tell you hit the limit when your connected item data is getting oddly truncated. Use `-PreserveAllConnections` to ensure all connected data is included. This comes at a significant performance penalty, because this requires multiple reads of the Commence database.
 
 ## RELATED LINKS
 

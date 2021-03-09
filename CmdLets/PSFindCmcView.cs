@@ -2,8 +2,6 @@ using System;
 using System.Management.Automation;
 using System.Collections.Generic;
 using Vovin.CmcLibNet.Database.Metadata;
-using System.Linq;
-using System.Collections.ObjectModel;
 using PoshCommence.Base;
 
 namespace PoshCommence.CmdLets
@@ -14,6 +12,7 @@ namespace PoshCommence.CmdLets
 
         private string viewName;
         [Parameter(Position = 0)]
+        [ArgumentCompleter(typeof(ViewDefArgumentCompleter))]
         public string Name
         {
             get { return viewName; }
@@ -67,7 +66,7 @@ namespace PoshCommence.CmdLets
         private List<Func<IViewDef, bool>> CreateFilterList()
         {
             var filters = new List<Func<IViewDef, bool>>();
-            if (!string.IsNullOrEmpty(viewName)) { filters.Add(s => !string.IsNullOrWhiteSpace(s.Name) && s.Name.Contains(viewName)); }
+            if (!string.IsNullOrEmpty(viewName)) { filters.Add(s => !string.IsNullOrWhiteSpace(s.Name) && s.Name.ToLower().Contains(viewName.ToLower())); }
             if (!string.IsNullOrEmpty(categoryName)) { filters.Add(s => s.Category.ToLower().Contains(categoryName.ToLower())); }
             if (!string.IsNullOrEmpty(viewType)) { filters.Add(s => s.Type.ToLower().Contains(viewType.ToLower())); }
             return filters;

@@ -26,6 +26,7 @@ Gets the specfied fieldvalues from a Commence category.
 ```powershell
 Get-CmcFieldValues CategoryName FieldName1, FieldName2
 ```
+
 Gets all fieldvalues for fields FieldName1 and Fieldame2.
 
 ### Example 2
@@ -45,7 +46,8 @@ Get-CmcFieldValues Account -FieldNames $fields -Filters $filter -RelatedColumns 
 Advanced example using filters and related columns.
 
 ### Example 3
-```  powershell
+```
+powershell
 # Example for Tutorial dabase
 Get-CmcFieldValues 'Account Default' (Get-CmcFields Account).Name -UseThids -UseView | Out-GridView
 ```
@@ -157,6 +159,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+
 [Get-CmcFilterF](Get-CmcFilterF.md)
 
 [Get-CmcFilterCTI](Get-CmcFilterCTI.md)

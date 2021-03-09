@@ -1,7 +1,8 @@
 using PoshCommence.Base;
 using System.Diagnostics;
+using System;
+using System.Linq;
 using System.Management.Automation;
-using Vovin.CmcLibNet;
 using Vovin.CmcLibNet.Database;
 using Vovin.CmcLibNet.Database.Metadata;
 
@@ -11,13 +12,14 @@ namespace PoshCommence.CmdLets
     public class OpenCmcView : PSCmdlet
     {
         private const string COMMENCE_PROCESS = "commence";
+        private const int MAX_ALLOWED_VIEWS = 10;
 
-        private IViewDef view;
+        private IViewDef[] views;
         [Parameter(Position = 0, Mandatory = true, ValueFromPipeline=true)]
-        public IViewDef Name
+        public IViewDef[] View
         {
-            get { return view; }
-            set { view = value; }
+            get { return views; }
+            set { views = value; }
         }
 
         private bool newCopy;
@@ -30,16 +32,19 @@ namespace PoshCommence.CmdLets
         
         protected override void ProcessRecord()
         {
+            if (views.Length > MAX_ALLOWED_VIEWS) {
+                WriteWarning($"Number of views exceeds limit of this cmdlet, opening first {MAX_ALLOWED_VIEWS} views.");
+            }
             using (var db = new CommenceDatabase())
             {
-                if (db.ShowView(view.Name, newCopy)) 
+                foreach (var v in views.Take(MAX_ALLOWED_VIEWS)) 
                 {
-                    ShowCommence(db.Name);
+                    if (!db.ShowView(v.Name, newCopy)) 
+                    {
+                        throw new InvalidOperationException($"Unable to open view '{v.Name}' in Commence.");
+                    }
                 }
-                else
-                {
-                    throw new CommenceDDEException($"Commence could not open a view named '{view.Name}'.");
-                }
+                ShowCommence(db.Name);                
             }
         }
 

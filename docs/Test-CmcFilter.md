@@ -75,7 +75,9 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 This cmdlet tests if the filter is syntactically valid. That is, it tests if it *technically* works, not if it returns anything meaningful.
 
 Use of this cmdlet in production environments is discouraged because it is a resource intensive operation.
+
 ## RELATED LINKS
+
 [Get-CmcFilterF](Get-CmcFilterF.md)
 
 [Get-CmcFilterCTI](Get-CmcFilterCTI.md)

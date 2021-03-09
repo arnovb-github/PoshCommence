@@ -14,7 +14,7 @@ Get the number of connected items in Commence.
 
 ```
 Get-CmcConnectedItemCount [-FromCategory] <String> [-ConnectionName] <String> [-ToCategory] <String>
- [[-FromItem] <String>] [<CommonParameters>]
+ [[-FromItem] <String>] [[-ClarifySeparator] <String>] [[-ClarifyValue] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -30,6 +30,36 @@ Get-CmcConnectedItemCount Account 'Relates to' Contact | Where-Object { $_.Count
 Get the itemnames and count from Contact items connected to Account via the 'Relates to' connection where more than 1 such connected item exists (_Tutorial database_).
 
 ## PARAMETERS
+
+### -ClarifySeparator
+{{ Fill ClarifySeparator Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 4
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ClarifyValue
+{{ Fill ClarifyValue Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 5
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -ConnectionName
 Name of the Commence connection (case-sensitive!).
