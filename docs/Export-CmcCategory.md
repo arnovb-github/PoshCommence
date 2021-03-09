@@ -13,8 +13,9 @@ Export a category to file.
 ## SYNTAX
 
 ```
-Export-CmcCategory [-CategoryName] <String> -OutputPath <String> [-ExportFormat <ExportFormat>]
- [-Filters <ICursorFilter[]>] [-FieldNames <String[]>] [-SkipConnectedItems] [-UseThids] [<CommonParameters>]
+Export-CmcCategory [-CategoryName] <String> [-OutputPath] <String> [-ExportFormat <ExportFormat>]
+ [-Filters <ICursorFilter[]>] [-FieldNames <String[]>] [-SkipConnectedItems] [-UseThids]
+ [-PreserveAllConnections] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -103,6 +104,36 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -OutputPath
+Path and filename to export to.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: 1
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -PreserveAllConnections
+Ensure inclusion of all connected items. Involves a significant performance penalty. See [On PreserveAllConnections](#on-preserveallconnections).
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -SkipConnectedItems
 Do not export connected items.
 
@@ -133,21 +164,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -OutputPath
-Path and filename to export to.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### CommonParameters
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
@@ -162,9 +178,13 @@ You cannot pipe input to this cmdlet.
 Writes to a file.
 
 ## NOTES
-Use this cmdlet for simple exports. For advanced exporting, see [Vovin.CmcLibNet](https://github.com/arnovb-github/CmcLibNet).
+Use this cmdlet for simple exports. For advanced exporting, see [Vovin.CmcLibNet](https://github.com/arnovb-github/CmcLibNet). 
+
+### On PreserveAllConnections
+Commence treats related data like any column in a cursor. It will just put a delimiter between connected values. The default number of characters that can be retrieved from a column is limited. While PoshCommence will use a value much greater than the Commence default, that buffer may still run out. You can you tell you hit the limit when your connected item data iss oddly truncated. Use `-PreserveAllConnections` to ensure all connected data is included. This comes at a significant performance penalty, because this requires multiple reads of the Commence database.
 
 ## RELATED LINKS
+
 [Get-CmcFilterF](Get-CmcFilterF.md)
 
 [Get-CmcFilterCTI](Get-CmcFilterCTI.md)
@@ -172,5 +192,3 @@ Use this cmdlet for simple exports. For advanced exporting, see [Vovin.CmcLibNet
 [Get-CmcFilterCTCF](Get-CmcFilterCTCF.md)
 
 [Get-CmcFilterCTCTI](Get-CmcFilterCTCTI.md)
-
-[Vovin.CmcLibNet](https://github.com/arnovb-github/CmcLibNet)
