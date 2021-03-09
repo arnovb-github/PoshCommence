@@ -13,6 +13,7 @@ namespace PoshCommence.Base
         private static IEnumerable<string> categoryNames;
 
         internal static IEnumerable<string> Categories => categoryNames;
+        internal static IEnumerable<IViewDef> Views => viewList;
         internal static IEnumerable<string> ViewTypes => viewTypes;
         internal static IEnumerable<IViewDef> FindView(List<Func<IViewDef, bool>> filters)
         {
@@ -22,7 +23,7 @@ namespace PoshCommence.Base
             {
                 retval = retval.Where(f);
             }
-            return retval;
+            return retval.ToArray();
         }
 
         internal static bool Ready() => viewList.Any();
