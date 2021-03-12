@@ -18,10 +18,7 @@ namespace PoshCommence.CmdLets
 
         protected override void ProcessRecord()
         {
-            foreach (var o in GetFields(categoryName))
-            {
-                WriteObject(o);
-            }
+            WriteObject(GetFields(categoryName), true);
         }
 
         private IEnumerable<object> GetFields(string categoryName) 
@@ -44,5 +41,6 @@ namespace PoshCommence.CmdLets
                 }
             }
         }
+
     }
 }

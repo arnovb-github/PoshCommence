@@ -38,7 +38,7 @@ namespace PoshCommence.Base
                         viewList.Add(db.GetViewDefinition(viewName));
                     }
                 }
-                viewTypes = viewList.Select(s => s.Type).Distinct(); // store the type
+                viewTypes = viewList.Select(s => s.Type).Distinct();
                 categoryNames = categoryNames.Distinct();
             }
         }
