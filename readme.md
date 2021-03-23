@@ -169,7 +169,7 @@ Set the first filter a a `Field (F)` filter for items where the Name field does 
 $filter = Get-CmcFilterF 1 accountKey Contains avi -Except -MatchCase -Verbose
 ```
 
-**Important**: You specify the filter conjunction in the filters themselves. The default is **AND**. Set the `-OrFilter` switch for **OR**. There is no need to specify the filter conjunction separately. __This is different from how you do it in Commence!__
+**Important**: You specify the filter conjunction in the filters themselves. __This is different from how you do it in Commence!__ The default is **AND**. Set the `-OrFilter` switch for **OR**. There is no need to specify the filter conjunction separately. 
 
 The `Get-CmcFilter…` cmcdlets do **not** check for correctness of the parameters, but there is a cmdlet to try out filters:
 
