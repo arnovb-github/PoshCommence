@@ -104,7 +104,7 @@ Will open view 'All Accounts'.
 When you pipe more than one view to `Open-CmcView` it will open up to the first 10.
 
 ## Getting field values ##
-`Get-CmcFieldValues` returns an object for every database row. Think of it as a hashtable with the fieldname and correspondig values(s):
+`Get-CmcFieldValues` returns an object for every database row. Think of it as a hashtable with the fieldname and corresponding values(s):
 
 Example (_Tutororial database_):
 
@@ -124,12 +124,13 @@ First Class Inc           416-781-1209
 ... 
 ```
 
-The complete syntax of `Get-CmcFieldValues` is:
+The syntax of `Get-CmcFieldValues` is:
 
-`Get-CmcFieldValues [-CategoryOrViewName] <string> [[-FieldNames] <string[]>] [-UseView] [-UseThids] [-Filters <ICursorFilter[]>] [-RelatedColumns <RelatedColumn[]>] [<CommonParameters>]`
+(for categories):
+`Get-CmcFieldValues [-CategoryName] <string> [-FieldNames] <string[]> [-UseThids] [-Filters <ICursorFilter[]>] [-RelatedColumns <RelatedColumn[]>] [<CommonParameters>]`
 
-### Use a view ###
-If you specify a Commence viewname instead of a categoryname, use the `-UseView` switch. Note that you still have to specify which fields you want from the view.
+(for views):
+`Get-CmcFieldValues [-ViewName] <string> [-FieldNames] <string[]> [-Filters <ICursorFilter[]>] [-RelatedColumns <RelatedColumn[]>] [<CommonParameters>]`
 
 ### Get THIDs ###
 If you want THIDs, specify the `-UseThids` switch. You get an additional `CommenceField` object with fieldname 'THID' for every row. This switch does not work on views.
