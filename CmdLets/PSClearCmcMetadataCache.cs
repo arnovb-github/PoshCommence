@@ -3,8 +3,8 @@ using System.Management.Automation;
 
 namespace PoshCommence.CmdLets
 {
-    [Cmdlet(VerbsCommon.Reset, "CmcMetadataCache")]
-    public class ResetMetadataCache : PSCmdlet
+    [Cmdlet(VerbsCommon.Clear, "CmcMetadataCache")]
+    public class ClearMetadataCache : PSCmdlet
     {
         protected override void ProcessRecord()
         {

@@ -5,7 +5,7 @@ online version:
 schema: 2.0.0
 ---
 
-# Reset-CmcMetadataCache
+# Clear-CmcMetadataCache
 
 ## SYNOPSIS
 Reset Commence metadata cache.
@@ -13,7 +13,7 @@ Reset Commence metadata cache.
 ## SYNTAX
 
 ```
-Reset-CmcMetadataCache [<CommonParameters>]
+Clear-CmcMetadataCache [<CommonParameters>]
 ```
 
 ## DESCRIPTION

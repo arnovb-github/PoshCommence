@@ -54,7 +54,7 @@ Accepted values: Xml, Json, Html, Text, Excel, GoogleSheets, Event
 
 Required: False
 Position: Named
-Default **********value**********: None
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
