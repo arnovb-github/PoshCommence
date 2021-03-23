@@ -32,7 +32,7 @@ Get the itemnames and count from Contact items connected to Account via the 'Rel
 ## PARAMETERS
 
 ### -ClarifySeparator
-{{ Fill ClarifySeparator Description }}
+Commence clarify sepator for category.
 
 ```yaml
 Type: String
@@ -47,7 +47,7 @@ Accept wildcard characters: False
 ```
 
 ### -ClarifyValue
-{{ Fill ClarifyValue Description }}
+Clarify value. (i.e., *not* the fully clarified itemname.)
 
 ```yaml
 Type: String

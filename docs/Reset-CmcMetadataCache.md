@@ -5,28 +5,28 @@ online version:
 schema: 2.0.0
 ---
 
-# Get-CmcCategories
+# Reset-CmcMetadataCache
 
 ## SYNOPSIS
-Get category names from Commence
+Reset Commence metadata cache.
 
 ## SYNTAX
 
 ```
-Get-CmcCategories [<CommonParameters>]
+Reset-CmcMetadataCache [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Returns the category names of the currently active Commence database.
+Will reset the cache holding Commence schema information that is being built up as you use this module. Use this cmdlet when the Commence database schema has changed, for example when a field was added.
 
 ## EXAMPLES
 
 ### Example 1
 ```powershell
-Get-CmcCategories
+Reset-CmcMetadataCache
 ```
 
-Returns the category names of the currently active Commence database.
+Will clear the cache holding Commence schema information.
 
 ## PARAMETERS
 
@@ -39,9 +39,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## OUTPUTS
 
-### System.String[]
-Returns an array of strings.
-
+### None
 ## NOTES
 
 ## RELATED LINKS

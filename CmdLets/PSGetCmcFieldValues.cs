@@ -6,37 +6,42 @@ using Vovin.CmcLibNet.Database;
 
 namespace PoshCommence.CmdLets
 {
-
-    [Cmdlet(VerbsCommon.Get, "CmcFieldValues")]
+    [Cmdlet(VerbsCommon.Get, "CmcFieldValues",
+        DefaultParameterSetName = "ByCategory")]
     public class GetCmcFieldValues : PSCmdlet
     {
         private string categoryName;
-        [Parameter(Position = 0, Mandatory = true)]
-        public string CategoryOrViewName
+        [Parameter(Position = 0, Mandatory = true, ParameterSetName = "ByCategory")]
+        [ArgumentCompleter(typeof(CategoryNameArgumentCompleter))]        
+        [Alias("c")]
+        public string CategoryName
         {
         get { return categoryName; }
         set { categoryName = value; }
         }
+
+        private string viewName;
+        [Parameter(Position = 0, Mandatory = true, ParameterSetName = "ByView")]
+        [ArgumentCompleter(typeof(ViewNameArgumentCompleter))]
+        [Alias("v")]
+
+        public string ViewName
+        {
+            get { return viewName; }
+            set { viewName = value; }
+        }
+
         private string[] fieldNames;
         [Parameter(Position = 1, Mandatory = true)]
+        [ArgumentCompleter(typeof(FieldNameArgumentCompleter))]
         public string[] FieldNames
         {
             get { return fieldNames; }
             set { fieldNames = value; }
         }
 
-        // use this to pass in a viewname
-        private bool useView;
-        [Parameter()]
-        public SwitchParameter UseView
-        {
-            get { return useView; }
-            set { useView = value; }
-        }
-        
-        // thids switch parameter
         private bool useThids;
-        [Parameter()]
+        [Parameter(ParameterSetName = "ByCategory")]
         public SwitchParameter UseThids
         {
             get { return useThids; }
@@ -78,11 +83,11 @@ namespace PoshCommence.CmdLets
             }
 
             // do the data reading
-            var rows = CursorReader.GetCmcFieldValues(categoryName,
+            var rows = CursorReader.GetCmcFieldValues(GetCursorName(),
                 fieldNames,
                 filters,
                 relatedColumns,
-                useView,
+                !string.IsNullOrEmpty(viewName),
                 useThids);
 
             foreach (var row in rows)
@@ -94,6 +99,11 @@ namespace PoshCommence.CmdLets
                 }
                 WriteObject(responseObject);
             }
+        }
+
+        private string GetCursorName()
+        {
+            return string.IsNullOrEmpty(viewName) ?  categoryName : viewName;
         }
     }
 }

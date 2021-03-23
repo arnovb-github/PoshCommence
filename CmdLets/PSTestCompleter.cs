@@ -6,33 +6,35 @@ using PoshCommence.Base;
 
 namespace PoshCommence.CmdLets
 {
-    [Cmdlet(VerbsCommon.Get, "CmcConnections")]
-    public class GetCmcConnections : PSCmdlet
+    // This CmdLet is only for debugging!
+    [Cmdlet(VerbsDiagnostic.Test, "Completer")]
+    public class TestCompleter  : PSCmdlet
     {
         private string categoryName;
         [Parameter(Position = 0, Mandatory = true)]
         [ArgumentCompleter(typeof(CategoryNameArgumentCompleter))]
-        [Alias("c")]  
+        [Alias("c")]
         public string CategoryName
         {
             get { return categoryName; }
             set { categoryName = value; }
         }
+        
+        private string fieldName;
+        [Parameter()]
+        [ArgumentCompleter(typeof(FieldNameArgumentCompleter))]
+        [Alias("f")]
+        public string Field
+        {
+            get { return fieldName; }
+            set { fieldName = value; }
+        }
+        
 
         protected override void ProcessRecord()
         {
-            foreach (var o in GetConnections(categoryName))
-            {
-                WriteObject(o);
-            }
+            WriteObject("Hello, World!");
         }
 
-        private IEnumerable<ICommenceConnection> GetConnections(string categoryName) 
-        {
-            using (ICommenceDatabase db = new CommenceDatabase())
-            {
-                return db.GetConnectionNames(categoryName);
-            }
-        }
     }
 }

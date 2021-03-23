@@ -1,4 +1,5 @@
 using System.Management.Automation;
+using PoshCommence.Base;
 using Vovin.CmcLibNet.Database;
 
 namespace PoshCommence.CmdLets
@@ -10,6 +11,8 @@ namespace PoshCommence.CmdLets
     public class TestCmcFilter  : PSCmdlet
     {
         [Parameter(Position = 0, Mandatory = true)]
+        [ArgumentCompleter(typeof(CategoryNameArgumentCompleter))]
+        [Alias("c")]         
         public string Category { get; set; }
 
         [Parameter(Position = 1, Mandatory = true)]

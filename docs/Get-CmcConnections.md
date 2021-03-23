@@ -23,7 +23,7 @@ Returns the connectionnames and their categoryname to the specfied category in C
 
 ### Example 1
 ```powershell
-PS C:\> Get-CmcConnections Account
+Get-CmcConnections Account
 ```
 
 Returns the connections and their categoryname to the Account category.
@@ -36,7 +36,7 @@ Commence category name to get connections for.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: c
 
 Required: True
 Position: 0

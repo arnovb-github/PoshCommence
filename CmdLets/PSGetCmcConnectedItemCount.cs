@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Management.Automation;
+using PoshCommence.Base;
 using Vovin.CmcLibNet.Database;
 
 namespace PoshCommence.CmdLets
@@ -10,6 +11,7 @@ namespace PoshCommence.CmdLets
     {
         private string fromCategory;
         [Parameter(Position = 0, Mandatory = true)]
+        [ArgumentCompleter(typeof(CategoryNameArgumentCompleter))]
         public string FromCategory
         {
         get { return fromCategory; }
@@ -25,6 +27,7 @@ namespace PoshCommence.CmdLets
 
         private string toCategory;
         [Parameter(Position = 2, Mandatory = true)]
+        [ArgumentCompleter(typeof(CategoryNameArgumentCompleter))]
         public string ToCategory
         {
         get { return toCategory; }

@@ -37,8 +37,20 @@ namespace PoshCommence.CmdLets
             set { _exportOptions.PreserveAllConnections = value; }
         } 
         
+        private bool useColumnNames;
+        [Parameter()]
+        public SwitchParameter UseColumnNames
+        {
+            get { return useColumnNames; }
+            set { useColumnNames = value; }
+        }
+        
         protected override void ProcessRecord()
         {
+            if (useColumnNames)
+            {
+                _exportOptions.HeaderMode = HeaderMode.Columnlabel;
+            }
             CommenceExporter.ExportView(_viewName, _path, _exportOptions);
             WriteVerbose("Export done. Hopefully");
         }

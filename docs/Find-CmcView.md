@@ -13,7 +13,7 @@ Find a Commence view.
 ## SYNTAX
 
 ```
-Find-CmcView [[-Name] <String>] [-Category <String>] [-Type <String>] [-Force] [<CommonParameters>]
+Find-CmcView [[-Name] <String>] [-CategoryName <String>] [-Type <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -45,28 +45,13 @@ Will list the views that match 'prod' in category 'Account' and of type 'Report 
 
 ## PARAMETERS
 
-### -Category
-The Commence category name to filter results on.
+### -CategoryName
+Commence category to filter on.
 
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Force
-Always query Commence for the list of views (i.e., do not use caching).
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
+Aliases: c
 
 Required: False
 Position: Named
@@ -96,7 +81,7 @@ The Commence viewtype to filter result on.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: t
 
 Required: False
 Position: Named
@@ -117,4 +102,5 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ### Vovin.CmcLibNet.Database.Metadata.IViewDef
 ## NOTES
 Will not return Commence MultiViews because they are not exposed by Commence.
+
 ## RELATED LINKS

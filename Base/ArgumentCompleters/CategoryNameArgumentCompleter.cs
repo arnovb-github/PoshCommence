@@ -11,7 +11,7 @@ namespace PoshCommence.Base
         public override IEnumerable<CompletionResult> CompleteArgument(string commandName, string parameterName, 
             string wordToComplete, CommandAst commandAst, IDictionary fakeBoundParameters)
         {
-            return ViewInfo.Categories.Where(s => s.ToLower().StartsWith(wordToComplete.ToLower()))
+            return CommenceMetadata.Categories.Where(s => s.ToLower().StartsWith(wordToComplete.ToLower()))
                .Select(s => new CompletionResult(base.MapString(s)));
         }
     }

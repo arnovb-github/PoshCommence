@@ -1,4 +1,5 @@
 using System.Management.Automation;
+using PoshCommence.Base;
 using Vovin.CmcLibNet.Database;
 
 namespace PoshCommence.CmdLets
@@ -16,18 +17,21 @@ namespace PoshCommence.CmdLets
 
         private string connection;
         [Parameter(Position = 1, Mandatory = true)]
+        [ArgumentCompleter(typeof(ConnectionNameArgumentCompleter))]
         public string Connection
         {
             get { return connection; }
             set { connection = value; }
         }
         
-        private string category;
+        private string categoryName;
         [Parameter(Position = 2, Mandatory = true)]
-        public string Category
+        [ArgumentCompleter(typeof(CategoryNameArgumentCompleter))]
+        [Alias("c")]       
+        public string CategoryName
         {
-            get { return category; }
-            set { category = value; }
+            get { return categoryName; }
+            set { categoryName = value; }
         }
         
         private string item;
@@ -57,11 +61,11 @@ namespace PoshCommence.CmdLets
         {
             ICursorFilterTypeCTI f = new CursorFilterTypeCTI(clauseNumber);
             f.Connection = connection;
-            f.Category = category;
+            f.Category = categoryName;
             f.Item = item;
             f.Except = except;
             f.OrFilter = orFilter;
-            WriteVerbose($"Resulting filterstring is: {f.ToString()}, conjunction is: [{(f.OrFilter ?  "OR" : "AND")}]");
+            WriteVerbose($"Resulting filterstring is: {f}, conjunction is: [{(f.OrFilter ?  "OR" : "AND")}]");
             WriteObject(f, false);
         }
     }

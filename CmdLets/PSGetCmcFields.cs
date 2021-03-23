@@ -2,6 +2,7 @@ using System.Management.Automation;
 using System.Collections.Generic;
 using Vovin.CmcLibNet.Database;
 using Vovin.CmcLibNet.Database.Metadata;
+using PoshCommence.Base;
 
 namespace PoshCommence.CmdLets
 {
@@ -10,6 +11,8 @@ namespace PoshCommence.CmdLets
     {
         private string categoryName;
         [Parameter(Position = 0, Mandatory = true)]
+        [ArgumentCompleter(typeof(CategoryNameArgumentCompleter))]
+        [Alias("c")]
         public string CategoryName
         {
             get { return categoryName; }

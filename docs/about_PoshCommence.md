@@ -7,7 +7,7 @@ PowerShell cmdlets for Commence RM.
 
 # LONG DESCRIPTION
 PoshCommence contains cmdlets that you can use in conjunction with the
-Commence RM Designer Edition database application. It is a set of
+Commence RM Desktop Edition database application. It is a set of
 convenience cmdlets based on the 
 [Vovin.CmcLibNet](https://github.com/arnovb-github/CmcLibNet) library.
 

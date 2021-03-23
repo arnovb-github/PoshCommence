@@ -50,7 +50,7 @@ Commence category name.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: c
 
 Required: True
 Position: 0

@@ -1,4 +1,5 @@
 using System.Management.Automation;
+using PoshCommence.Base;
 
 namespace PoshCommence.CmdLets
 {
@@ -15,6 +16,8 @@ namespace PoshCommence.CmdLets
 
         private string toCategory;
         [Parameter(Position = 1, Mandatory = true)]
+        [ArgumentCompleter(typeof(CategoryNameArgumentCompleter))]
+        [Alias("c")]         
         public string ToCategory
         {
             get { return toCategory; }

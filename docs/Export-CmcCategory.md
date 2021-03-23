@@ -13,7 +13,7 @@ Export a category to file.
 ## SYNTAX
 
 ```
-Export-CmcCategory [-CategoryName] <String> [-OutputPath] <String> [-ExportFormat <ExportFormat>]
+Export-CmcCategory [-ToCategoryName] <String> [-OutputPath] <String> [-ExportFormat <ExportFormat>]
  [-Filters <ICursorFilter[]>] [-FieldNames <String[]>] [-SkipConnectedItems] [-UseThids]
  [-PreserveAllConnections] [<CommonParameters>]
 ```
@@ -43,21 +43,6 @@ Advanced example (using _Tutorial database_): export address fields and list of 
 
 ## PARAMETERS
 
-### -CategoryName
-Name of Commence category to export from.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 0
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -ExportFormat
 File type to export to.
 
@@ -69,13 +54,13 @@ Accepted values: Xml, Json, Html, Text, Excel, GoogleSheets, Event
 
 Required: False
 Position: Named
-Default value: None
+Default **********value**********: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -FieldNames
-Array of fieldnames to include in the export. Does no accept related fields.
+Array of fieldnames to include in the export. Does not accept related fields (yet).
 
 ```yaml
 Type: String[]
@@ -149,8 +134,23 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -CategoryName
+Commence category to export from.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: c
+
+Required: True
+Position: 0
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -UseThids
-Include THID in export.
+Include THIDs in export.
 
 ```yaml
 Type: SwitchParameter

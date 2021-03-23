@@ -16,6 +16,9 @@ namespace PoshCommence.CmdLets
             set { clauseNumber = value; }
         }
 
+        // we cannot autocomplete here because we do not know what category
+        // we are working in
+        // We could display all database fields but that's probably worse than no auto-complete.
         private string fieldName;
         [Parameter(Position = 1, Mandatory = true)]
         public string FieldName
@@ -90,7 +93,7 @@ namespace PoshCommence.CmdLets
             }
             f.MatchCase = matchCase;
             f.OrFilter = orFilter;
-            WriteVerbose($"Resulting filterstring is: {f.ToString()}, conjunction is: [{(f.OrFilter ?  "OR" : "AND")}]");
+            WriteVerbose($"Resulting filterstring is: {f}, conjunction is: [{(f.OrFilter ?  "OR" : "AND")}]");
             WriteObject(f, false);
         }
     }

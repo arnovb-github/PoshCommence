@@ -1,3 +1,4 @@
+using PoshCommence.Base;
 using PoshCommence.Base.Extensions;
 using System.Management.Automation;
 using Vovin.CmcLibNet.Attributes;
@@ -18,21 +19,25 @@ namespace PoshCommence.CmdLets
 
         private string connection;
         [Parameter(Position = 1, Mandatory = true)]
+        [ArgumentCompleter(typeof(ConnectionNameArgumentCompleter))]
         public string Connection
         {
             get { return connection; }
             set { connection = value; }
         }
         
-        private string category;
+        private string categoryName;
         [Parameter(Position = 2, Mandatory = true)]
-        public string Category
+        [ArgumentCompleter(typeof(CategoryNameArgumentCompleter))]
+        [Alias("c")]        
+        public string ToCategoryName
         {
-            get { return category; }
-            set { category = value; }
+            get { return categoryName; }
+            set { categoryName = value; }
         }
         private string fieldName;
         [Parameter(Position = 3, Mandatory = true)]
+        [ArgumentCompleter(typeof(FieldNameArgumentCompleter))]
         public string FieldName
         {
             get { return fieldName; }
@@ -90,7 +95,7 @@ namespace PoshCommence.CmdLets
             ICursorFilterTypeCTCF f = new CursorFilterTypeCTCF(clauseNumber);
             f.Except = except;
             f.Connection = connection;
-            f.Category = category;
+            f.Category = categoryName;
             f.FieldName = fieldName;
             f.Qualifier = qualifier;
             if (qualifier == FilterQualifier.Between)
@@ -104,7 +109,7 @@ namespace PoshCommence.CmdLets
             }
             f.MatchCase = matchCase;
             f.OrFilter = orFilter;
-            WriteVerbose($"Resulting filterstring is: {f.ToString()}, conjunction is: [{(f.OrFilter ?  "OR" : "AND")}]");
+            WriteVerbose($"Resulting filterstring is: {f}, conjunction is: [{(f.OrFilter ?  "OR" : "AND")}]");
             WriteObject(f, false);
         }
     }

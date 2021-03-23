@@ -37,7 +37,7 @@ Commence category to apply filter on.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: c
 
 Required: True
 Position: 0

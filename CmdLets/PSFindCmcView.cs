@@ -12,7 +12,7 @@ namespace PoshCommence.CmdLets
 
         private string viewName;
         [Parameter(Position = 0)]
-        [ArgumentCompleter(typeof(ViewDefArgumentCompleter))]
+        [ArgumentCompleter(typeof(ViewNameArgumentCompleter))]
         public string Name
         {
             get { return viewName; }
@@ -21,8 +21,9 @@ namespace PoshCommence.CmdLets
 
         private string categoryName;
         [Parameter]
+        [Alias("c")]
         [ArgumentCompleter(typeof(CategoryNameArgumentCompleter))]
-        public string Category
+        public string CategoryName
         {
             get { return categoryName; }
             set { categoryName = value; }
@@ -30,6 +31,7 @@ namespace PoshCommence.CmdLets
 
         private string viewType;
         [Parameter]
+        [Alias("t")]
         [ArgumentCompleter(typeof(ViewTypeArgumentCompleter))]
         public string Type
         {
@@ -37,13 +39,14 @@ namespace PoshCommence.CmdLets
             set { viewType = value; }
         }
 
-        private bool force;
-        [Parameter]
-        public SwitchParameter Force
-        {
-            get { return force; }
-            set { force = value; }
-        }
+        //private bool force;
+        //[Parameter]
+        //[Alias("f")]
+        //public SwitchParameter Force
+        //{
+        //    get { return force; }
+        //    set { force = value; }
+        //}
 
         protected override void BeginProcessing()
         {
@@ -52,10 +55,7 @@ namespace PoshCommence.CmdLets
         }
         protected override void ProcessRecord()
         {
-            if (!ViewInfo.Ready() || force) {
-                ViewInfo.GetViewDefinitions();
-            }
-            WriteObject(ViewInfo.FindView(CreateFilterList()));
+            WriteObject(CommenceMetadata.FindView(CreateFilterList()));
         }
 
         protected override void EndProcessing()

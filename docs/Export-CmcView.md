@@ -14,7 +14,7 @@ Export a Commence view to file.
 
 ```
 Export-CmcView [-ViewName] <String> [-OutputPath] <String> [-ExportFormat <ExportFormat>]
- [-PreserveAllConnections] [<CommonParameters>]
+ [-PreserveAllConnections] [-UseColumnNames] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -24,10 +24,10 @@ Export a Commence view to file if the view supports it.
 
 ### Example 1
 ```powershell
-PS C:\> Export-CmcView 'Contact List' -OutputPath contactlist.xml
+Export-CmcView 'Contact List' -OutputPath contactlist.xml
 ```
 
-Export view 'Contact List` to file contactlist.xml using default settings.
+Export view 'Contact List` to file 'contactlist.xml' using default settings.
 
 ## PARAMETERS
 
@@ -48,7 +48,7 @@ Accept wildcard characters: False
 ```
 
 ### -OutputPath
-{{ Fill OutputPath Description }}
+Path and filename to export to.
 
 ```yaml
 Type: String
@@ -64,6 +64,21 @@ Accept wildcard characters: False
 
 ### -PreserveAllConnections
 Ensure inclusion of all connected items. Involves a significant performance penalty. See [details](Export-CmcCategory.md#on-preserveallconnections).
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -UseColumnNames
+Use the columnlabel as node/key/column header. If omitted, the underlying Commence fieldname is used (default).
 
 ```yaml
 Type: SwitchParameter

@@ -1,4 +1,5 @@
 using System.Management.Automation;
+using PoshCommence.Base;
 using Vovin.CmcLibNet.Database;
 
 namespace PoshCommence.CmdLets
@@ -16,6 +17,7 @@ namespace PoshCommence.CmdLets
 
         private string connection;
         [Parameter(Position = 1, Mandatory = true)]
+        [ArgumentCompleter(typeof(ConnectionNameArgumentCompleter))]
         public string Connection
         {
             get { return connection; }
@@ -24,7 +26,9 @@ namespace PoshCommence.CmdLets
         
         private string category;
         [Parameter(Position = 2, Mandatory = true)]
-        public string Category
+        [ArgumentCompleter(typeof(CategoryNameArgumentCompleter))]
+        [Alias("c")]        
+        public string CategoryName
         {
             get { return category; }
             set { category = value; }
@@ -32,18 +36,20 @@ namespace PoshCommence.CmdLets
 
         private string connection2;
         [Parameter(Position = 3, Mandatory = true)]
+        [ArgumentCompleter(typeof(ConnectionNameArgumentCompleter))]
         public string Connection2
         {
             get { return connection2; }
             set { connection2 = value; }
         }
 
-        private string category2;
+        private string toCategoryName;
         [Parameter(Position = 4, Mandatory = true)]
-        public string Category2
+        [ArgumentCompleter(typeof(CategoryNameArgumentCompleter))]
+        public string ToCategoryName
         {
-            get { return category2; }
-            set { category2 = value; }
+            get { return toCategoryName; }
+            set { toCategoryName = value; }
         }
         
         private string item;
@@ -75,11 +81,11 @@ namespace PoshCommence.CmdLets
             f.Connection = connection;
             f.Category = category;
             f.Connection2 = connection2;
-            f.Category2 = category2;
+            f.Category2 = toCategoryName;
             f.Item = item;
             f.Except = except;
             f.OrFilter = orFilter;
-            WriteVerbose($"Resulting filterstring is: {f.ToString()}, conjunction is: [{(f.OrFilter ?  "OR" : "AND")}]");
+            WriteVerbose($"Resulting filterstring is: {f}, conjunction is: [{(f.OrFilter ?  "OR" : "AND")}]");
             WriteObject(f, false);
         }
     }

@@ -19,6 +19,8 @@ namespace PoshCommence.CmdLets
         private IExportSettings _exportOptions = new ExportSettings();
         private string _categoryName;
         [Parameter(Position = 0, Mandatory = true)]
+        [ArgumentCompleter(typeof(CategoryNameArgumentCompleter))]
+        [Alias("c")]
         public string CategoryName
         {
         get { return _categoryName; }
@@ -53,6 +55,7 @@ namespace PoshCommence.CmdLets
         // because we want to be able to pass a PS @() array in
         private string[] _fieldNames;
         [Parameter()]
+        [ArgumentCompleter(typeof(FieldNameArgumentCompleter))]
         public string[] FieldNames
         {
             get { return _fieldNames; }

@@ -13,9 +13,9 @@ Get a Commence CTCF filter.
 ## SYNTAX
 
 ```
-Get-CmcFilterCTCF [-ClauseNumber] <Int32> [-Connection] <String> [-Category] <String> [-FieldName] <String>
- [-Qualifier] <FilterQualifier> [-FieldValue] <String> [[-FieldValue2] <String>] [-MatchCase] [-Except]
- [-OrFilter] [<CommonParameters>]
+Get-CmcFilterCTCF [-ClauseNumber] <Int32> [-Connection] <String> [-ToCategoryName] <String>
+ [-FieldName] <String> [-Qualifier] <FilterQualifier> [-FieldValue] <String> [[-FieldValue2] <String>]
+ [-MatchCase] [-Except] [-OrFilter] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -31,21 +31,6 @@ Get-CmcFilterCTCF 1 'Relates to' Contact lastName EqualTo Douglas -MatchCase
 (Assumes _Tutorial database_, category 'Account') Set filter 1 to get items in 'Account' that have connected items in connection 'Relates to' to category 'Contact' where field 'lastName' is equal to string 'Douglas', case-sensitive.
 
 ## PARAMETERS
-
-### -Category
-Connected Commence category.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 2
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -ClauseNumber
 Position of the filter (1-8).
@@ -178,6 +163,21 @@ Accepted values: Contains, DoesNotContain, On, At, EqualTo, NotEqualTo, LessThan
 
 Required: True
 Position: 4
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ToCategoryName
+{{ Fill ToCategoryName Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: c
+
+Required: True
+Position: 2
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

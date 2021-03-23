@@ -13,8 +13,8 @@ Get filter on connection to connected item.
 ## SYNTAX
 
 ```
-Get-CmcFilterCTCTI [-ClauseNumber] <Int32> [-Connection] <String> [-Category] <String> [-Connection2] <String>
- [-Category2] <String> [-Item] <String> [-Except] [-OrFilter] [<CommonParameters>]
+Get-CmcFilterCTCTI [-ClauseNumber] <Int32> [-Connection] <String> [-CategoryName] <String>
+ [-Connection2] <String> [-ToCategoryName] <String> [-Item] <String> [-Except] [-OrFilter] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -31,31 +31,16 @@ Get-CmcFilterCTCTI 1 'Relates to' History 'Relates to' Contact 'Findlay.Howard'
 
 ## PARAMETERS
 
-### -Category
-Primary connected Commence category
+### -CategoryName
+Commence category name.
 
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: c
 
 Required: True
 Position: 2
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Category2
-Secondary connected Commence category name.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 4
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -146,6 +131,21 @@ Aliases:
 
 Required: False
 Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ToCategoryName
+Commence category connected via `Connection2`.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: 4
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

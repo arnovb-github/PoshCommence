@@ -6,13 +6,13 @@ using System.Collections;
 
 namespace PoshCommence.Base
 {
-    internal class ViewDefArgumentCompleter : BaseArgumentCompleter
+    internal class ViewNameArgumentCompleter : BaseArgumentCompleter
     {
         public override IEnumerable<CompletionResult> CompleteArgument(string commandName, string parameterName, 
             string wordToComplete, CommandAst commandAst, IDictionary fakeBoundParameters)
         {
-            return ViewInfo.Views.Where(s => s.Name.ToLower().StartsWith(wordToComplete.ToLower()))
-               .Select(s => new CompletionResult(base.MapString(s.Name)));
+            return CommenceMetadata.Views.Where(s => s.StartsWith(wordToComplete))
+                .Select(s => new CompletionResult(base.MapString(s)));
         }
     }
 }

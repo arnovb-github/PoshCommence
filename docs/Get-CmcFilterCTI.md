@@ -13,8 +13,8 @@ Get filter for items connected to an item.
 ## SYNTAX
 
 ```
-Get-CmcFilterCTI [-ClauseNumber] <Int32> [-Connection] <String> [-Category] <String> [-Item] <String> [-Except]
- [-OrFilter] [<CommonParameters>]
+Get-CmcFilterCTI [-ClauseNumber] <Int32> [-Connection] <String> [-CategoryName] <String> [-Item] <String>
+ [-Except] [-OrFilter] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -31,13 +31,13 @@ Get-CmcFilterCTI 1 'Relates to' Contact 'Findlay.Howard'
 
 ## PARAMETERS
 
-### -Category
-Connected Commence category name.
+### -CategoryName
+Commence category name.
 
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: c
 
 Required: True
 Position: 2
