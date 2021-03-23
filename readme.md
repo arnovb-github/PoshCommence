@@ -106,7 +106,7 @@ When you pipe more than one view to `Open-CmcView` it will open up to the first 
 ## Getting field values ##
 `Get-CmcFieldValues` returns an object for every database row. Think of it as a hashtable with the fieldname and corresponding values(s):
 
-Example (_Tutororial database_):
+Example (_Tutorial database_):
 
 ```powershell
 # return  fieldvalues for fields "accountKey" and "businessNumber"
@@ -126,14 +126,14 @@ First Class Inc           416-781-1209
 
 The syntax of `Get-CmcFieldValues` is:
 
-(for categories):
+for categories:
 `Get-CmcFieldValues [-CategoryName] <string> [-FieldNames] <string[]> [-UseThids] [-Filters <ICursorFilter[]>] [-RelatedColumns <RelatedColumn[]>] [<CommonParameters>]`
 
-(for views):
+for views:
 `Get-CmcFieldValues [-ViewName] <string> [-FieldNames] <string[]> [-Filters <ICursorFilter[]>] [-RelatedColumns <RelatedColumn[]>] [<CommonParameters>]`
 
 ### Get THIDs ###
-If you want THIDs, specify the `-UseThids` switch. You get an additional `CommenceField` object with fieldname 'THID' for every row. This switch does not work on views.
+If you want THIDs, specify the `-UseThids` switch. You get an additional `CommenceField` object with fieldname 'THID' for every row.
 
 ### Related columns ###
 Providing related columns involves some more work. These are the columns you would set by the `cursor.SetRelatedColumn(…)` method in the Commence API.
