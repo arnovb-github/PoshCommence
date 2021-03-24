@@ -16,6 +16,17 @@ namespace PoshCommence.Base
         private static IDictionary<string, IEnumerable<string>> fieldNames = new Dictionary<string, IEnumerable<string>>();
         private static IDictionary<string, IEnumerable<ICommenceConnection>> connections = new Dictionary<string, IEnumerable<ICommenceConnection>>();
 
+        static CommenceMetadata()
+        {
+            var monitor = new CommenceProcessMonitor.ProcessMonitor();
+            monitor.CommenceDatabaseChanged += Monitor_CommenceDatabaseChanged;
+        }
+
+        private static void Monitor_CommenceDatabaseChanged(object sender, CommenceProcessMonitor.CommenceDatabaseChangedArgs e)
+        {
+            ClearAll();
+        }
+
         #region Categories
         internal static IEnumerable<string> Categories
         {

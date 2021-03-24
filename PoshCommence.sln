@@ -5,7 +5,13 @@ VisualStudioVersion = 16.0.31112.23
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PoshCommence", "PoshCommence.csproj", "{F9BD0B36-B994-4080-A636-5E26FABE9487}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "CommenceProcessMonitor", "..\..\..\Shared\CommenceProcessMonitor\CommenceProcessMonitor\CommenceProcessMonitor.shproj", "{5AA6FBCB-9B62-4C48-972C-2C9E186695E4}"
+EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		..\..\..\Shared\CommenceProcessMonitor\CommenceProcessMonitor\CommenceProcessMonitor.projitems*{5aa6fbcb-9b62-4c48-972c-2c9e186695e4}*SharedItemsImports = 13
+		..\..\..\Shared\CommenceProcessMonitor\CommenceProcessMonitor\CommenceProcessMonitor.projitems*{f9bd0b36-b994-4080-a636-5e26fabe9487}*SharedItemsImports = 5
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU

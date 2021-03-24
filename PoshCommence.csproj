@@ -18,4 +18,6 @@
     <PackageReference Include="Vovin.CmcLibNet" Version="1.0.3" />
   </ItemGroup>
 
+  <Import Project="..\..\..\Shared\CommenceProcessMonitor\CommenceProcessMonitor\CommenceProcessMonitor.projitems" Label="Shared" />
+
 </Project>
