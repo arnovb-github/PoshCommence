@@ -167,12 +167,6 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## RELATED LINKS
 
-[Get-CmcFilterF](Get-CmcFilterF.md)
-
-[Get-CmcFilterCTI](Get-CmcFilterCTI.md)
-
-[Get-CmcFilterCTCF](Get-CmcFilterCTCF.md)
-
-[Get-CmcFilterCTCTI](Get-CmcFilterCTCTI.md)
+[Get-CmcFilter](Get-CmcFilter.md)
 
 [Get-CmcRelatedColumn](Get-CmcRelatedColumn.md)

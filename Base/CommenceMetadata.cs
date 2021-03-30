@@ -18,7 +18,8 @@ namespace PoshCommence.Base
 
         static CommenceMetadata()
         {
-            var monitor = new CommenceProcessMonitor.ProcessMonitor();
+            // git has no idea about this. CommenceProcessMonitor lives in a separate shared project.
+            var monitor = new CommenceProcessMonitor.ProcessMonitor(); 
             monitor.CommenceDatabaseChanged += Monitor_CommenceDatabaseChanged;
         }
 

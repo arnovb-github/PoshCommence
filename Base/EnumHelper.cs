@@ -4,6 +4,7 @@ using System.Text;
 
 namespace  PoshCommence.Base
 {
+    [Obsolete]
     public static class EnumHelper
     {
         public static IEnumerable<object> ListEnum<T>() where T: Enum

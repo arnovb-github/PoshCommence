@@ -1,13 +1,15 @@
 using PoshCommence.Base;
 using PoshCommence.Base.Extensions;
+using System;
 using System.Management.Automation;
 using Vovin.CmcLibNet.Attributes;
 using Vovin.CmcLibNet.Database;
 
 namespace PoshCommence.CmdLets
 {
+    [Obsolete]
     [Cmdlet(VerbsCommon.Get, "CmcFilterCTCF")]
-    public class GetFilterCTCF  : PSCmdlet
+    internal  class GetFilterCTCF  : PSCmdlet //internal because I do not want to expose this but keep the code for now
     {
         private int clauseNumber;
         [Parameter(Position = 0, Mandatory = true)]

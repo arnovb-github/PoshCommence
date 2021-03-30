@@ -12,7 +12,7 @@ namespace PoshCommence.Base
             string wordToComplete, CommandAst commandAst, IDictionary fakeBoundParameters)
         {
             string categoryParam;
-            if (fakeBoundParameters != null && base.ContainsKey(fakeBoundParameters, out categoryParam))
+            if (fakeBoundParameters != null && base.ContainsKey(fakeBoundParameters, base.categoryParameterNames, out categoryParam))
             {
                 // we want to search in the FieldNames dictionary in the static 'cache' class 
                 // the (list of) values that belong to the key that equals 

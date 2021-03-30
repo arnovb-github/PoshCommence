@@ -13,7 +13,7 @@ Export a category to file.
 ## SYNTAX
 
 ```
-Export-CmcCategory [-ToCategoryName] <String> [-OutputPath] <String> [-ExportFormat <ExportFormat>]
+Export-CmcCategory [-CategoryName] <String> [-OutputPath] <String> [-ExportFormat <ExportFormat>]
  [-Filters <ICursorFilter[]>] [-FieldNames <String[]>] [-SkipConnectedItems] [-UseThids]
  [-PreserveAllConnections] [<CommonParameters>]
 ```
@@ -25,7 +25,7 @@ Use this to export the data in a Commence category to a file.
 
 ### Example 1
 ```powershell
-PS C:\> Export-CmcCategory Account accounts.xml
+Export-CmcCategory Account accounts.xml
 ```
 
 Simple example (using _Tutorial database_): Export the entire Account category to file account.xml using default settings.
@@ -182,10 +182,4 @@ Use this cmdlet for simple exports. For advanced exporting, see [Vovin.CmcLibNet
 
 ## RELATED LINKS
 
-[Get-CmcFilterF](Get-CmcFilterF.md)
-
-[Get-CmcFilterCTI](Get-CmcFilterCTI.md)
-
-[Get-CmcFilterCTCF](Get-CmcFilterCTCF.md)
-
-[Get-CmcFilterCTCTI](Get-CmcFilterCTCTI.md)
+[Get-CmcFilter](Get-CmcFilter.md)

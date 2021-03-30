@@ -41,7 +41,7 @@ The first parameter will search the list of views for views that have names that
 Find-CmcView prod -Category Account -Type "Report Viewer"
 ```
 
-Will list the views that match 'prod' in category 'Account' and of type 'Report Viewer'. The `-Category` and `-Type` parameters support tab-completion after the first run.
+Will list the views that match 'prod' in category 'Account' and of type 'Report Viewer'. The `-Category` and `-Type` parameters both have tab-completion.
 
 ## PARAMETERS
 

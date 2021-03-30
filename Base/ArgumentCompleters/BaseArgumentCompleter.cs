@@ -12,6 +12,8 @@ namespace PoshCommence.Base
         // we need more than one, because sometimes more than one is specified,
         // or it is has a different name
         protected readonly string[] categoryParameterNames = {"CategoryName", "ToCategoryName"};
+        protected readonly string[] connectionParams = { "Connection", "Connection2" };
+
         protected internal string MapString(string s)
         {
             if (s.Contains(" "))
@@ -19,10 +21,10 @@ namespace PoshCommence.Base
             return s;
         }
 
-        protected internal bool ContainsKey(IDictionary dict, out string result)
+        protected internal bool ContainsKey(IDictionary dict, string[] paramNames, out string result)
         {
             result = string.Empty;
-            var matches = dict.Keys.Cast<string>().ToArray().Intersect(categoryParameterNames);
+            var matches = dict.Keys.Cast<string>().ToArray().Intersect(paramNames);
             // when more than 1 parameter matches, we have no mechanism of telling which one to use
             // i.e. if we'd have a command that specifies both the -CategoryName and -ToCategoryName parameters
             // the CLI would not know whether to auto-complete -CategoryName of -ToCategoryName
