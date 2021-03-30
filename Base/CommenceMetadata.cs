@@ -18,7 +18,7 @@ namespace PoshCommence.Base
 
         static CommenceMetadata()
         {
-            // git has no idea about this. CommenceProcessMonitor lives in a separate shared project.
+            // https://github.com/arnovb-github/CommenceProcessMonitor
             var monitor = new CommenceProcessMonitor.ProcessMonitor(); 
             monitor.CommenceDatabaseChanged += Monitor_CommenceDatabaseChanged;
         }
