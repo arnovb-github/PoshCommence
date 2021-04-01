@@ -153,20 +153,34 @@ Usage:
 Note: you cannot yet specify only related columns, you need to specify at least 1 direct column (simply ignore it in the output).
 
 ### Filters ###
-You can also supply filters with `-Filters`. For every filtertype there is a cmdlet:
+You can also supply filters with `-Filters`. Use the `Get-CmcFilter`. This is a cmdlet that has a dynamic parameterset for every type of filter:
 
-`Get-CmcFilterF [-ClauseNumber] <Int32> [-FieldName] <String> [-Qualifier] {Contains | DoesNotContain | On | At | EqualTo | NotEqualTo | LessThan | GreaterThan | Between | True | False | Checked | NotChecked | Yes | No | Before | After | Blank | Shared | Local | One | Zero} [-FieldValue] <String> [[-FieldValue2] <String>] [-Except] [-MatchCase] [-OrFilter] [<CommonParameters>]`
-
-`Get-CmcFilterCTI [-ClauseNumber] <Int32> [-Connection] <String> [-Category] <String> [-Item] <String> [-Except] [-OrFilter] [<CommonParameters>]`
-
-`Get-CmcFilterCTCTI [-ClauseNumber] <Int32> [-Connection] <String> [-Category] <String> [-Connection2] <String> [-Category2] <String> [-Item] <String> [-Except] [-OrFilter] [<CommonParameters>]`
-
-`Get-CmcFilterCTCF [-ClauseNumber] <Int32> [-Connection] <String> [-Category] <String> [-FieldName] <String> [-Qualifier] {Contains | DoesNotContain | On | At | EqualTo | NotEqualTo | LessThan | GreaterThan | Between | True | False | Checked | NotChecked | Yes | No | Before | After | Blank | Shared | Local | One | Zero} [-FieldValue] <String> [[-FieldValue2] <String>] [-Except] [-MatchCase] [-OrFilter] [<CommonParameters>]`
-
-Set the first filter a a `Field (F)` filter for items where the Name field does not contain 'test', case-sensitive:
+FilterType Field (F):
 
 ```powershell
-$filter = Get-CmcFilterF 1 accountKey Contains avi -Except -MatchCase -Verbose
+Get-CmcFilter [-ClauseNumber] <Int32> [-FilterType] <FilterType> [-Except] [-OrFilter] -FieldName <String>
+ -Qualifier <FilterQualifier> -FieldValue <String> [-FieldValue2 <String>] [-MatchCase] [<CommonParameters>]
+```
+
+FilterType ConnectionToItem (CTI):
+```powershell
+Get-CmcFilter [-ClauseNumber] <Int32> [-FilterType] <FilterType> [-Connection] <String> [-ToCategoryName] <String> [-Item] <String> [-Except] [-OrFilter] [<CommonParameters>]
+```
+
+FilterType ConnectionToCategoryToItem (CTCTI):
+```powershell
+Get-CmcFilter [-ClauseNumber] <Int32> [-FilterType] <FilterType> [-Connection] <String> [-ToCategoryName] <String> [-Connection2] <String> [-ToCategoryName2] <String> [-Item] <String> [-Except] [-OrFilter] [<CommonParameters>]
+```
+
+FilterType ConnectionToCategoryField (CTCF):
+```powershell
+Get-CmcFilter [-ClauseNumber] <int> [-FilterType] <FilterType> [-Connection] <string> [-ToCategoryName] <string> [-FieldName] <string> [-Qualifier] <FilterQualifier> [-FieldValue] <string> [[-FieldValue2] <string>] [-Except] [-OrFilter] [-MatchCase] [<CommonParameters>]
+```
+
+Usage example: set the first filter a a `Field (F)` filter for items where the 'accountKey' field does not contain 'avio', case-sensitive:
+
+```powershell
+$filter = Get-CmcFilter 1 -FilterType Field accountKey Contains avio -Except -MatchCase -Verbose
 ```
 
 **Important**: You specify the filter conjunction in the filters themselves. __This is different from how you do it in Commence!__ The default is **AND**. Set the `-OrFilter` switch for **OR**. There is no need to specify the filter conjunction separately. 
@@ -188,7 +202,7 @@ Example of finding all items in the _Account_ category that have more than 1 con
 Get-CmcConnectedItemCount Account 'Relates to' Contact | Where-Object { $_.Count -gt 1 } | Select-Object -Property Itemname, Count
 ```
 
-You can check the connection count for a known item by specifying the itemname as the `-FromItem` parameter. It does not (yet) accept clarified itemnames. A return value of `-1` means that the item was not found.
+You can check the connection count for a known item by specifying the itemname as the `-FromItem` parameter. A return value of `-1` means that the item was not found.
 
 ## Exporting ##
 The `Export-CmcCategory` cmdlet allows you to do simple exporting directly from the command-line. For advanced exporting see [Vovin.CmcLibNet](https://github.com/arnovb-github/CmcLibNet). 
