@@ -14,7 +14,6 @@ namespace PoshCommence.CmdLets
     [Cmdlet(VerbsCommon.Get, "CmcFilter")]
     public class GetFilter : PSCmdlet, IDynamicParameters
     {
-
         private int clauseNumber;
         [Parameter(Position = 0, Mandatory = true)]
         [ValidateSet("1","2","3","4","5","6","7","8")]

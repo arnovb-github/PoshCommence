@@ -12,7 +12,7 @@ Create a filter object used to filter Commence data.
 
 ## SYNTAX
 
-```powershell
+```
 Get-CmcFilter [-ClauseNumber] <Int32> [-FilterType] <FilterType> [-Except] [-OrFilter] -FieldName <String>
  -Qualifier <FilterQualifier> -FieldValue <String> [-FieldValue2 <String>] [-MatchCase] [<CommonParameters>]
 ```
@@ -117,30 +117,30 @@ Get-CmcFilter 7 3 'Relates to' Employee Title EqualTo 'Telemarketer'
 ```powershell
 [Enum]::GetValues([Vovin.CmcLibNet.Database.FilterType]) | % { Write-Host $_  $_.Value__}
 ```
+
 When you specify a `-FilterType` value, you can use tab-completion to cycle through all named values. This example outputs the names and the corresponding numerical values numbers of the [FilterType] enum.
 
 ### Get Qualifier names and values
 ```powershell
 [Enum]::GetValues([Vovin.CmcLibNet.Database.FilterQualifier]) | % { Write-Host $_  $_.Value__}
 ```
+
 When you specify a `-Qualifier` value, you can use tab-completion to cycle through all named values. This example outputs the names and the corresponding numerical values numbers of the [FilterQualifier] enum.
 
 ### Get the filterstring
-Seasoned Commence API users at this point may go 'WTF is happening here? Create objects for filtering Commence data? How does that work?'
-
-What happens under the hood is, when a filter is applied, the filter object is turned into a string that is passed to the `ICommenceCursor.SetFilter(...)` method, which expects a string formatted as a DDE request.
-
-A filter object created by `Get-CmcFilter` has a `ToString()` overload that creates that DDE syntax. So for getting that string just call `ToString()` on the filter object.
-
-For example:
 ```powershell
 (Get-CmcFilter 1 0 accountKey Between "A*" "K*" -MatchCase).ToString()
 # a more convenient way
 $f = Get-CmcFilter 1 0 accountKey Between "A*" "K*" -MatchCase
 $f # ToString() is implicit
 ```
+
 Output:
 '[ViewFilter(1,F,,"accountKey","Between","A*","K*")]'
+
+Seasoned Commence API users at this point may go 'WTF is happening here? Create objects for filtering Commence data? How does that work?'
+
+What happens under the hood is, when a filter is applied, the filter object is turned into a specially formatted string that is passed to the `ICommenceCursor.SetFilter(...)` method.
 
 ## PARAMETERS
 

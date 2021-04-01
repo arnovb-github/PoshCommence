@@ -193,13 +193,22 @@ You can check the connection count for a known item by specifying the itemname a
 ## Exporting ##
 The `Export-CmcCategory` cmdlet allows you to do simple exporting directly from the command-line. For advanced exporting see [Vovin.CmcLibNet](https://github.com/arnovb-github/CmcLibNet). 
 
-`Export-CmcCategory [-CategoryName] <String> [-ExportFormat {Xml | Json | Html | Text | Excel | GoogleSheets | Event 
-    }] [-FieldNames <String[]>] [-Filters <ICursorFilter[]>] [-SkipConnectedItems] [-UseThids] -OutputPath <String> [<C 
-    ommonParameters>]`
+### Syntax for ByCategory
+```powershell
+Export-CmcData [-CategoryName] <String> [-OutputPath] <String> [-ExportFormat <ExportFormat>]
+ [-Filters <ICursorFilter[]>] [-FieldNames <String[]>] [-SkipConnectedItems] [-UseThids]
+ [-PreserveAllConnections] [<CommonParameters>]
+```
+
+### Syntax for ByView
+```powershell
+Export-CmcData [-ViewName] <String> [-OutputPath] <String> [-ExportFormat <ExportFormat>] [-SkipConnectedItems]
+ [-PreserveAllConnections] [-UseColumnNames] [<CommonParameters>]
+```
 
 Simple example (_Tutorial database_): export the entire _Account_ category to  file _account.xml_.
 ```powershell
-Export-CmcCategory Account accounts.xml
+Export-CmcData Account accounts.xml
 ```
 
 Advanced example: export address fields and list of Sales person of items in _Account_ that have 'Wing' in their name or are connected to _salesTeam_ item 'Team 1' to a Json file.
@@ -208,13 +217,16 @@ Advanced example: export address fields and list of Sales person of items in _Ac
 $filters = @((Get-CmcFilterF 1 accountKey 0 Wing),
             (Get-CmcFilterCTI 2 'Relates to' 'salesTeam' 'Team 1' -OrFilter))
 # perform the export
-Export-CmcCategory Account accounts.json -ExportFormat Json -Filters $filters -FieldNames accountKey, Address, City, zipPostal, Country, 'Relates to Employee'
+Export-CmcData Account accounts.json -ExportFormat Json -Filters $filters -FieldNames accountKey, Address, City, zipPostal, Country, 'Relates to Employee'
 ```
 If you are not interested in connected values you can specify `-SkipConnectedItems`, which will significantly boost performance. The `-UseThids` switch will give you thids. You can use it if you know what they are :).
 
-The `Export-CmcView` will export a view as-is (provided the view supports exporting, not all viewtypes in Commence do). Notice that the column order may not be retained, connected values may come last. This is by design. View names in Commence are case-sensitive!
+Example for exporting a view:
+```powershell
+Export-CmcView -v 'Contact List' -OutputPath contactlist.xml
+```
 
-`Export-CmcView [-ViewName] <string> [-Path] <string> [-ExportFormat <ExportFormat>] [<CommonParameters>]`
+Export view 'Contact List` to file 'contactlist.xml' using default settings.
 
 ## Debugging ##
 Some Cmdlets make _Vovin.CmcLibNet_ issue DDE commands to Commence. These can be extraordinarily hard to debug. Display the last DDE error thrown in Commence with:

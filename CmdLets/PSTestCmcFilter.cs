@@ -15,7 +15,7 @@ namespace PoshCommence.CmdLets
         [Alias("c")]         
         public string Category { get; set; }
 
-        [Parameter(Position = 1, Mandatory = true)]
+        [Parameter(Position = 1, Mandatory = true, ValueFromPipeline = true)]
         public ICursorFilter Filter { get; set; }
 
         protected override void ProcessRecord()
