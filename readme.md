@@ -20,15 +20,19 @@ There is full `Get-Help` for every cmdlet, created with the [PlatyPS](https://ww
 ## Exploring the database ##
 Get the name of the currently active Commence database:
 
-`Get-CmcDatabaseName [<CommonParameters>]`
+```powershell
+Get-CmcDatabaseName [<CommonParameters>]
+```
 
 Get the Commence _active.log_ file:
 
-`Get-CmcLogFile [<CommonParameters>]`
+```powershell
+Get-CmcLogFile [<CommonParameters>]
+```
 
 This will return a `System.IO.FileInfo` object.
 
-Example:
+### Example:
 ```powershell
 # get last 10 lines of log file
 Get-Content (Get-CmcLogFile).FullName -Tail 10
@@ -37,12 +41,14 @@ Get-Content (Get-CmcLogFile).FullName -Tail 10
 **Side note** In the vast majority of cases, you will want to look at contents of the log file. So why not simply make the cmdlet return the contents of the file? The reason for that is two-fold: consistency and retaining information. A file is actually an object, with properties. Like *size*, or *last modified*. `Get-CmcLogFile` does just what is says: return the file object. By doing so, it keeps true to the spirit of Powershell in which everything you work with is an object. Just returning the contents of the file, or even the name of the file, would ultimately make it harder to work with the cmdlet.
 
 Get the Commence _data.ini_ file:
-
-`Get-CmcIniFile [<CommonParameters>]`
+```powershell
+Get-CmcIniFile [<CommonParameters>]
+```
 
 This will return a `System.IO.FileInfo` object.
 
-Example:
+### Example
+Get the _data.ini_ file:
 ```powershell
 # get contents of data.ini
 Get-Content (Get-CmcIniFile).FullName 
@@ -50,20 +56,24 @@ Get-Content (Get-CmcIniFile).FullName
 
 Get the database directory:
 
-`Get-CmcDatabaseDirectory [<CommonParameters>]`
+```powershell
+Get-CmcDatabaseDirectory [<CommonParameters>]
+```
 
 This will return a `System.IO.DirectoryInfo` object.
 
-Example:
+### Example
 ```powershell
 "The full database path is " + (Get-CmcDatabaseDirectory).FullName
 ```
 
 List all categories:
 
-`Get-CmcCategories [<CommonParameters>]`
+```powershell
+Get-CmcCategories [<CommonParameters>]
+```
 
-Example:
+### Example
 ```powershell
 # list the category names
 Get-CmcCategories | Select-Object -Property Name 
@@ -71,9 +81,11 @@ Get-CmcCategories | Select-Object -Property Name
 
 List all fields in a category:
 
-`Get-CmcFields [-CategoryName] <string> [<CommonParameters>]`
+```powershell
+Get-CmcFields [-CategoryName] <string> [<CommonParameters>]
+```
 
-Example:
+### Example
 ```powershell
 # get info on the Name field for category Account
 Get-CmcFields Account | Where-Object { $_.Type -eq Name } # 'Name' is a fieldtype in Commence
@@ -82,7 +94,9 @@ Get-CmcFields Account | Where-Object { $_.Type -eq Name } # 'Name' is a fieldtyp
 Use the `Get-CmcFieldTypes` cmdlet for getting the list of Commence field types
 
 List all connections for a category:
-`Get-CmcConnections [-CategoryName] <string> [<CommonParameters>]`
+```powershell
+Get-CmcConnections [-CategoryName] <string> [<CommonParameters>]
+```
 
 This is self-explanatory. Note that connection names in Commence are case-sensitive.
 
@@ -106,7 +120,7 @@ When you pipe more than one view to `Open-CmcView` it will open up to the first 
 ## Getting field values ##
 `Get-CmcFieldValues` returns an object for every database row. Think of it as a hashtable with the fieldname and corresponding values(s):
 
-Example (_Tutorial database_):
+### Example (_Tutorial database_):
 
 ```powershell
 # return  fieldvalues for fields "accountKey" and "businessNumber"
@@ -124,13 +138,15 @@ First Class Inc           416-781-1209
 ... 
 ```
 
-The syntax of `Get-CmcFieldValues` is:
+### Syntax for categories:
+```powershell
+Get-CmcFieldValues [-CategoryName] <string> [-FieldNames] <string[]> [-UseThids] [-Filters <ICursorFilter[]>] [-RelatedColumns <RelatedColumn[]>] [<CommonParameters>]
+```
 
-for categories:
-`Get-CmcFieldValues [-CategoryName] <string> [-FieldNames] <string[]> [-UseThids] [-Filters <ICursorFilter[]>] [-RelatedColumns <RelatedColumn[]>] [<CommonParameters>]`
-
-for views:
-`Get-CmcFieldValues [-ViewName] <string> [-FieldNames] <string[]> [-Filters <ICursorFilter[]>] [-RelatedColumns <RelatedColumn[]>] [<CommonParameters>]`
+### Syntax for views:
+```powershell
+Get-CmcFieldValues [-ViewName] <string> [-FieldNames] <string[]> [-Filters <ICursorFilter[]>] [-RelatedColumns <RelatedColumn[]>] [<CommonParameters>]
+```
 
 ### Get THIDs ###
 If you want THIDs, specify the `-UseThids` switch. You get an additional `CommenceField` object with fieldname 'THID' for every row.
@@ -177,6 +193,7 @@ FilterType ConnectionToCategoryField (CTCF):
 Get-CmcFilter [-ClauseNumber] <int> [-FilterType] <FilterType> [-Connection] <string> [-ToCategoryName] <string> [-FieldName] <string> [-Qualifier] <FilterQualifier> [-FieldValue] <string> [[-FieldValue2] <string>] [-Except] [-OrFilter] [-MatchCase] [<CommonParameters>]
 ```
 
+### Example
 Usage example: set the first filter a a `Field (F)` filter for items where the 'accountKey' field does not contain 'avio', case-sensitive:
 
 ```powershell
@@ -185,7 +202,7 @@ $filter = Get-CmcFilter 1 -FilterType Field accountKey Contains avio -Except -Ma
 
 **Important**: You specify the filter conjunction in the filters themselves. __This is different from how you do it in Commence!__ The default is **AND**. Set the `-OrFilter` switch for **OR**. There is no need to specify the filter conjunction separately. 
 
-The `Get-CmcFilter…` cmcdlets do **not** check for correctness of the parameters, but there is a cmdlet to try out filters:
+The `Get-CmcFilter` cmcdlet does **not** check for correctness of the parameters (for example: is a qualifier can be appliewd to the supplied field), but there is a cmdlet to try out filters:
 
 `Test-CmcFilter [-Category] <string> [-Filter] <ICursorFilter> [<CommonParameters>]`
 
@@ -194,9 +211,12 @@ This will tell you if Commence accepts the filter as valid, regardless of result
 ## Count connected items ##
 This can be useful for example when the database specifies at most a single connection, but multiple connections exist. (Commence does not always enforce that setting).
 
-`Get-CmcConnectedItemCount [-FromCategory] <string> [-ConnectionName] <string> [-ToCategory] <string> [[-FromItem] <string>] [<CommonParameters>]`
+```powershell
+Get-CmcConnectedItemCount [-FromCategory] <string> [-ConnectionName] <string> [-ToCategory] <string> [[-FromItem] <string>] [<CommonParameters>]`
+```
 
-Example of finding all items in the _Account_ category that have more than 1 connection to the _Contact_ category (using the _Tutorial database_):
+### Example
+Finding all items in the _Account_ category that have more than 1 connection to the _Contact_ category (using the _Tutorial database_):
 
 ```powershell
 Get-CmcConnectedItemCount Account 'Relates to' Contact | Where-Object { $_.Count -gt 1 } | Select-Object -Property Itemname, Count
@@ -220,11 +240,13 @@ Export-CmcData [-ViewName] <String> [-OutputPath] <String> [-ExportFormat <Expor
  [-PreserveAllConnections] [-UseColumnNames] [<CommonParameters>]
 ```
 
-Simple example (_Tutorial database_): export the entire _Account_ category to  file _account.xml_.
+### Example (_Tutorial database_)
+Export the entire _Account_ category to  file _account.xml_.
 ```powershell
 Export-CmcData Account accounts.xml
 ```
 
+### Example (_Tutorial database_)
 Advanced example: export address fields and list of Sales person of items in _Account_ that have 'Wing' in their name or are connected to _salesTeam_ item 'Team 1' to a Json file.
 ```powershell
 # create array of filters
@@ -235,16 +257,10 @@ Export-CmcData Account accounts.json -ExportFormat Json -Filters $filters -Field
 ```
 If you are not interested in connected values you can specify `-SkipConnectedItems`, which will significantly boost performance. The `-UseThids` switch will give you thids. You can use it if you know what they are :).
 
-Example for exporting a view:
+### Example (_Tutorial database_)
+Exporting a view:
 ```powershell
 Export-CmcView -v 'Contact List' -OutputPath contactlist.xml
 ```
 
-Export view 'Contact List` to file 'contactlist.xml' using default settings.
-
-## Debugging ##
-Some Cmdlets make _Vovin.CmcLibNet_ issue DDE commands to Commence. These can be extraordinarily hard to debug. Display the last DDE error thrown in Commence with:
-
-`Get-CmcLastDDEError [<CommonParameters>]`
-
-I do not have an immediate use case to show, but combined with the Commence Help files it may be useful nonetheless.
+Exports view 'Contact List` to file 'contactlist.xml' using default settings.
