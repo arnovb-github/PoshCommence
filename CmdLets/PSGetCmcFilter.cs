@@ -50,6 +50,7 @@ namespace PoshCommence.CmdLets
 
         protected override void ProcessRecord()
         {
+            // TODO: should we include a check for checking the Qualifier and chosen fieltype?
             ICursorFilter filter;
             switch (_type)
             {

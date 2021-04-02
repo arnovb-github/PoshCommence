@@ -18,8 +18,6 @@ namespace PoshCommence.CmdLets
     {
         private const string categorySet = "ByCategory";
         private const string viewSet = "ByView";
-        private const string includeConnectionsSet = "IncludeConnections";
-        private const string excludeConnectionsSet = "ExcludeConnections";
 
         [Parameter(Position = 0,Mandatory = true, ParameterSetName = viewSet)]
         [ArgumentCompleter(typeof(ViewNameArgumentCompleter))]
@@ -78,9 +76,6 @@ namespace PoshCommence.CmdLets
             set { fieldNames = value; }
         }
 
-        [Parameter(ParameterSetName = viewSet)]
-        [Parameter(ParameterSetName =  categorySet)]
-        [Parameter(ParameterSetName =  excludeConnectionsSet)]
         public SwitchParameter SkipConnectedItems
         {
             get { return _exportOptions.SkipConnectedItems; }
@@ -93,10 +88,7 @@ namespace PoshCommence.CmdLets
             get { return _exportOptions.UseThids; }
             set { _exportOptions.UseThids = value; }
         }
-
-        [Parameter(ParameterSetName = viewSet)]
-        [Parameter(ParameterSetName = categorySet)]
-        [Parameter(ParameterSetName = includeConnectionsSet)]         
+      
         public SwitchParameter PreserveAllConnections
         {
             get { return _exportOptions.PreserveAllConnections; }

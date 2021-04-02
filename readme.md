@@ -91,8 +91,6 @@ Get-CmcFields [-CategoryName] <string> [<CommonParameters>]
 Get-CmcFields Account | Where-Object { $_.Type -eq Name } # 'Name' is a fieldtype in Commence
 ```
 
-Use the `Get-CmcFieldTypes` cmdlet for getting the list of Commence field types
-
 List all connections for a category:
 ```powershell
 Get-CmcConnections [-CategoryName] <string> [<CommonParameters>]
@@ -110,6 +108,7 @@ Find-CmcView abc -Category Acccount -Type Report
 Will output view of type 'Report' in category 'Account' that containg 'abc' in the name. All parameters support tab-completion.
 
 You can pipe results to `Open-CmcView`:
+### Example
 ```powershell
 Find-CmcView 'All Accounts' | Open-CmcView
 ```
@@ -123,7 +122,7 @@ When you pipe more than one view to `Open-CmcView` it will open up to the first 
 ### Example (_Tutorial database_):
 
 ```powershell
-# return  fieldvalues for fields "accountKey" and "businessNumber"
+# return fieldvalues for fields "accountKey" and "businessNumber"
 Get-CmcFieldValues Account accountKey, businessNumber
 ```
 
