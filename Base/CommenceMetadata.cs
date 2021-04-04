@@ -15,17 +15,137 @@ namespace PoshCommence.Base
         private static IEnumerable<string> viewTypes;
         private static IDictionary<string, IEnumerable<string>> fieldNames = new Dictionary<string, IEnumerable<string>>();
         private static IDictionary<string, IEnumerable<ICommenceConnection>> connections = new Dictionary<string, IEnumerable<ICommenceConnection>>();
+        private static IDictionary<CommenceFieldType, IEnumerable<FilterQualifier>> validFieldQualifiers;
 
         static CommenceMetadata()
         {
             // https://github.com/arnovb-github/CommenceProcessMonitor
             var monitor = new CommenceProcessMonitor.ProcessMonitor(); 
             monitor.CommenceDatabaseChanged += Monitor_CommenceDatabaseChanged;
+            validFieldQualifiers = CreateValidFieldQualifiers();
         }
 
         private static void Monitor_CommenceDatabaseChanged(object sender, CommenceProcessMonitor.CommenceDatabaseChangedArgs e)
         {
             ClearAll();
+        }
+
+
+        /*
+            It would be nice to be able to check if the qualifiers used in a filter
+            are actually applicable to the specfied fieldname(s).
+            There is a problem with that:
+            A filter has no knowledge of the underlying cateory.
+            I suppose I could add that, but it is extra typing for the end-user
+            and he would not see the category name in the resulting DDE ViewFilter string.
+            On the other hand, if we are taking the object oriented approach to filtering,
+            it would kind of make sense to have to provide the underling category as well.
+            I am currently in two minds about this.
+        */
+        private static IDictionary<CommenceFieldType, IEnumerable<FilterQualifier>> CreateValidFieldQualifiers()
+        {
+            // this just populates a static list
+            var retval = new Dictionary<CommenceFieldType, IEnumerable<FilterQualifier>>();
+            retval.Add(CommenceFieldType.Name, new List<FilterQualifier>() {
+                FilterQualifier.Between,
+                FilterQualifier.Blank,
+                FilterQualifier.Contains,
+                FilterQualifier.DoesNotContain,
+                FilterQualifier.EqualTo,
+                // notice the absence of HasDuplicates
+            });
+            retval.Add(CommenceFieldType.Calculation, new List<FilterQualifier>() {
+                FilterQualifier.Between,
+                FilterQualifier.EqualTo,
+                FilterQualifier.GreaterThan,
+                FilterQualifier.LessThan,
+                FilterQualifier.NotEqualTo
+            });
+            retval.Add(CommenceFieldType.Checkbox, new List<FilterQualifier>() {
+                FilterQualifier.Checked,
+                FilterQualifier.False,
+                FilterQualifier.No,
+                FilterQualifier.NotChecked,
+                FilterQualifier.One,
+                FilterQualifier.True,
+                FilterQualifier.Yes,
+                FilterQualifier.Zero
+            });
+            retval.Add(CommenceFieldType.Datafile, new List<FilterQualifier>()); // Data File fields cannot be filtered
+            retval.Add(CommenceFieldType.Date, new List<FilterQualifier>() {
+                FilterQualifier.After,
+                FilterQualifier.Before,
+                FilterQualifier.Between,
+                FilterQualifier.Blank,
+                FilterQualifier.On
+            });
+            retval.Add(CommenceFieldType.Email, new List<FilterQualifier>() {
+                FilterQualifier.After,
+                FilterQualifier.Before,
+                FilterQualifier.Between,
+                FilterQualifier.Blank,
+                FilterQualifier.On
+            });
+            retval.Add(CommenceFieldType.ExcelCell, new List<FilterQualifier>());
+            retval.Add(CommenceFieldType.Image, new List<FilterQualifier>());                                      
+            retval.Add(CommenceFieldType.Number, new List<FilterQualifier>() {
+                FilterQualifier.Between,
+                FilterQualifier.EqualTo,
+                FilterQualifier.GreaterThan,
+                FilterQualifier.LessThan,
+                FilterQualifier.NotEqualTo
+            });
+            retval.Add(CommenceFieldType.Selection, new List<FilterQualifier>() {
+                FilterQualifier.EqualTo,
+                FilterQualifier.NotEqualTo
+            });
+            retval.Add(CommenceFieldType.Sequence, new List<FilterQualifier>() {
+                FilterQualifier.Between,
+                FilterQualifier.EqualTo,
+                FilterQualifier.GreaterThan,
+                FilterQualifier.LessThan,
+                FilterQualifier.NotEqualTo
+            });
+            retval.Add(CommenceFieldType.Telephone, new List<FilterQualifier>() {
+                FilterQualifier.Blank,
+                FilterQualifier.Contains,
+                FilterQualifier.DoesNotContain,
+                FilterQualifier.EqualTo
+            });
+            retval.Add(CommenceFieldType.Text, new List<FilterQualifier>() {
+                FilterQualifier.Between,
+                FilterQualifier.Blank,
+                FilterQualifier.Contains,
+                FilterQualifier.DoesNotContain,
+                FilterQualifier.EqualTo,
+            });
+            retval.Add(CommenceFieldType.Time, new List<FilterQualifier>() {
+                FilterQualifier.After,
+                FilterQualifier.After,
+                FilterQualifier.Before,
+                FilterQualifier.Between,
+                FilterQualifier.Blank,
+            });                           
+            retval.Add(CommenceFieldType.URL, new List<FilterQualifier>() {
+                FilterQualifier.Contains,
+                FilterQualifier.DoesNotContain,
+                FilterQualifier.Between,
+                FilterQualifier.Blank
+            });            
+            return retval;
+        }
+
+
+        internal static bool IsQualifierValidForField(ICursorFilter filter)
+        {
+            switch (filter.GetType())
+            {
+                case ICursorFilterTypeF f:
+                    return false;
+                case ICursorFilterTypeCTCF ctcf:
+                    return false;
+            }
+            return false;
         }
 
         #region Categories

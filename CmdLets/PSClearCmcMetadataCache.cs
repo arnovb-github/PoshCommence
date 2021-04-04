@@ -9,7 +9,7 @@ namespace PoshCommence.CmdLets
         protected override void ProcessRecord()
         {
             CommenceMetadata.ClearAll();
-            WriteVerbose("Cleared the Commence Metadata cache");
+            WriteVerbose("Cleared the Commence Metadata cache.");
         }
     }
 }
