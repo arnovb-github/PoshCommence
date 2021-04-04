@@ -39,15 +39,6 @@ namespace PoshCommence.CmdLets
             set { viewType = value; }
         }
 
-        //private bool force;
-        //[Parameter]
-        //[Alias("f")]
-        //public SwitchParameter Force
-        //{
-        //    get { return force; }
-        //    set { force = value; }
-        //}
-
         protected override void BeginProcessing()
         {
             base.BeginProcessing();
