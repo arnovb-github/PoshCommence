@@ -134,7 +134,6 @@ namespace PoshCommence.Base
             return retval;
         }
 
-
         internal static bool IsQualifierValidForField(ICursorFilter filter)
         {
             switch (filter.GetType())
