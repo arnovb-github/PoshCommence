@@ -30,7 +30,6 @@ namespace PoshCommence.Base
             ClearAll();
         }
 
-
         /*
             It would be nice to be able to check if the qualifiers used in a filter
             are actually applicable to the specfied fieldname(s).
