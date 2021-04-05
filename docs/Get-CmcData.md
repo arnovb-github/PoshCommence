@@ -5,7 +5,7 @@ online version:
 schema: 2.0.0
 ---
 
-# Get-CmcFieldValues
+# Get-CmcData
 
 ## SYNOPSIS
 Gets fieldvalues from Commence.
@@ -14,13 +14,13 @@ Gets fieldvalues from Commence.
 
 ### ByCategory (Default)
 ```
-Get-CmcFieldValues [-CategoryName] <String> [-FieldNames] <String[]> [-UseThids] [-Filters <ICursorFilter[]>]
+Get-CmcData [-CategoryName] <String> [-FieldNames] <String[]> [-UseThids] [-Filters <ICursorFilter[]>]
  [-RelatedColumns <RelatedColumn[]>] [<CommonParameters>]
 ```
 
 ### ByView
 ```
-Get-CmcFieldValues [-ViewName] <String> [-FieldNames] <String[]> [-Filters <ICursorFilter[]>]
+Get-CmcData [-ViewName] <String> [-FieldNames] <String[]> [-Filters <ICursorFilter[]>]
  [-RelatedColumns <RelatedColumn[]>] [<CommonParameters>]
 ```
 
@@ -31,7 +31,7 @@ Gets the specfied fieldvalues from a Commence category.
 
 ### Example 1
 ```powershell
-Get-CmcFieldValues CategoryName FieldName1, FieldName2
+Get-CmcData CategoryName FieldName1, FieldName2
 ```
 
 Gets all fieldvalues for fields FieldName1 and Fieldame2.
@@ -47,7 +47,7 @@ $rc2 = Get-CmcRelatedColumn 'Relates to' Contact emailBusiness
 # define a Field (type F) filter for items where the field called Name does not contain string 'test', case-sensitive
 # the `0` represents the numerical value of enum value [Vovin.CmcLibNet.Database.FilterQualifier]::Contains
 $filter = Get-CmcFilterF 1 "accountKey" 0 test -Except -MatchCase
-Get-CmcFieldValues -c Account -FieldNames $fields -Filters $filter -RelatedColumns $rc1, $rc2
+Get-CmcData -c Account -FieldNames $fields -Filters $filter -RelatedColumns $rc1, $rc2
 ```
 
 Advanced example using filters and related columns.
@@ -56,7 +56,7 @@ Advanced example using filters and related columns.
 ```
 powershell
 # Example for Tutorial dabase
-Get-CmcFieldValues -v 'Account Default' (Get-CmcFields Account).Name -UseThids -UseView | Out-GridView
+Get-CmcData -v 'Account Default' (Get-CmcFields Account).Name -UseThids -UseView | Out-GridView
 ```
 
 Getting funky: show your own "Commence view" based on the "Account Default" view but with all available fields and the THID of all items in the "Account" category. This may appear a little silly, but a `GridView` allows for quick filtering on any field and toggling of fields.

@@ -5,7 +5,7 @@ A collection of Powershell cmdlets for use with the Commence RM API. Requires [V
 
 This is all experimental.
 
-The most useful cmdlets are probably `Get-CmcFieldValues`, which allows you to extract fieldvalues without having to create a view in Commence and `Export-CmcCategory`, which allows you to export data without having to define an Export Template in Commence.
+The most useful cmdlets are probably `Get-CmcData`, which allows you to extract fieldvalues without having to create a view in Commence and `Export-CmcCategory`, which allows you to export data without having to define an Export Template in Commence.
 
 ## Background ##
 I botch these together whenever I find I have to do too much work in PS to get what I want. For example, in a project I was working on I needed to retrieve the Name field values for a category repeatedly. Just a few lines of code, but a single CmdLet is even easier.
@@ -117,13 +117,13 @@ Will open view 'All Accounts'.
 When you pipe more than one view to `Open-CmcView` it will open up to the first 10.
 
 ## Getting field values ##
-`Get-CmcFieldValues` returns an object for every database row. Think of it as a hashtable with the fieldname and corresponding values(s):
+`Get-CmcData` returns an object for every database row. Think of it as a hashtable with the fieldname and corresponding values(s):
 
 ### Example (_Tutorial database_):
 
 ```powershell
 # return fieldvalues for fields "accountKey" and "businessNumber"
-Get-CmcFieldValues Account accountKey, businessNumber
+Get-CmcData Account accountKey, businessNumber
 ```
 
 output:
@@ -139,12 +139,12 @@ First Class Inc           416-781-1209
 
 ### Syntax for categories:
 ```powershell
-Get-CmcFieldValues [-CategoryName] <string> [-FieldNames] <string[]> [-UseThids] [-Filters <ICursorFilter[]>] [-RelatedColumns <RelatedColumn[]>] [<CommonParameters>]
+Get-CmcData [-CategoryName] <string> [-FieldNames] <string[]> [-UseThids] [-Filters <ICursorFilter[]>] [-RelatedColumns <RelatedColumn[]>] [<CommonParameters>]
 ```
 
 ### Syntax for views:
 ```powershell
-Get-CmcFieldValues [-ViewName] <string> [-FieldNames] <string[]> [-Filters <ICursorFilter[]>] [-RelatedColumns <RelatedColumn[]>] [<CommonParameters>]
+Get-CmcData [-ViewName] <string> [-FieldNames] <string[]> [-Filters <ICursorFilter[]>] [-RelatedColumns <RelatedColumn[]>] [<CommonParameters>]
 ```
 
 ### Get THIDs ###
@@ -163,7 +163,7 @@ $rc2 = Get-CmcRelatedColumn 'Relates to', 'Contact','emailBusiness'
 **Important**: connection names in Commence are case-sensitive!
 
 Usage:
-`Get-CmcFieldValues CategoryName FieldName1, FieldName2 -RelatedColumns $rc1, $rc2`
+`Get-CmcData CategoryName FieldName1, FieldName2 -RelatedColumns $rc1, $rc2`
 
 Note: you cannot yet specify only related columns, you need to specify at least 1 direct column (simply ignore it in the output).
 
