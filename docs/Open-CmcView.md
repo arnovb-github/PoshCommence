@@ -26,7 +26,7 @@ Used in conjunction with [Find-CmcView](Find-CmcView.md). Opens the view(s) in C
 Find-CmcView -Name Product | Open-CmcView
 ```
 
-Will open all views that contain 'Product' in their name. __NOTE__ If the number of views passed to this cmdlet exceeds a threshold, only the first number of views up to that threshold will be opened. At the time of writing this threshold was 10.
+Will open all views that contain 'Product' in their name. __NOTE__ If the number of views passed to this cmdlet exceeds a threshold, only the first number of views up to that threshold will be opened. At the time of writing this threshold is 5.
 
 ## PARAMETERS
 
@@ -46,7 +46,7 @@ Accept wildcard characters: False
 ```
 
 ### -View
-(Array of) IViewDef object(s) returned by `Find-CmcView`.
+View objects returned by `Find-CmcView`.
 
 ```yaml
 Type: IViewDef[]

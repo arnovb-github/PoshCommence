@@ -56,12 +56,12 @@ namespace PoshCommence.CmdLets
             set { filters = value; }
         }
         
-        private RelatedColumn[] relatedColumns;
+        private ConnectedField[] connectedFields;
         [Parameter()]
-        public RelatedColumn[] RelatedColumns
+        public ConnectedField[] ConnectedFields
         {
-            get { return relatedColumns; }
-            set { relatedColumns = value; }
+            get { return connectedFields; }
+            set { connectedFields = value; }
         }
         protected override void ProcessRecord()
         {
@@ -76,9 +76,9 @@ namespace PoshCommence.CmdLets
             {
                 columnNames.Add(s);
             }
-            if (relatedColumns != null)
+            if (connectedFields != null)
             {
-                var r = relatedColumns.Select(s => s.ColumnName);
+                var r = connectedFields.Select(s => s.ColumnName);
                 columnNames = columnNames.Concat(r).ToList();
             }
 
@@ -86,7 +86,7 @@ namespace PoshCommence.CmdLets
             var rows = CursorReader.GetCmcFieldValues(GetCursorName(),
                 fieldNames,
                 filters,
-                relatedColumns,
+                connectedFields,
                 !string.IsNullOrEmpty(viewName),
                 useThids);
 

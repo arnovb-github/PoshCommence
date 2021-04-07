@@ -12,7 +12,7 @@ namespace PoshCommence.CmdLets
     public class OpenCmcView : PSCmdlet
     {
         private const string COMMENCE_PROCESS = "commence";
-        private const int MAX_ALLOWED_VIEWS = 10;
+        private const int MAX_VIEWS = 5;
 
         private IViewDef[] views;
         [Parameter(Position = 0, Mandatory = true, ValueFromPipeline=true)]
@@ -32,12 +32,12 @@ namespace PoshCommence.CmdLets
         
         protected override void ProcessRecord()
         {
-            if (views.Length > MAX_ALLOWED_VIEWS) {
-                WriteWarning($"Number of views exceeds limit of this cmdlet, opening first {MAX_ALLOWED_VIEWS} views.");
+            if (views.Length > MAX_VIEWS) {
+                WriteWarning($"Number of views exceeds limit of this cmdlet, opening first {MAX_VIEWS} views.");
             }
             using (var db = new CommenceDatabase())
             {
-                foreach (var v in views.Take(MAX_ALLOWED_VIEWS)) 
+                foreach (var v in views.Take(MAX_VIEWS)) 
                 {
                     if (!db.ShowView(v.Name, newCopy)) 
                     {

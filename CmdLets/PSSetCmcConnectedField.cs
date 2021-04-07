@@ -3,8 +3,8 @@ using PoshCommence.Base;
 
 namespace PoshCommence.CmdLets
 {
-    [Cmdlet(VerbsCommon.Get, "CmcRelatedColumn")]
-    public class GetCmcRelatedColumn : PSCmdlet
+    [Cmdlet(VerbsCommon.Set, "CmcConnectedField")]
+    public class SetCmcConnectedField : PSCmdlet
     {
         private string connectionName;
         [Parameter(Position = 0, Mandatory = true)]
@@ -34,7 +34,7 @@ namespace PoshCommence.CmdLets
 
         protected override void ProcessRecord()
         {
-            var rc = new RelatedColumn(connectionName, toCategory, fieldName);
+            var rc = new ConnectedField(connectionName, toCategory, fieldName);
             WriteObject(rc);
         }
     }

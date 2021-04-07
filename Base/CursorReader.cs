@@ -13,7 +13,7 @@ namespace PoshCommence.Base
             string categoryName,
                 IEnumerable<string> fieldNames,
                 IEnumerable<ICursorFilter> filters,
-                IEnumerable<RelatedColumn> relatedColumns,
+                IEnumerable<ConnectedField> relatedColumns,
                 bool useView,
                 bool useThids)
         {

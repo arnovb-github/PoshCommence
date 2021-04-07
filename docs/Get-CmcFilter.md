@@ -12,7 +12,7 @@ Create a filter object used to filter Commence data.
 
 ## SYNTAX
 
-```powershell
+```
 Get-CmcFilter [-ClauseNumber] <Int32> [-FilterType] <FilterType> [-Except] [-OrFilter] -FieldName <String>
  -Qualifier <FilterQualifier> -FieldValue <String> [-FieldValue2 <String>] [-MatchCase] [<CommonParameters>]
 ```

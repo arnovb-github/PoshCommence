@@ -12,17 +12,16 @@ Export Commence data to file.
 
 ## SYNTAX
 
-### ByView
-```powershell
-Export-CmcData [-ViewName] <String> [-OutputPath] <String> [-ExportFormat <ExportFormat>] [-SkipConnectedItems]
- [-PreserveAllConnections] [-UseColumnNames] [<CommonParameters>]
+### ByCategory (Default)
+```
+Export-CmcData [-CategoryName] <String> [-OutputPath] <String> [-ExportFormat <ExportFormat>]
+ [-Filters <ICursorFilter[]>] [-FieldNames <String[]>] [-UseThids] [<CommonParameters>]
 ```
 
-### ByCategory
-```powershell
-Export-CmcData [-CategoryName] <String> [-OutputPath] <String> [-ExportFormat <ExportFormat>]
- [-Filters <ICursorFilter[]>] [-FieldNames <String[]>] [-SkipConnectedItems] [-UseThids]
- [-PreserveAllConnections] [<CommonParameters>]
+### ByView
+```
+Export-CmcData [-ViewName] <String> [-OutputPath] <String> [-ExportFormat <ExportFormat>] [-UseColumnNames]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -58,7 +57,7 @@ Export view 'Contact List` to file 'contactlist.xml' using default settings.
 ## PARAMETERS
 
 ### -CategoryName
-Commence category name
+Commence category name.
 
 ```yaml
 Type: String
@@ -89,7 +88,7 @@ Accept wildcard characters: False
 ```
 
 ### -FieldNames
-Array of fieldnames to include in the export. Does not accept related fields (yet).
+Array of fieldnames to include in the export.
 
 ```yaml
 Type: String[]
@@ -128,36 +127,6 @@ Aliases:
 
 Required: True
 Position: 1
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -PreserveAllConnections
-Ensure inclusion of all connected items. Involves a significant performance penalty.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -SkipConnectedItems
-Do not export connected items.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -223,4 +192,5 @@ Writes data to a file.
 ## NOTES
 
 ## RELATED LINKS
+
 [Get-CmcFilter](Get-CmcFilter.md)

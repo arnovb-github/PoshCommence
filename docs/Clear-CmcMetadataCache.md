@@ -12,7 +12,7 @@ Reset Commence metadata cache.
 
 ## SYNTAX
 
-```
+```powershell
 Clear-CmcMetadataCache [<CommonParameters>]
 ```
 
@@ -23,7 +23,7 @@ Will reset the cache holding Commence schema information that is being built up 
 
 ### Example 1
 ```powershell
-Reset-CmcMetadataCache
+Clear-CmcMetadataCache
 ```
 
 Will clear the cache holding Commence schema information.

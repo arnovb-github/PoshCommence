@@ -139,31 +139,31 @@ First Class Inc           416-781-1209
 
 ### Syntax for categories:
 ```powershell
-Get-CmcData [-CategoryName] <string> [-FieldNames] <string[]> [-UseThids] [-Filters <ICursorFilter[]>] [-RelatedColumns <RelatedColumn[]>] [<CommonParameters>]
+Get-CmcData [-CategoryName] <string> [-FieldNames] <string[]> [-UseThids] [-Filters <ICursorFilter[]>] [-ConnectedFields <ConnectedField>] [<CommonParameters>]
 ```
 
 ### Syntax for views:
 ```powershell
-Get-CmcData [-ViewName] <string> [-FieldNames] <string[]> [-Filters <ICursorFilter[]>] [-RelatedColumns <RelatedColumn[]>] [<CommonParameters>]
+Get-CmcData [-ViewName] <string> [-FieldNames] <string[]> [-Filters <ICursorFilter[]>] [-ConnectedFields <ConnectedField[]>] [<CommonParameters>]
 ```
 
 ### Get THIDs ###
 If you want THIDs, specify the `-UseThids` switch. You get an additional `CommenceField` object with fieldname 'THID' for every row.
 
 ### Related columns ###
-Providing related columns involves some more work. These are the columns you would set by the `cursor.SetRelatedColumn(…)` method in the Commence API.
+Providing related columns involves some more work. These are the columns you would set by the `cursor.SetRelatedColumn()` method in the Commence API.
 
 ```powershell
 # create object directly
-$rc1 = [PoshCommence.RelatedColumn]::New('Relates to', 'Contact','accountKey')
+$rc1 = [PoshCommence.ConnectedField]::New('Relates to', 'Contact','accountKey')
 # or better: use the cmdlet for it
-$rc2 = Get-CmcRelatedColumn 'Relates to', 'Contact','emailBusiness'
+$rc2 = Set-CmcConnectedField 'Relates to', 'Contact','emailBusiness'
 ```
 
 **Important**: connection names in Commence are case-sensitive!
 
 Usage:
-`Get-CmcData CategoryName FieldName1, FieldName2 -RelatedColumns $rc1, $rc2`
+`Get-CmcData CategoryName FieldName1, FieldName2 -ConnectedFields $rc1, $rc2`
 
 Note: you cannot yet specify only related columns, you need to specify at least 1 direct column (simply ignore it in the output).
 

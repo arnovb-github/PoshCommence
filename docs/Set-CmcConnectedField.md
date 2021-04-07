@@ -5,7 +5,7 @@ online version: https://github.com/arnovb-github/CmcLibNet
 schema: 2.0.0
 ---
 
-# Get-CmcRelatedColumn
+# Set-CmcConnectedField
 
 ## SYNOPSIS
 Get a related column.
@@ -13,18 +13,18 @@ Get a related column.
 ## SYNTAX
 
 ```
-Get-CmcRelatedColumn [-ConnectionName] <String> [-ToCategory] <String> [-FieldName] <String>
+Set-CmcConnectedField [-ConnectionName] <String> [-ToCategory] <String> [-FieldName] <String>
  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Get a related column definition for use in `Get-CmcFieldValues`.
+Defines a connected field to get from a Commence category or view.
 
 ## EXAMPLES
 
 ### Example 1
 ```powershell
-Get-CmcRelatedColumn 'Relates to' Contact contactKey
+Set-CmcConnectedField 'Relates to' Contact contactKey
 ```
 
 Get a related column pointing to the 'contactKey' field in connection 'Relates to' to category 'Contact'.
@@ -47,7 +47,7 @@ Accept wildcard characters: False
 ```
 
 ### -FieldName
-Commence fieldname in connected category.
+Commence fieldname in the connected category.
 
 ```yaml
 Type: String
@@ -85,9 +85,9 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## OUTPUTS
 
-### PoshCommence.RelatedColumn
+### PoshCommence.ConnectedField
 ## NOTES
 
 ## RELATED LINKS
 
-[Get-CmcFieldValues](Get-CmcFieldValues.md)
+## RELATED LINKS
