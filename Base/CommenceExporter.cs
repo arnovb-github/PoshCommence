@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Vovin.CmcLibNet.Database;
 using Vovin.CmcLibNet.Export;
 
@@ -21,14 +22,33 @@ namespace PoshCommence.Base
             ee.Close(); // does nothing, not needed
         }
 
-        internal static void ExportCursor(string categoryName, IEnumerable<ICursorFilter> filters, string[] fieldNames, string path, IExportSettings options)
+        internal static void ExportCursor(string categoryName, IEnumerable<ICursorFilter> filters, string[] fieldNames, IEnumerable<ConnectedField> connectedFields, string path, IExportSettings options)
         {
             // we got fieldnames, so we have to create a custom cursor
             using (var db = new CommenceDatabase())
             using (var cur = db.GetCursor(categoryName))
             {
-                cur.Columns.AddDirectColumns(fieldNames);
+                if (fieldNames != null && fieldNames.Any())
+                {
+                    cur.Columns.AddDirectColumns(fieldNames);
+                }
+                // in this case the cursor will hold all columns, because non was exlicitly specified
+                // we need to explicitly clear it
+                // in this case we will do so by adding the Name field
+                else
+                {
+                    cur.Columns.AddDirectColumn(db.GetNameField(categoryName));
+                }
+                
+                if (connectedFields != null)
+                {
+                    foreach (var cf in connectedFields)
+                    {
+                        cur.Columns.AddRelatedColumn(cf.ConnectionName, cf.ToCategory, cf.FieldName);
+                    }
+                }
                 cur.Columns.Apply();
+                
                 if (filters != null)
                 {
                     foreach (var f in filters)

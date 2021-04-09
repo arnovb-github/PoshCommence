@@ -8,7 +8,7 @@ schema: 2.0.0
 # Get-CmcFields
 
 ## SYNOPSIS
-Get fieldnames form Commence category.
+Get field defitions form Commence category.
 
 ## SYNTAX
 
@@ -20,27 +20,40 @@ Get-CmcFields [-CategoryName] <String> [<CommonParameters>]
 Gets the fieldnames from the specfied Commence category.
 
 ## EXAMPLES
-
 ### Example 1
 ```powershell
-Get-CmcFields Account | Where-Object { $_.Type -eq Name }
+Get-CmcFields Account
 ```
 
-Get the Name field for category Account. The Name argument has special meaning. See the next example.
+Gets all field definitions for the fields in category 'Account'.
 
 ### Example 2
 ```powershell
-Get-CmcFields Account | Where-Object { $_.Type -eq [Vovin.CmcLibNet.Database.CommenceFieldType]::Name }
+(Get-CmcFields Account).Name
 ```
 
-Get the Name field for category Account using the predefined enumeration in [Vovin.CmcLibNet.Datbase.FieldType]. 
+List the fieldnames in category 'Account'.
 
 ### Example 3
 ```powershell
-Get-CmcFields Account | Where-Object { $_.Type -eq 11 }
+Get-CmcFields Account | Where-Object { $_.Type -eq "Telephone" }
 ```
 
-Get the Name field for category Account using the numerical value from the predefined enumeration in [Vovin.CmcLibNet.Datbase.FieldType]. 
+Get the fields of type 'Telephone' for category 'Account'.
+
+### Example 4
+```powershell
+Get-CmcFields Account | Where-Object { $_.Type -eq [Vovin.CmcLibNet.Database.CommenceFieldType]::Telephone }
+```
+
+Same as previous example, but this time using the predefined enumeration in `[Vovin.CmcLibNet.Datbase.FieldType]`. 
+
+### Example 5
+```powershell
+Get-CmcFields Account | Where-Object { $_.Type -eq 3 }
+```
+
+Same as previous example, but this time using the numerical value from the predefined enumeration in [Vovin.CmcLibNet.Datbase.FieldType]. 
 
 ## PARAMETERS
 
@@ -68,8 +81,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## OUTPUTS
 
-### System.String[]
-Returns an array of strings.
+### System.Object
 
 ## NOTES
 

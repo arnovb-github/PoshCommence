@@ -5,44 +5,45 @@ online version:
 schema: 2.0.0
 ---
 
-# Get-CmcCategories
+# Get-CmcItemCount
 
 ## SYNOPSIS
-Get categories from Commence
+Get item count for category.
 
 ## SYNTAX
 
 ```
-Get-CmcCategories [<CommonParameters>]
+Get-CmcItemCount [-CategoryName] <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Returns the category definitions from the currently active Commence database.
+Gets the number of items in a Commence category. A value of -1 means that the category was not found.
 
 ## EXAMPLES
 
 ### Example 1
 ```powershell
-Get-CmcCategories
+Get-CmcItemCount Account
 ```
 
-Returns the category definitions of the currently active Commence database.
-
-### Example 2
-```powershell
-(Get-CmcCategories).Name
-```
-
-Show all category names.
-
-### Example 3
-```powershell
-Get-CmcCategories | Where-Object { $_.Clarified -eq $true } | select Name, ClarifyField, ClarifySeparator
-```
-
-Show all clarified categories and their clarify field and separator.
+Returns the number of items in category 'Account'.
 
 ## PARAMETERS
+
+### -CategoryName
+Commence category name.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: c
+
+Required: True
+Position: 0
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### CommonParameters
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
@@ -53,8 +54,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## OUTPUTS
 
-### System.Object
-
+### System.Int32
 ## NOTES
 
 ## RELATED LINKS

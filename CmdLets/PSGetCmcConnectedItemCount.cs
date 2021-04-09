@@ -60,8 +60,6 @@ namespace PoshCommence.CmdLets
             set { clarifyValue = value; }
         }
         
-        // Vovin.CmcLibNet calls that use a DDE call swallow all errors
-        // so this may return nothing       
         protected override void ProcessRecord()
         {
             var db = new CommenceDatabase();
@@ -87,24 +85,20 @@ namespace PoshCommence.CmdLets
                         // since this not rely on string values, it should be reliable
                         connectedItemCount = db.ViewConnectedCount(i, connectionName, toCategory);
                         WriteObject(new
-                        {
-                            ItemName = itemNames[i - 1],
-                            FromCategory = fromCategory,
-                            Connection = connectionName,
-                            ToCategory = toCategory,
-                            Count = connectedItemCount
-                        },
+                            {
+                                ItemName = itemNames[i - 1],
+                                FromCategory = fromCategory,
+                                Connection = connectionName,
+                                ToCategory = toCategory,
+                                Count = connectedItemCount
+                            },
                             false); // return and do not enumerate. I.e. pass every object separately.
                     }
                 }
                 else
                 { 
-                    // We received a specific item to test for.
-                    // Depending on how crazy its values, we may get -1, 
-                    // meaning Commence could not handle it.
-                    // A typical example would be 'Earvin "Magic" Johnson', 
-                    // that will choke the DDE call on the inner quotes.
-                    if (!string.IsNullOrEmpty(clarifyValue) && !string.IsNullOrEmpty(clarifySeparator)) {
+                    if (!string.IsNullOrEmpty(clarifyValue) && !string.IsNullOrEmpty(clarifySeparator)) 
+                    {
                         fromItem = db.GetClarifiedItemName(fromItem, clarifySeparator, clarifyValue);
                         db.ClarifyItemNames("TRUE");
                     }
@@ -128,7 +122,7 @@ namespace PoshCommence.CmdLets
                     WriteVerbose("A count of -1 means an error occurred while trying to receive the count from Commence.\n"
                         + "This is likely caused by one or more of the arguments being invalid.\n"
                         + "Note that connection- and viewnames in Commence are case-sensitive!\n\n"
-                        + "Another cause may be that the arguments contain characters that break DDE commands.\n\n");
+                        + "A clarify separator may include spaces. Make sure to include them in the command.\n\n");
                     return;
                 }
             }

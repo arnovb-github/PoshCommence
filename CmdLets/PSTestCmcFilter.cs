@@ -20,16 +20,23 @@ namespace PoshCommence.CmdLets
 
         protected override void ProcessRecord()
         {
-            bool retval;
-            retval = CursorFilters.ValidateFilter(Category, Filter);
-            WriteObject(retval);
-            if (retval)
+            using (var db = new CommenceDatabase())
+            using (var cur = db.GetCursor(Category)) // this may also fail
             {
-                WriteVerbose($"Succesfully applied {Filter} on category {Category}");
-            }
-            else
-            {
-                WriteVerbose($"Filter '{Filter}' could not be applied to category '{Category}'. Check the spelling of the category- and fieldname(s), and make sure filterqualifier can be applied to the fieldtypes you provided.");
+                int total = cur.RowCount;
+                cur.Filters.Add(Filter);
+                try
+                {
+                    cur.Filters.Apply();
+                }
+                catch
+                {
+                    WriteVerbose($"Could not apply filter '{Filter}' to category '{Category}'. Check the spelling of the category- and fieldname(s) and make sure filterqualifier can be applied to the fieldtypes you provided.");
+                    WriteObject(false);
+                    return;
+                }
+                WriteVerbose($"Succesfully applied filter '{Filter}' to category '{Category}'. {cur.RowCount} of {total} items returned.");
+                WriteObject(true);
             }
         }
     }

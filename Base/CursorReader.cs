@@ -8,7 +8,13 @@ namespace PoshCommence.Base
     {
         // notice we do not do any error checking
         // we just let the error pass through to Powershell
-        // Not sure if that's a good idea
+        // This means the end user (me!) can see pretty cryptic error messages
+        // but I don't care for now.
+        
+        // TODO: we should incorporate some kind of warning mechanism
+        // when the umber of items is large;
+        // in that case the read may take a long time
+        // It would require a significant overhaul of this class though.
         public static List<List<string>> GetCmcFieldValues(
             string categoryName,
                 IEnumerable<string> fieldNames,

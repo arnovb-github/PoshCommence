@@ -5,26 +5,26 @@ online version: https://github.com/arnovb-github/CmcLibNet
 schema: 2.0.0
 ---
 
-# Set-CmcConnectedField
+# Get-CmcConnectedField
 
 ## SYNOPSIS
-Get a related column.
+Get a related column (field).
 
 ## SYNTAX
 
 ```
-Set-CmcConnectedField [-ConnectionName] <String> [-ToCategory] <String> [-FieldName] <String>
+Get-CmcConnectedField [-ConnectionName] <String> [-ToCategory] <String> [-FieldName] <String>
  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Defines a connected field to get from a Commence category or view.
+Defines a connected field to retrieve from a Commence category or view.
 
 ## EXAMPLES
 
 ### Example 1
 ```powershell
-Set-CmcConnectedField 'Relates to' Contact contactKey
+Get-CmcConnectedField 'Relates to' Contact contactKey
 ```
 
 Get a related column pointing to the 'contactKey' field in connection 'Relates to' to category 'Contact'.
@@ -61,7 +61,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -ToCategory
+### -ToCategoryName
 Connected Commence category name.
 
 ```yaml

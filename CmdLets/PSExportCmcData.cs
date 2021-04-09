@@ -76,6 +76,15 @@ namespace PoshCommence.CmdLets
             set { fieldNames = value; }
         }
 
+        private ConnectedField[] connectedFields;
+        [Parameter(ParameterSetName = categorySet)]
+        public ConnectedField[] ConnectedFields
+        {
+            get { return connectedFields; }
+            set { connectedFields = value; }
+        }
+
+        [Parameter()]
         public SwitchParameter SkipConnectedItems
         {
             get { return _exportOptions.SkipConnectedItems; }
@@ -88,7 +97,8 @@ namespace PoshCommence.CmdLets
             get { return _exportOptions.UseThids; }
             set { _exportOptions.UseThids = value; }
         }
-      
+
+        [Parameter()]
         public SwitchParameter PreserveAllConnections
         {
             get { return _exportOptions.PreserveAllConnections; }
@@ -126,9 +136,9 @@ namespace PoshCommence.CmdLets
 
         private void ExportByCategory()
         {
-            if (fieldNames != null)
+            if (fieldNames!= null || connectedFields != null)
             {
-                CommenceExporter.ExportCursor(categoryName, _filters, fieldNames, _path, _exportOptions);
+                CommenceExporter.ExportCursor(categoryName, _filters, fieldNames, connectedFields, _path, _exportOptions);
             }
             else
             {

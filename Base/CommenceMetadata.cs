@@ -15,7 +15,7 @@ namespace PoshCommence.Base
         private static IEnumerable<string> viewTypes;
         private static IDictionary<string, IEnumerable<string>> fieldNames = new Dictionary<string, IEnumerable<string>>();
         private static IDictionary<string, IEnumerable<ICommenceConnection>> connections = new Dictionary<string, IEnumerable<ICommenceConnection>>();
-        private static IDictionary<CommenceFieldType, IEnumerable<FilterQualifier>> validFieldQualifiers;
+        private static readonly IDictionary<CommenceFieldType, IEnumerable<FilterQualifier>> validFieldQualifiers;
 
         static CommenceMetadata()
         {

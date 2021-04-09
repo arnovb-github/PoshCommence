@@ -63,10 +63,10 @@ namespace PoshCommence.CmdLets
             get { return connectedFields; }
             set { connectedFields = value; }
         }
+
         protected override void ProcessRecord()
         {
-
-            // assemble all the columnnames
+            // assemble all the columnnames, used for output object
             var columnNames = new List<string>();
             if (useThids) 
             {
@@ -83,7 +83,7 @@ namespace PoshCommence.CmdLets
             }
 
             // do the data reading
-            var rows = CursorReader.GetCmcFieldValues(GetCursorName(),
+            var rows = CursorReader.GetCmcFieldValues(this.CursorName,
                 fieldNames,
                 filters,
                 connectedFields,
@@ -93,7 +93,7 @@ namespace PoshCommence.CmdLets
             foreach (var row in rows)
             {
                 PSObject responseObject = new PSObject();
-                for (int i = 0; i < row.Count; i++) {
+                for (int i = 0; i < row.Count; i++) { //row.Count represents the number of columns in the row
                     // PSNoteProperty: Serves as a property that is a simple name-value pair.
                     responseObject.Members.Add(new PSNoteProperty(columnNames[i], row[i]));
                 }
@@ -101,9 +101,8 @@ namespace PoshCommence.CmdLets
             }
         }
 
-        private string GetCursorName()
-        {
-            return string.IsNullOrEmpty(viewName) ?  categoryName : viewName;
-        }
+        private string CursorName =>
+            string.IsNullOrEmpty(ViewName) ?  this.CategoryName : this.ViewName;
+
     }
 }

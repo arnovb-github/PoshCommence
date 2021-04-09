@@ -31,22 +31,22 @@ Without parameters it will output the complete list of views in Commence.
 ### Example 2
 ```powershell
 Find-CmcView prod
-Find-CmcView -Name prod
 ```
 
 The first parameter will search the list of views for views that have names that contain the argument 'prod'. The `-Name` parameter supports tab-completion after the first run.
 
 ### Example 3
 ```powershell
-Find-CmcView prod -Category Account -Type "Report Viewer"
+# using Tutorial database
+Find-CmcView prod -Category Product -Type Report
 ```
 
-Will list the views that match 'prod' in category 'Account' and of type 'Report Viewer'. The `-Category` and `-Type` parameters both have tab-completion.
+Will list the views that match 'prod' in category 'Product' and of type 'Report Viewer'. The `-Category` and `-Type` parameters both have tab-completion.
 
 ## PARAMETERS
 
 ### -CategoryName
-Commence category to filter on.
+Commence category to filter views on.
 
 ```yaml
 Type: String
@@ -76,7 +76,7 @@ Accept wildcard characters: False
 ```
 
 ### -Type
-The Commence viewtype to filter result on.
+The Commence viewtype to filter views on.
 
 ```yaml
 Type: String

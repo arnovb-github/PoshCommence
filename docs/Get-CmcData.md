@@ -13,40 +13,39 @@ Gets fieldvalues from Commence.
 ## SYNTAX
 
 ### ByCategory (Default)
-```
+```powershell
 Get-CmcData [-CategoryName] <String> [-FieldNames] <String[]> [-UseThids] [-Filters <ICursorFilter[]>]
  [-ConnectedFields <ConnectedField[]>] [<CommonParameters>]
 ```
 
 ### ByView
-```
+```powershell
 Get-CmcData [-ViewName] <String> [-FieldNames] <String[]> [-Filters <ICursorFilter[]>]
  [-ConnectedFields <ConnectedField[]>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Gets the specfied fieldvalues from a Commence category.
+Gets the specfied fieldvalues from a Commence category. Can use a category or view as datasource.
 
 ## EXAMPLES
 
 ### Example 1
 ```powershell
-Get-CmcData CategoryName FieldName1, FieldName2
+Get-CmcData Account accountKey, businessNumber
 ```
 
-Gets all fieldvalues for fields FieldName1 and Fieldame2.
+Gets the fieldvalues for the 'accountKey' and 'businessNumber' from the 'Account' category.
 
 ### Example 2
 ```powershell
-# Example for Tutorial dabase
-# define some fields we want to get
+# Using Tutorial dabase
+# define fields we want to get
 $fields = "accountKey", "Address", "cityStateZip", "businessNumber"
 # define related columns we want to get
-$rc1 = Set-CmcConnectedField 'Relates to' Contact contactKey
-$rc2 = Set-CmcConnectedField 'Relates to' Contact emailBusiness
-# define a Field (type F) filter for items where the field called Name does not contain string 'test', case-sensitive
-# the `0` represents the numerical value of enum value [Vovin.CmcLibNet.Database.FilterQualifier]::Contains
-$filter = Get-CmcFilterF 1 "accountKey" 0 test -Except -MatchCase
+$rc1 = Get-CmcConnectedField 'Relates to' Contact contactKey
+$rc2 = Get-CmcConnectedField 'Relates to' Contact emailBusiness
+# define a Field (type F) filter for items where the field called accountKey does not contain string 'Leap', case-sensitive
+$filter = Get-CmcFilter 1 Field "accountKey" Contains Leap -Except -MatchCase
 Get-CmcData -c Account -FieldNames $fields -Filters $filter -ConnectedFields $rc1, $rc2
 ```
 
@@ -55,11 +54,11 @@ Advanced example using filters and related columns.
 ### Example 3
 ```powershell
 powershell
-# Example for Tutorial dabase
-Get-CmcData -v 'Account Default' (Get-CmcFields Account).Name -UseThids -UseView | Out-GridView
+# Uses Tutorial dabase
+Get-CmcData -v 'Account Default' (Get-CmcFields Account).Name | Out-GridView
 ```
 
-Getting funky: show your own "Commence view" based on the "Account Default" view but with all available fields and the THID of all items in the "Account" category. This may appear a little silly, but a `GridView` allows for quick filtering on any field and toggling of fields.
+Getting funky: show your own "Commence view" using the data in the "Account Default" view but with all available fields in the "Account" category. This may appear a little silly, but a `GridView` allows for quick filtering on any field.
 
 ## PARAMETERS
 
@@ -169,4 +168,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 [Get-CmcFilter](Get-CmcFilter.md)
 
-[Set-CmcConnectedField](Set-CmcConnectedField.md)
+[Get-CmcConnectedField](Get-CmcConnectedField.md)
