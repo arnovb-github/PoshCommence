@@ -28,6 +28,13 @@ Get-CmcItemCount Account
 
 Returns the number of items in category 'Account'.
 
+### Example 2
+```powershell
+Get-CmcCategories -pv cat | Get-CmcItemCount | % { Write-Output $cat.CategoryName $_ }
+```
+
+Display all categorynames and their item count.
+
 ## PARAMETERS
 
 ### -CategoryName
@@ -41,7 +48,7 @@ Aliases: c
 Required: True
 Position: 0
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 

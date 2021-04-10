@@ -13,13 +13,13 @@ Gets fieldvalues from Commence.
 ## SYNTAX
 
 ### ByCategory (Default)
-```powershell
+```
 Get-CmcData [-CategoryName] <String> [-FieldNames] <String[]> [-UseThids] [-Filters <ICursorFilter[]>]
  [-ConnectedFields <ConnectedField[]>] [<CommonParameters>]
 ```
 
 ### ByView
-```powershell
+```
 Get-CmcData [-ViewName] <String> [-FieldNames] <String[]> [-Filters <ICursorFilter[]>]
  [-ConnectedFields <ConnectedField[]>] [<CommonParameters>]
 ```

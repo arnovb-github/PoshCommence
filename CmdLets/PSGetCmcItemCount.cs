@@ -8,7 +8,7 @@ namespace PoshCommence.CmdLets
     public class GetCmcItemCount : PSCmdlet
     {
         private string categoryName;
-        [Parameter(Position = 0, Mandatory = true)]
+        [Parameter(Position = 0, Mandatory = true, ValueFromPipelineByPropertyName = true)]
         [ArgumentCompleter(typeof(CategoryNameArgumentCompleter))]
         [Alias("c")]
         public string CategoryName
@@ -23,6 +23,11 @@ namespace PoshCommence.CmdLets
         {
             using (var db = new CommenceDatabase())
             {
+                //var retval = new 
+                //{
+                //    CategoryName = this.CategoryName,
+                //    RowCount = db.GetItemCount(CategoryName)
+                //};
                 WriteObject(db.GetItemCount(CategoryName));
             }
         }

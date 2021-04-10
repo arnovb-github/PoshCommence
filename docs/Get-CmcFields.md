@@ -20,6 +20,7 @@ Get-CmcFields [-CategoryName] <String> [<CommonParameters>]
 Gets the fieldnames from the specfied Commence category.
 
 ## EXAMPLES
+
 ### Example 1
 ```powershell
 Get-CmcFields Account

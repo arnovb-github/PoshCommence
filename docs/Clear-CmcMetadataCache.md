@@ -12,7 +12,7 @@ Reset Commence metadata cache.
 
 ## SYNTAX
 
-```powershell
+```
 Clear-CmcMetadataCache [<CommonParameters>]
 ```
 

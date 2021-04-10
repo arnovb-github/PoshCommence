@@ -15,7 +15,7 @@ namespace PoshCommence.CmdLets
                 foreach (string c in categories)
                 {
                     ICategoryDef def = db.GetCategoryDefinition(c);
-                    yield return new { Name = c,
+                    yield return new { CategoryName = c,
                         Id = def.CategoryID,
                         Clarified = def.Clarified,
                         ClarifyField = def.ClarifyField,

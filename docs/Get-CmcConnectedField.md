@@ -13,7 +13,7 @@ Get a related column (field).
 ## SYNTAX
 
 ```
-Get-CmcConnectedField [-ConnectionName] <String> [-ToCategory] <String> [-FieldName] <String>
+Get-CmcConnectedField [-ConnectionName] <String> [-ToCategoryName] <String> [-FieldName] <String>
  [<CommonParameters>]
 ```
 
@@ -37,7 +37,7 @@ Commence connection name (case-sensitive).
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: cn
 
 Required: True
 Position: 0
@@ -52,7 +52,7 @@ Commence fieldname in the connected category.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: f
 
 Required: True
 Position: 2
@@ -87,7 +87,5 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ### PoshCommence.ConnectedField
 ## NOTES
-
-## RELATED LINKS
 
 ## RELATED LINKS

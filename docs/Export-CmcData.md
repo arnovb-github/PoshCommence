@@ -14,12 +14,15 @@ Export Commence data to file.
 
 ### ByCategory (Default)
 ```
-Export-CmcData [-CategoryName] <string> [-OutputPath] <string> [-ExportFormat <ExportFormat>] [-Filters <ICursorFilter[]>] [-FieldNames <string[]>] [-ConnectedFields <ConnectedField[]>] [-UseThids] [<CommonParameters>]
+Export-CmcData [-CategoryName] <String> [-OutputPath] <String> [-ExportFormat <ExportFormat>]
+ [-Filters <ICursorFilter[]>] [-FieldNames <String[]>] [-ConnectedFields <ConnectedField[]>]
+ [-SkipConnectedItems] [-UseThids] [-PreserveAllConnections] [<CommonParameters>]
 ```
 
 ### ByView
 ```
-Export-CmcData [-ViewName] <string> [-OutputPath] <string> [-ExportFormat <ExportFormat>] [-UseColumnNames] [<CommonParameters>]
+Export-CmcData [-ViewName] <String> [-OutputPath] <String> [-ExportFormat <ExportFormat>] [-SkipConnectedItems]
+ [-PreserveAllConnections] [-UseColumnNames] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -50,6 +53,7 @@ Export-CmcData -c Account -FieldNames $fields -Filters $filter -ConnectedFields 
 Export specified fields to a Json file
 
 Advanced example (using _Tutorial database_): export 
+
 ### Example 3 (View)
 ```powershell
 Export-CmcData -v 'Contact List' -OutputPath contactlist.xml
@@ -69,6 +73,21 @@ Aliases: c
 
 Required: True
 Position: 0
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ConnectedFields
+Fields from connections.
+
+```yaml
+Type: ConnectedField[]
+Parameter Sets: ByCategory
+Aliases:
+
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -105,21 +124,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -ConnectedFields
-Fields from connections.
-
-```yaml
-Type: ConnectedField[]
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Filters
 List of filters to apply to the category.
 
@@ -145,6 +149,36 @@ Aliases:
 
 Required: True
 Position: 1
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -PreserveAllConnections
+{{ Fill PreserveAllConnections Description }}
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -SkipConnectedItems
+{{ Fill SkipConnectedItems Description }}
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
