@@ -233,15 +233,12 @@ The `Export-CmcData` cmdlet allows you to do simple exporting directly from the 
 
 ### Syntax for ByCategory
 ```powershell
-Export-CmcData [-CategoryName] <String> [-OutputPath] <String> [-ExportFormat <ExportFormat>]
- [-Filters <ICursorFilter[]>] [-FieldNames <String[]>] [-SkipConnectedItems] [-UseThids]
- [-PreserveAllConnections] [<CommonParameters>]
+Export-CmcData [-CategoryName] <String> [-OutputPath] <String> [-ExportFormat <ExportFormat>]  [-Filters <ICursorFilter[]>] [-FieldNames <String[]>] [-SkipConnectedItems] [-UseThids]  [-PreserveAllConnections] [<CommonParameters>]
 ```
 
 ### Syntax for ByView
 ```powershell
-Export-CmcData [-ViewName] <String> [-OutputPath] <String> [-ExportFormat <ExportFormat>] [-SkipConnectedItems]
- [-PreserveAllConnections] [-UseColumnNames] [<CommonParameters>]
+Export-CmcData [-ViewName] <String> [-OutputPath] <String> [-ExportFormat <ExportFormat>] [-SkipConnectedItems] [-PreserveAllConnections] [-UseColumnNames] [<CommonParameters>]
 ```
 
 ### Example
