@@ -158,10 +158,10 @@ Get-CmcData [-ViewName] <string> [-FieldNames] <string[]> [-Filters <ICursorFilt
 ```
 
 ### Get THIDs ###
-If you want THIDs, specify the `-UseThids` switch. You get an additional `CommenceField` object with fieldname 'THID' for every row.
+If you want THIDs, specify the `-UseThids` switch. You get an additional column with the name 'THID' for every row.
 
 ### Related columns ###
-Providing related columns involves some more work. These are the columns you would set by the `cursor.SetRelatedColumn()` method in the Commence API.
+Providing related columns involves some more work. These are the columns you would set by the `<cursor>.SetRelatedColumn()` method in the Commence API.
 
 ### Example
 ```powershell
