@@ -178,8 +178,7 @@ You can also supply filters with `-Filters`. Use the `Get-CmcFilter`. This is a 
 FilterType Field (F):
 
 ```powershell
-Get-CmcFilter [-ClauseNumber] <Int32> [-FilterType] <FilterType> [-Except] [-OrFilter] -FieldName <String>
- -Qualifier <FilterQualifier> -FieldValue <String> [-FieldValue2 <String>] [-MatchCase] [<CommonParameters>]
+Get-CmcFilter [-ClauseNumber] <Int32> [-FilterType] <FilterType> [-Except] [-OrFilter] -FieldName <String> -Qualifier <FilterQualifier> -FieldValue <String> [-FieldValue2 <String>] [-MatchCase] [<CommonParameters>]
 ```
 
 FilterType ConnectionToItem (CTI):
