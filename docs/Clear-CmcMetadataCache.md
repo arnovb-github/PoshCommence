@@ -41,5 +41,5 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ### None
 ## NOTES
-
+When you switch databases, the cache is automatically cleared.
 ## RELATED LINKS

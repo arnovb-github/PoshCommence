@@ -3,14 +3,12 @@
 ## Overview ##
 A collection of Powershell cmdlets for use with the Commence RM API. Requires [Vovin.CmcLibNet](https://www.nuget.org/packages/Vovin.CmcLibNet/). You can think of these as convenience methods, since _Vovin.CmcLibNet_ can also be used directly in PowerShell. It assumes a single running instance of Commence .
 
-This is all experimental.
+The most useful cmdlets are probably `Get-CmcData`, which allows you to extract fieldvalues without having to create a view in Commence and `Export-CmcData`, which allows you to export data without having to define an Export Template in Commence. Keep in mind that the Commence API is quite slow.
 
-The most useful cmdlets are probably `Get-CmcData`, which allows you to extract fieldvalues without having to create a view in Commence and `Export-CmcData`, which allows you to export data without having to define an Export Template in Commence.
-
-All examples that specify a categoryname, fieldname, viewname, etc. are for the _Tutorial_ database present in all Commence installations under Help.
+All examples that specify a categoryname, fieldname, viewname, etc. are for the _Tutorial_ database present in all Commence installations under *Help*.
 
 ## Background ##
-I botch these together whenever I find I have to do too much work in PS to get what I want. For example, in a project I was working on I needed to retrieve the Name field values for a category repeatedly. Just a few lines of code, but a single CmdLet is even easier.
+I botch these together whenever I find I have to do too much work in PS to get what I want. For example, in a project I was working on I needed to retrieve the Name field values for a category repeatedly. Just a few lines of code, but a single cmdLet is even easier.
 
 This is a binary assembly. It could all have been done in plain PS, I just wanted to play around with doing it in C# code using VS Code.
 
