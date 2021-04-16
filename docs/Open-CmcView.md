@@ -28,6 +28,12 @@ Find-CmcView -Name Product | Open-CmcView
 
 Will open all views that contain 'Product' in their name. __NOTE__ If the number of views passed to this cmdlet exceeds a threshold, only the first number of views up to that threshold will be opened. At the time of writing this threshold is 5.
 
+### Example 2
+```powershell
+Open-CmcView 'All Accounts'
+```
+
+Will open the view called 'All Accounts'. View names are case-sensitive.
 ## PARAMETERS
 
 ### -NewCopy
