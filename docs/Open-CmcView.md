@@ -13,11 +13,11 @@ Open a view in Commence.
 ## SYNTAX
 
 ```
-Open-CmcView [-View] <IViewDef[]> [-NewCopy] [<CommonParameters>]
+Open-CmcView -Name <String> [-NewCopy] [-Max <Int32>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Used in conjunction with [Find-CmcView](Find-CmcView.md). Opens the view(s) in Commence and puts the window focus on Commence.
+Typically used in conjunction with [Find-CmcView](Find-CmcView.md). Opens the view(s) in Commence and puts the window focus on Commence.
 
 ## EXAMPLES
 
@@ -31,7 +31,7 @@ Will open all views that contain 'Product' in their name. __NOTE__ If the number
 ## PARAMETERS
 
 ### -NewCopy
-Opens a copy of the view if it was already opened.
+Opens a copy of the view even if it was already opened.
 
 ```yaml
 Type: SwitchParameter
@@ -45,18 +45,33 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -View
-View objects returned by `Find-CmcView`.
+### -Max
+Maximum number of views to open. Keep this member small or Commence or your brain will explode.
 
 ```yaml
-Type: IViewDef[]
+Type: Int32
 Parameter Sets: (All)
 Aliases:
 
+Required: False
+Position: Named
+Default value: 5
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Name
+Commence view name. Case-sensitive.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: ViewName
+
 Required: True
-Position: 0
+Position: Named
 Default value: None
-Accept pipeline input: True (ByValue)
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -71,7 +86,6 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ### None
 ## NOTES
-There is a maximum to the total number of views that Commence can show. In order to not make Commence blow up in your face immediately, there is a hard-coded limit to the amount of views this cmdlet will open. It may still blow up, just not immediately.
 
 ## RELATED LINKS
 

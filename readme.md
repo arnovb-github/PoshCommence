@@ -10,12 +10,13 @@ All examples that specify a categoryname, fieldname, viewname, etc. are for the 
 ## Background ##
 I botch these together whenever I find I have to do too much work in PS to get what I want. For example, in a project I was working on I needed to retrieve the Name field values for a category repeatedly. Just a few lines of code, but a single cmdLet is even easier.
 
-This is a binary assembly. It could all have been done in plain PS, I just wanted to play around with doing it in C# code using VS Code.
-
 # CmdLets #
 
 ## Getting help ##
 There is full `Get-Help` for every cmdlet, created with the [PlatyPS](https://www.powershellgallery.com/packages/platyPS/) package.
+
+## Argument completion ##
+There is tab-completion for most parameter values.
 
 ## Exploring the database ##
 Get the name of the currently active Commence database:

@@ -1,10 +1,8 @@
 using PoshCommence.Base;
-using System.Diagnostics;
 using System;
-using System.Linq;
+using System.Diagnostics;
 using System.Management.Automation;
 using Vovin.CmcLibNet.Database;
-using Vovin.CmcLibNet.Database.Metadata;
 
 namespace PoshCommence.CmdLets
 {
@@ -12,49 +10,77 @@ namespace PoshCommence.CmdLets
     public class OpenCmcView : PSCmdlet
     {
         private const string COMMENCE_PROCESS = "commence";
-        private const int MAX_VIEWS = 5;
 
-        private IViewDef[] views;
-        [Parameter(Position = 0, Mandatory = true, ValueFromPipeline=true)]
-        public IViewDef[] View
+        private string viewName;
+        [Parameter(Position = 0, Mandatory = true, ValueFromPipelineByPropertyName = true)]
+        [Alias("v","ViewName")]
+        public string Name
         {
-            get { return views; }
-            set { views = value; }
+            get { return viewName; }
+            set { viewName = value; }
         }
 
+
         private bool newCopy;
-        [Parameter(Position = 1)]
+        [Parameter(Position = 1, Mandatory = false)]
         public SwitchParameter NewCopy
         {
             get { return newCopy; }
             set { newCopy = value; }
         }
-        
+
+        [Parameter(Position = 2, Mandatory = false)]
+        [ValidateRange(1,99)]
+        [PSDefaultValue(Value = 5)]
+        public int Max
+        {
+            get { return maxViews; }
+            set { maxViews = value; }
+        }
+
+        private int maxViews = 5;
+        private int counter;
+        private string dbName;
+
+        protected override void BeginProcessing()
+        {
+            base.BeginProcessing();
+            counter = 0; // not needed, just there to make the logic flow more clear
+        }
+
         protected override void ProcessRecord()
         {
-            if (views.Length > MAX_VIEWS) {
-                WriteWarning($"Number of views exceeds limit of this cmdlet, opening first {MAX_VIEWS} views.");
-            }
-            using (var db = new CommenceDatabase())
+            counter++;
+            if (counter >= maxViews) { return; }
+            using (var db = new CommenceDatabase()) // could move this to BeginProcessing? Do we care? 
             {
-                foreach (var v in views.Take(MAX_VIEWS)) 
+                dbName = db.Name;
+                if (!db.ShowView(this.Name, newCopy))
                 {
-                    if (!db.ShowView(v.Name, newCopy)) 
-                    {
-                        throw new InvalidOperationException($"Unable to open view '{v.Name}' in Commence.");
-                    }
+                    throw new InvalidOperationException($"Unable to open view '{this.Name}' in Commence.");
                 }
-                ShowCommence(db.Name);                
             }
+        }
+
+        protected override void EndProcessing()
+        {
+            base.StopProcessing();
+            if (counter >= maxViews)
+            {
+                WriteWarning($"Number of views exceeded limit of this cmdlet, opened first {this.Max} views.");
+            }
+            ShowCommence(dbName);
         }
 
         private void ShowCommence(string databaseName)
         {
+            if (string.IsNullOrEmpty(databaseName)) { return; }
             Process p = ProcessHelper.GetProcessFromTitle(COMMENCE_PROCESS, databaseName);
-            if (p != null) {
+            if (p != null)
+            {
                 WindowHelper.BringProcessToFront(p);
             }
         }
-        
+
     }
 }

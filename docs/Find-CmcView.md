@@ -13,11 +13,11 @@ Find a Commence view.
 ## SYNTAX
 
 ```
-Find-CmcView [[-Name] <String>] [-CategoryName <String>] [-Type <String>] [<CommonParameters>]
+Find-CmcView [-ViewName <String>] [-CategoryName <String>] [-ViewType <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Finds 
+Can be used to search for Commence views by name, category or viewtype.
 
 ## EXAMPLES
 
@@ -26,22 +26,22 @@ Finds
 Find-CmcView
 ```
 
-Without parameters it will output the complete list of views in Commence.
+Without parameters it will output all views in Commence.
 
 ### Example 2
 ```powershell
-Find-CmcView prod
+Find-CmcView -ViewName prod
 ```
 
-The first parameter will search the list of views for views that have names that contain the argument 'prod'. The `-Name` parameter supports tab-completion after the first run.
+Will search the list of views for views that have a name that starts with 'prod'. The `-ViewName` parameter supports tab-completion after the first run. Note that while view names in Commence are case-sensitive, this argument is not.
 
 ### Example 3
 ```powershell
 # using Tutorial database
-Find-CmcView prod -Category Product -Type Report
+Find-CmcView prod -CategoryName Product -ViewType Report
 ```
 
-Will list the views that match 'prod' in category 'Product' and of type 'Report Viewer'. The `-Category` and `-Type` parameters both have tab-completion.
+Will list the views that start with 'prod' in category 'Product' and are of type 'Report'. The `-CategoryName` and `-ViewType` parameters both support tab-completion.
 
 ## PARAMETERS
 
@@ -60,8 +60,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Name
-(Part of) the view name to find.
+### -ViewName
+(First characters of) the view name to find.
 
 ```yaml
 Type: String
@@ -69,13 +69,13 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 0
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Type
+### -ViewType
 The Commence viewtype to filter views on.
 
 ```yaml

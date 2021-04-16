@@ -26,7 +26,7 @@ Returns the connectionnames and their categoryname to the specfied category in C
 Get-CmcConnections Account
 ```
 
-Returns the connections and their categoryname to the Account category.
+Returns the connections and their categoryname for the 'Account' category.
 
 ## PARAMETERS
 
