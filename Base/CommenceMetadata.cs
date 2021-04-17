@@ -214,7 +214,7 @@ namespace PoshCommence.Base
             {
                 retval = retval.Where(f);
             }
-            return retval.ToArray();
+            return retval;
         }
 
         internal static void RefreshViewDefinitions()

@@ -101,6 +101,6 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ### Vovin.CmcLibNet.Database.Metadata.IViewDef
 ## NOTES
-Will not return Commence MultiViews because they are not exposed by Commence.
+Will not return views of type MultiView or Document because they are not exposed by Commence.
 
 ## RELATED LINKS

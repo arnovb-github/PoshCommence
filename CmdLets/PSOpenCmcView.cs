@@ -31,7 +31,7 @@ namespace PoshCommence.CmdLets
 
         [Parameter(Position = 2, Mandatory = false)]
         [ValidateRange(1,99)]
-        [PSDefaultValue(Value = 5)]
+        [PSDefaultValue(Value = 5)] // PlatyPS does not pick this up
         public int Max
         {
             get { return maxViews; }
@@ -52,7 +52,7 @@ namespace PoshCommence.CmdLets
         {
             counter++;
             if (counter >= maxViews) { return; }
-            using (var db = new CommenceDatabase()) // could move this to BeginProcessing? Do we care? 
+            using (var db = new CommenceDatabase()) // we could move this to BeginProcessing? Do we care? 
             {
                 dbName = db.Name;
                 if (!db.ShowView(this.Name, newCopy))
@@ -65,11 +65,11 @@ namespace PoshCommence.CmdLets
         protected override void EndProcessing()
         {
             base.StopProcessing();
+            ShowCommence(dbName);
             if (counter >= maxViews)
             {
                 WriteWarning($"Number of views exceeded limit of this cmdlet, opened first {this.Max} views.");
             }
-            ShowCommence(dbName);
         }
 
         private void ShowCommence(string databaseName)
