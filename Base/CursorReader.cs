@@ -12,7 +12,7 @@ namespace PoshCommence.Base
         // but I don't care for now.
         
         // TODO: we should incorporate some kind of warning mechanism
-        // when the umber of items is large;
+        // when the number of items is large;
         // in that case the read may take a long time
         // It would require a significant overhaul of this class though.
         public static List<List<string>> GetCmcFieldValues(
@@ -36,21 +36,33 @@ namespace PoshCommence.Base
                         {
                             cur.Filters.Add(f);
                         }
-                    
-                    cur.Filters.Apply();
+                        cur.Filters.Apply();
                     }
-                    cur.SetColumns(fieldNames.Cast<object>().ToArray());
-                    if (relatedColumns != null) 
+
+                    if (fieldNames != null)
                     {
+                        // by default all columns are included in a cursor
+                        // the GetColumns method takes care of setting the column index
+                        cur.SetColumns(fieldNames.Cast<object>().ToArray());
+                    }
+
+                    // for related columns, we need a manual way to make sure we get the correct columnnumber
+                    int columnIndex = cur.ColumnCount; // we want to start after last position by default
+                    if (relatedColumns != null)
+                    {
+                        // make sure we start at 0 if there were no fields provided
+                        // we do that because when a cursor is created, by default all columns are included
+                        if (fieldNames == null) { columnIndex = 0; } 
                         foreach (var rc in relatedColumns)
                         {
-                            cur.SetRelatedColumn(cur.ColumnCount, 
+                            cur.SetRelatedColumn(columnIndex, 
                                 rc.ConnectionName,
                                 rc.ToCategory,
                                 rc.FieldName);
                         }
+                        columnIndex = cur.ColumnCount;
                     }
-                    retval = cur.ReadAllRows();
+                    retval = cur.ReadAllRows(); // this may be slow! No CancellationToken possible
                 }
             }
             return retval;
