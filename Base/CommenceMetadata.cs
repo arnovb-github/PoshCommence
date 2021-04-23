@@ -10,7 +10,14 @@ namespace PoshCommence.Base
     internal static class CommenceMetadata
     {
         private static IEnumerable<string> categoryNames = new List<string>();
-        private static IEnumerable<string> viewNames = new List<string>();
+        // this list is used for the viewname autocomplete
+        // it will contain <viewname>,<categoryname>
+        // I added the category to have it at hand in case we want to retrieve mor info on the view
+        private static IDictionary<string, string> viewNames = new Dictionary<string, string>();
+        // this contans all view definitions
+        // in theory, having just this list would provide all information
+        // but building this list takes a lot of DDE requests,
+        // which is why we also have the viewNames dictionary.
         private static List<IViewDef> viewList = new List<IViewDef>();
         private static IEnumerable<string> viewTypes;
         private static IDictionary<string, IEnumerable<string>> fieldNames = new Dictionary<string, IEnumerable<string>>();
@@ -157,7 +164,6 @@ namespace PoshCommence.Base
                 }
                 return categoryNames;
             }
-
         }
 
         private static void RefreshCategories()
@@ -170,7 +176,7 @@ namespace PoshCommence.Base
         #endregion
 
         #region Views
-        internal static IEnumerable<string> Views
+        internal static IDictionary<string, string> ViewNames
         {
             get
             {
@@ -189,7 +195,10 @@ namespace PoshCommence.Base
             {
                 foreach (string categoryName in Categories)
                 {
-                    viewNames = viewNames.Concat(db.GetViewNames(categoryName));
+                    foreach (string viewName in db.GetViewNames(categoryName))
+                    {
+                        viewNames.Add(viewName, categoryName);
+                    }
                 }
             }
         }
@@ -222,7 +231,7 @@ namespace PoshCommence.Base
             viewList.Clear();
             using (var db = new CommenceDatabase())
             {
-                foreach (string viewName in Views)
+                foreach (string viewName in ViewNames.Keys)
                 {
                     viewList.Add(db.GetViewDefinition(viewName));
                 }
@@ -282,7 +291,7 @@ namespace PoshCommence.Base
         {
             categoryNames = new List<string>();
             fieldNames = new Dictionary<string, IEnumerable<string>>();
-            viewNames = new List<string>();
+            viewNames = new Dictionary<string, string>();
             viewList = new List<IViewDef>();
             connections = new Dictionary<string, IEnumerable<ICommenceConnection>>();
         }
