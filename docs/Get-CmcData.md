@@ -163,6 +163,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ### PSObject
 ## NOTES
+Connected dataare returned just as Commence returns them. That means that they are either comma or newline-separated strings, depending on the type of uderlying data source (different viewtypes return different formats). This can make working with related data quite hard. In those cases it is probably easier to dump the contents to a file. The export engine will treat connected items as seperarate entities if possible. Use either XML or Json.
 
 ## RELATED LINKS
 

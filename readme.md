@@ -31,28 +31,26 @@ Get the Commence _active.log_ file:
 Get-CmcLogFile [<CommonParameters>]
 ```
 
-This will return a `System.IO.FileInfo` object.
+This will return a `PSObject` object.
 
 ### Example:
 ```powershell
 # get last 10 lines of log file
-Get-Content (Get-CmcLogFile).FullName -Tail 10
+Get-CmcLogFile | Get-Content -Tail 10
 ```
-
-**Side note** In the vast majority of cases, you will want to look at contents of the log file. So why not simply make the cmdlet return the contents of the file? The reason for that is two-fold: consistency and retaining information. A file is actually an object, with properties. Like *size*, or *last modified*. `Get-CmcLogFile` does just what is says: return the file object. By doing so, it keeps true to the spirit of Powershell in which everything you work with is an object. Just returning the contents of the file, or even the name of the file, would ultimately make it harder to work with the cmdlet.
 
 Get the Commence _data.ini_ file:
 ```powershell
 Get-CmcIniFile [<CommonParameters>]
 ```
 
-This will return a `System.IO.FileInfo` object.
+This will return a `PSObect` object.
 
 ### Example
 Get the _data.ini_ file:
 ```powershell
 # get contents of data.ini
-Get-Content (Get-CmcIniFile).FullName 
+Get-CmcIniFile | Get-Content
 ```
 
 Get the database directory:
@@ -61,7 +59,7 @@ Get the database directory:
 Get-CmcDatabaseDirectory [<CommonParameters>]
 ```
 
-This will return a `System.IO.DirectoryInfo` object.
+This will return a `PSObject` object.
 
 ### Example
 ```powershell
@@ -113,10 +111,10 @@ This is self-explanatory.
 
 ### Example
 ```powershell
-Find-CmcView peop -CategoryName Contact -Type Report
+Find-CmcView 'peop' -CategoryName Contact -Type Report
 ```
 
-Will output view of type 'Report' in category 'Contact' that contain 'peop' in the name. All parameters support tab-completion.
+Will output view of type 'Report' in category 'Contact' that contain the string 'peop' in the name. All parameters support tab-completion.
 
 You can pipe results to `Open-CmcView`:
 ### Example
@@ -172,6 +170,8 @@ $rc1 = [PoshCommence.ConnectedField]::New('Relates to', 'Contact','accountKey')
 $rc2 = Get-CmcConnectedField 'Relates to', 'Contact','emailBusiness'
 ```
 **Important**: connection names in Commence are case-sensitive!
+
+This is the fastest way to get related data, but it should be noted that you get related data just as the Commence API returns them. Depending on whether you read from a cursor or a view and depending on the viewtype, related columns are a `\n` or comma-delimited string. This can make processing related data quite hard. It is probably easier to use [Export-CmcData](Export-CmcData.md) and read the resulting file content, because the export engine splits connected data. Use XML or Json format.
 
 ### Filters ###
 You can also supply filters with `-Filters`. Use the `Get-CmcFilter`. This is a cmdlet that has a dynamic parameterset for every type of filter:
