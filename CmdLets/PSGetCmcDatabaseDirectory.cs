@@ -8,7 +8,8 @@ namespace PoshCommence.CmdLets
     {
         protected override void ProcessRecord()
         {
-            WriteObject(PathFinder.DatabaseDirectory);
+            var item = InvokeProvider.Item.Get(PathFinder.DatabaseDirectory.FullName);
+            WriteObject(item, true);
         }
     }
 }

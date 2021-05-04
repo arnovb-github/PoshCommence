@@ -123,6 +123,8 @@ namespace PoshCommence.CmdLets
                 ExportByCategory();
             }
             WriteVerbose($"File '{_path}' of type '{_exportOptions.ExportFormat}' written to '{_path}'.");
+            var item = InvokeProvider.Item.Get(_path);
+            WriteObject(item, true);
         }
 
         private void ExportByView()

@@ -238,8 +238,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## OUTPUTS
 
-### None
-Writes data to a file.
+### PSObject
 
 ## NOTES
 
