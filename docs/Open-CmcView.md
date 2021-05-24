@@ -13,7 +13,7 @@ Open a view in Commence.
 ## SYNTAX
 
 ```
-Open-CmcView -Name <String> [-NewCopy] [-Max <Int32>] [<CommonParameters>]
+Open-CmcView [-Name] <String> [-NewCopy] [[-Max] <Int32>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -34,7 +34,38 @@ Open-CmcView 'All Accounts'
 ```
 
 Will open the view called 'All Accounts'. View names are case-sensitive.
+
 ## PARAMETERS
+
+### -Max
+Maximum number of views to open. Keep this member small or Commence or your brain will explode.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 2
+Default value: 5
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Name
+Commence view name. Case-sensitive.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: v, ViewName
+
+Required: True
+Position: 0
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
 
 ### -NewCopy
 Opens a copy of the view even if it was already opened.
@@ -48,36 +79,6 @@ Required: False
 Position: 1
 Default value: None
 Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Max
-Maximum number of views to open. Keep this member small or Commence or your brain will explode.
-
-```yaml
-Type: Int32
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: 5
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Name
-Commence view name. Case-sensitive.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases: ViewName
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 

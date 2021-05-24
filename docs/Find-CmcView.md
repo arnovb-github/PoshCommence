@@ -13,7 +13,7 @@ Find a Commence view.
 ## SYNTAX
 
 ```
-Find-CmcView [-ViewName <String>] [-CategoryName <String>] [-ViewType <String>] [<CommonParameters>]
+Find-CmcView [[-ViewName] <String>] [-CategoryName <String>] [-ViewType <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -69,7 +69,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
+Position: 0
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

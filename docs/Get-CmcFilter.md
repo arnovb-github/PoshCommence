@@ -13,8 +13,9 @@ Create a filter object used to filter Commence data.
 ## SYNTAX
 
 ```
-Get-CmcFilter [-ClauseNumber] <Int32> [-FilterType] <FilterType> [-Except] [-OrFilter] -FieldName <String>
- -Qualifier <FilterQualifier> -FieldValue <String> [-FieldValue2 <String>] [-MatchCase] [<CommonParameters>]
+Get-CmcFilter [-ClauseNumber] <Int32> [-FilterType] <FilterType> [-Except] [-OrFilter] [-FieldName] <String>
+ [-Qualifier] <FilterQualifier> [-FieldValue] <String> [[-FieldValue2] <String>] [-MatchCase]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -175,37 +176,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -FilterType
-Filter type. For each type there is a different set of parameters.
-
-```yaml
-Type: FilterType
-Parameter Sets: (All)
-Aliases: t, Type
-Accepted values: Field, ConnectionToItem, ConnectionToCategoryToItem, ConnectionToCategoryField
-
-Required: True
-Position: 1
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -OrFilter
-Set filter conjunction to OR (if omitted, defaults to AND).
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -FieldName
 Commence fieldname. Only used in F and CTCF filters.
 
@@ -215,7 +185,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: Named
+Position: 2
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -230,7 +200,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: Named
+Position: 4
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -245,7 +215,23 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
+Position: 5
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -FilterType
+Filter type. For each type there is a different set of parameters.
+
+```yaml
+Type: FilterType
+Parameter Sets: (All)
+Aliases: t, Type
+Accepted values: Field, ConnectionToItem, ConnectionToCategoryToItem, ConnectionToCategoryField
+
+Required: True
+Position: 1
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -266,6 +252,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -OrFilter
+Set filter conjunction to OR (if omitted, defaults to AND).
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Qualifier
 Commence filter qualifier. Only used in F and CTCF filters. See the examples.
 
@@ -273,9 +274,10 @@ Commence filter qualifier. Only used in F and CTCF filters. See the examples.
 Type: FilterQualifier
 Parameter Sets: (All)
 Aliases:
+Accepted values: Contains, DoesNotContain, On, At, EqualTo, NotEqualTo, LessThan, GreaterThan, Between, True, False, Checked, NotChecked, Yes, No, Before, After, Blank, Shared, Local, One, Zero
 
 Required: True
-Position: Named
+Position: 3
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
