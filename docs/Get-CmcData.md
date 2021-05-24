@@ -20,7 +20,7 @@ Get-CmcData [-CategoryName] <String> [-FieldNames] <String[]> [-UseThids] [-Filt
 
 ### ByView
 ```
-Get-CmcData [-ViewName] <String> [-FieldNames] <String[]> [-Filters <ICursorFilter[]>]
+Get-CmcData [-ViewName] <String> [[-FieldNames] <String[]>] [-Filters <ICursorFilter[]>]
  [-ConnectedFields <ConnectedField[]>] [<CommonParameters>]
 ```
 
@@ -97,10 +97,22 @@ Commence fieldnames.
 
 ```yaml
 Type: String[]
-Parameter Sets: (All)
+Parameter Sets: ByCategory
 Aliases:
 
 Required: True
+Position: 1
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+```yaml
+Type: String[]
+Parameter Sets: ByView
+Aliases:
+
+Required: False
 Position: 1
 Default value: None
 Accept pipeline input: False

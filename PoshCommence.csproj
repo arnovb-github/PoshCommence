@@ -14,8 +14,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Base\ChangeLog.cs~RF217094ba.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="PowershellStandard.Library" Version="5.1.1" />
-    <PackageReference Include="Vovin.CmcLibNet" Version="1.0.4" />
+    <PackageReference Include="Vovin.CmcLibNet" Version="1.0.5" />
   </ItemGroup>
 
   <Import Project="..\..\..\Shared\CommenceProcessMonitor\CommenceProcessMonitor\CommenceProcessMonitor.projitems" Label="Shared" />
