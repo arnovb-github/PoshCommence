@@ -281,7 +281,7 @@ namespace PoshCommence.CmdLets
 
         /// <summary>
         /// Sets the replacement rules for the fieldtypes. 
-        /// If no rules are specified, the field will not be processrd.
+        /// If no rules are specified, the field will not be processed.
         /// </summary>
         /// <param name="d">Commence field definition</param>
         /// <returns>Dictionary of chars to replace</returns>
@@ -359,39 +359,25 @@ namespace PoshCommence.CmdLets
             return path;
         }
 
-        //private PSObject GetSummaryFromLog(ChangeLog log)
-        //{
-        //    int rows = log.ModifiedRows.Keys.Count();
-        //    var fields = log.ModifiedRows.Sum(s => s.Value.Count());
-        //    var o = new PSObject();
-        //    o.Members.Add(new PSNoteProperty("Affected rows", rows));
-        //    o.Members.Add(new PSNoteProperty("Affected fields", fields));
-        //    return o;
-        //}
-
         private IEnumerable<PSObject> GetSummaryFromLog(ChangeLog log)
         {
             if (!log.ModifiedRows.Any())
             {
                 yield return new PSObject("No unexpected control characters found.");
+                yield break;
             }
-            else
+            // flatten and group FieldModification objects
+            var groups = log.ModifiedRows.Values.SelectMany(d => d).GroupBy(p => p.CategoryName);
+            foreach (var g in groups)
             {
-                // flatten and group FieldModification objects
-                // we lose the row ids
-                var groups = log.ModifiedRows.Values.SelectMany(d => d)
-                        .GroupBy(p => p.CategoryName);
-                foreach (var g in groups)
-                {
-                    int affectedRowCount = log.ModifiedRows.Keys.Count(w => log.ModifiedRows[w].Any(a => a.CategoryName.Equals(g.Key)));
-                    var o = new PSObject();
-                    o.Members.Add(new PSNoteProperty("Category", g.Key));
-                    o.Members.Add(new PSNoteProperty("Affected rows", affectedRowCount));
-                    o.Members.Add(new PSNoteProperty("Affected fields", g.Count()));
-                    yield return o;
-                }
+                // LINQ magic. I will not remember how I did this but it gets me there
+                int affectedRowCount = log.ModifiedRows.Keys.Count(w => log.ModifiedRows[w].Any(a => a.CategoryName.Equals(g.Key)));
+                var o = new PSObject();
+                o.Members.Add(new PSNoteProperty("Category", g.Key));
+                o.Members.Add(new PSNoteProperty("Affected rows", affectedRowCount));
+                o.Members.Add(new PSNoteProperty("Affected fields", g.Count()));
+                yield return o;
             }
         }
     }
 }
-

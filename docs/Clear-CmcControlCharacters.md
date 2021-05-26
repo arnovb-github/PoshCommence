@@ -73,12 +73,12 @@ Commence category name.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: c
 
 Required: True
 Position: 0
 Default value: None
-Accept pipeline input: True (ByValue)
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -133,7 +133,7 @@ Directory to write logfile to.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: l
 
 Required: False
 Position: 1
@@ -148,7 +148,7 @@ Number of Commence database rows to process at a time. Defaults to 100. Change t
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
+Aliases: m
 
 Required: False
 Position: Named
@@ -184,4 +184,5 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ### None
 ## NOTES
 Depending on the Commence version, some Commence fields will accept control characters when they should not. They can either be entered directly in the UI, copy/pasted, or written by the API. Depending on the fieldtype, this can cause unwanted side-effects, ranging from simply not being able to call a URL with a CRLF in it to Commence crashing on enrolls. This cmdlet will strip text-based fields from control characters. Tabs are replaced with spaces. Line endings and carriage returns are either removed completely or replaced with Windows line-endings.
+
 ## RELATED LINKS
