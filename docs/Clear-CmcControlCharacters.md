@@ -18,7 +18,7 @@ Clear-CmcControlCharacters [-CategoryName] <String> [[-LogDir] <String>] [-MaxRo
 ```
 
 ## DESCRIPTION
-Commence in some cases allows for entering control characters in fields where there should be none. In various cases this can be troublesome. This cmdlet clears or changes any control characters from fields which should not contain them. This cmdlet changes values in the Commence database. Take appropriate precautions to prevent potential data loss.
+Commence in some cases allows for entering control characters in fields where there should be none. In various cases this can be troublesome. This cmdlet clears or changes any control characters from fields which should not contain them. This cmdlet changes values in the Commence database. Take appropriate precautions to prevent potential data loss. Also, it is recommended that you start the Commence process with the /noagents command line parameter prior to running this cmdlet, or Commence may lock up and crash.
 
 ## EXAMPLES
 
@@ -27,14 +27,14 @@ Commence in some cases allows for entering control characters in fields where th
 Clear-CmcControlCharacters Account
 ```
 
-Will prompt user to remove control chatacters from fields in category 'Account'. A log will be written to '%AppData%\PoshCommence'.
+Will prompt user to remove control characters from fields in category 'Account'. A log will be written to '%AppData%\Local\PoshCommence'.
 
 ### Example 2
 ```powershell
 Clear-CmcControlCharacters -CategoryName Account -WhatIf -LogDir C:\TEMP
 ```
 
-(Recommended to run first) Will do a dummy run of the command writing potential changes to a log will in 'C:\TEMP'.
+(Recommended to run first) Will do a dummy run on category 'Account', writing potential changes to a log file in 'C:\TEMP'.
 
 ### Example 3
 ```powershell
@@ -53,17 +53,18 @@ Recommended usage. The first command will do a dry run. A logfile of pending cha
 
 ### Example 5
 ```powershell
-Get-CmcCategories | Clear-CmcControlCharacters -CategoryName Account -WhatIf -LogDir C:\TEMP
+Get-CmcCategories | Clear-CmcControlCharacters -WhatIf -LogDir C:\TEMP
 ```
 
 Analyze the entire database by piping all categories to the cmdlet. A logfile of pending changes will be written to 'C:\TEMP' in Json format. Json is a way to concisely represent control characters in text format and it will allow you to do analysis by reading it back into objects if so desired.
 
 ### Example 6
 ```powershell
-Get-CmcCategories | Clear-CmcControlCharacters -CategoryName Account -LogDir C:\TEMP -Force
+Get-CmcCategories | Clear-CmcControlCharacters -LogDir C:\TEMP -Force
 ```
 
 You are absoluty certain you want to clean up all categories, so you pass in all category names and you override the confirmation with `-Force`.
+
 ## PARAMETERS
 
 ### -CategoryName
@@ -82,7 +83,7 @@ Accept wildcard characters: False
 ```
 
 ### -ColumnDelimiter
-Do not touch this unless you are a Commence wizard. It is the delimiter passed to a RowSets `GetRow()` method. You would only ever need this if the default for some reason gives unwanted results. The default is defined in [Vovin.CmcLibNet](https://github.com/arnovb-github/CmcLibNet).
+Do not touch this unless you are a Commence wizard. It is the delimiter passed to a RowSets `GetRow()` method. You only ever need to change this if the default for some reason gives unwanted results. The default is defined in [Vovin.CmcLibNet](https://github.com/arnovb-github/CmcLibNet).
 
 ```yaml
 Type: String
@@ -158,7 +159,6 @@ Accept wildcard characters: False
 
 ### -WhatIf
 Shows what would happen if the cmdlet runs.
-The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter

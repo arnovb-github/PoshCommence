@@ -118,7 +118,8 @@ namespace PoshCommence.CmdLets
                 if (Force || ShouldContinue("Do you want to continue?",
                     $"Remove control characters from text-fields in category '{this.CategoryName}'." +
                     $" This action cannot be undone.\n" +
-                    $"It is recommended that you disable workgroup syncing and backup your database before you run this command."))
+                    $"It is recommended that you disable workgroup syncing and backup your database before you run this command.\n" +
+                    $"It is also recommended you start the Commence process with the /noagents command line parameter."))
                 {
                     try
                     {
@@ -150,11 +151,8 @@ namespace PoshCommence.CmdLets
         protected override void EndProcessing()
         {
             base.EndProcessing();
-            if (!ShouldProcess(TARGET))
-            {
-                WriteObject(GetSummaryFromLog(changeLog), true);
-                WriteVerbose($"See '{logFile}' for details.");
-            }
+            WriteObject(GetSummaryFromLog(changeLog), true);
+            WriteVerbose($"See '{logFile}' for details.");
         }
 
         private Dictionary<string, Dictionary<char, string>> rules;
@@ -192,10 +190,14 @@ namespace PoshCommence.CmdLets
                                 }
                             }
                         }
+                        // explicitly close rowset, even though it will be closed automatically.
+                        // it is just a safety precaution to prevent Commence 
+                        // running out of resources before GC kicks in.
+                        ers.Close(); 
                     }
                     if (rows % 100 == 0)
                     {
-                        WriteProgress(new ProgressRecord(0, $"{rows} of {totalRows}", "Commence rows processed."));
+                        WriteProgress(new ProgressRecord(0, $"{rows} of {totalRows} ({this.CategoryName})", $"Commence rows processed."));
                     }
                 }
                 changeLog.WriteToFile(logFile); // all went peachy
