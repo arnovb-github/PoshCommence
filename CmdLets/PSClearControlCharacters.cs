@@ -41,10 +41,9 @@ namespace PoshCommence.CmdLets
     public class ClearCmcControlCharacters : PSCmdlet
     {
         private const string TARGET = "Commence database";
-        private Dictionary<string, Dictionary<char, string>> rules;
         private ChangeLog changeLog;
 
-        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, Position = 0, ValueFromPipelineByPropertyName = true)]
         [ArgumentCompleter(typeof(CategoryNameArgumentCompleter))]
         public string CategoryName
         {
@@ -93,21 +92,31 @@ namespace PoshCommence.CmdLets
         protected override void BeginProcessing()
         {
             base.BeginProcessing();
+            using (var db = new CommenceDatabase())
+            {
+                categoryNames = db.GetCategoryNames();
+            }
             logFile = GetLogPath();
-            rules = GetColumnReplacementRules(categoryName);
+            
             changeLog = new ChangeLog()
             {
-                Date = DateTime.Now,
-                CategoryName = categoryName
+                Date = DateTime.Now
             };
         }
 
+        IEnumerable<string> categoryNames;
         protected override void ProcessRecord()
         {
+            // do not process categories that arent in the database
+            if (!categoryNames.Contains(this.CategoryName))
+            {
+                WriteWarning($"Skipped category '{this.CategoryName}': it does not exist in the database.");
+                return;
+            }
             if (ShouldProcess(TARGET)) // for use with WhatIf
             {
                 if (Force || ShouldContinue("Do you want to continue?",
-                    $"Remove control characters from text-fields in category '{categoryName}'." +
+                    $"Remove control characters from text-fields in category '{this.CategoryName}'." +
                     $" This action cannot be undone.\n" +
                     $"It is recommended that you disable workgroup syncing and backup your database before you run this command."))
                 {
@@ -135,16 +144,26 @@ namespace PoshCommence.CmdLets
             else // -WhatIf portion
             {
                 ClearControlCharactersFromCategory(this.CategoryName, false);
-                WriteObject(GetSummaryFromLog(changeLog));
+            }
+        }
+
+        protected override void EndProcessing()
+        {
+            base.EndProcessing();
+            if (!ShouldProcess(TARGET))
+            {
+                WriteObject(GetSummaryFromLog(changeLog), true);
                 WriteVerbose($"See '{logFile}' for details.");
             }
         }
 
+        private Dictionary<string, Dictionary<char, string>> rules;
         private void ClearControlCharactersFromCategory(string categoryName, bool doCommit)
         {
             using (var db = new CommenceDatabase())
-            using (var cur = db.GetCursor(categoryName, CmcCursorType.Category, CmcOptionFlags.UseThids)) // TODO we can optimize this by eliminating connections. Or can we? No we cannot, we can only limit it after getting it.
+            using (var cur = db.GetCursor(categoryName, CmcCursorType.Category, CmcOptionFlags.UseThids))
             {
+                rules = GetColumnReplacementRulesForCategory(this.CategoryName);
                 // use the keys in rules to limit our cursor
                 // the keys represent the fieldnames to be processed
                 cur.Columns.AddDirectColumns(rules.Keys.ToArray());
@@ -204,15 +223,15 @@ namespace PoshCommence.CmdLets
                     var newValue = ReplaceControlCharacters(oldValue, rules.Values.ElementAt(column));
                     if (!oldValue.Equals(newValue)) // TODO can we make this faster?
                     {
-                        // TODO try/catch this?
                         var result = ers.ModifyRow(row, column, newValue, CmcOptionFlags.Default); // ModifyRow will truncate strings.
-                        if (result != 0)
-                        {
-                            throw new CommenceCOMException($"Commence method EditRowSet.ModifyRow() failed on row {row}, column {column}.");
-                        }
+                        //if (result != 0)
+                        //{
+                        //    throw new CommenceCOMException($"Commence method EditRowSet.ModifyRow() failed on row {row}, column {column}.");
+                        //}
                         retval = true;
                         // add new result to temporary changeset
                         changeResults.Add(new FieldModification(
+                            CategoryName = this.CategoryName,
                             // notice we pass rowValues[0] as the itemname
                             // that is because the Name field is always the first field to be returned from Commence,
                             // and it is also always present in our test.
@@ -221,7 +240,7 @@ namespace PoshCommence.CmdLets
                             rules.Keys.ElementAt(column), // fieldname
                             oldValue,
                             newValue,
-                            result));
+                            result)); ;
                     }
                 }
                 // add edits made to the row to change log
@@ -233,7 +252,7 @@ namespace PoshCommence.CmdLets
             return retval;
         }
 
-        private Dictionary<string, Dictionary<char, string>> GetColumnReplacementRules(string categoryName)
+        private Dictionary<string, Dictionary<char, string>> GetColumnReplacementRulesForCategory(string categoryName)
         {
             var retval = new Dictionary<string, Dictionary<char, string>>();
             using (var db = new CommenceDatabase())
@@ -335,15 +354,31 @@ namespace PoshCommence.CmdLets
             return path;
         }
 
-        private PSObject GetSummaryFromLog(ChangeLog log)
+        //private PSObject GetSummaryFromLog(ChangeLog log)
+        //{
+        //    int rows = log.ModifiedRows.Keys.Count();
+        //    var fields = log.ModifiedRows.Sum(s => s.Value.Count());
+        //    var o = new PSObject();
+        //    o.Members.Add(new PSNoteProperty("Affected rows", rows));
+        //    o.Members.Add(new PSNoteProperty("Affected fields", fields));
+        //    return o;
+        //}
+
+        private IEnumerable<PSObject> GetSummaryFromLog(ChangeLog log)
         {
-            int rows = log.ModifiedRows.Keys.Count();
-            var fields = log.ModifiedRows.Sum(s => s.Value.Count());
-            var o = new PSObject();
-            o.Members.Add(new PSNoteProperty("Category", log.CategoryName));
-            o.Members.Add(new PSNoteProperty("Affected rows", rows));
-            o.Members.Add(new PSNoteProperty("Affected fields", fields));
-            return o;
+            // flatten and group FieldModification objects
+            // we lose the row ids
+            var groups = log.ModifiedRows.Values.SelectMany(d => d)
+                       .GroupBy(p => p.CategoryName);
+            foreach (var g in groups)
+            {
+                int affectedRowCount = log.ModifiedRows.Keys.Count(w => log.ModifiedRows[w].Any(a => a.CategoryName.Equals(g.Key)));
+                var o = new PSObject();
+                o.Members.Add(new PSNoteProperty("Category", g.Key));
+                o.Members.Add(new PSNoteProperty("Affected rows", affectedRowCount));
+                o.Members.Add(new PSNoteProperty("Affected fields", g.Count()));
+                yield return o;
+            }
         }
     }
 }

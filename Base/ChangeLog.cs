@@ -8,7 +8,6 @@ namespace PoshCommence.Base
     internal class ChangeLog
     {
         public string DatabaseName { get; set; }
-        public string CategoryName { get; set; }
 
         public DateTime Date { get; set; }
 
@@ -30,19 +29,26 @@ namespace PoshCommence.Base
 
     internal class FieldModification
     {
-        internal FieldModification(string itemName, string fieldName, string oldValue, string newValue, int modifySuccess)
+        internal FieldModification(string categoryName, 
+            string itemName, 
+            string fieldName, 
+            string oldValue, 
+            string newValue, 
+            int modifyResult)
         {
+            CategoryName = categoryName;
             ItemName = itemName;
             FieldName = fieldName;
             OldValue = oldValue;
             NewValue = newValue;
-            ModifySuccess = modifySuccess;
+            ModifyResult = modifyResult;
         }
 
+        public string CategoryName { get; }
         public string ItemName { get; }
         public string FieldName { get; }
         public string OldValue { get; }
         public string NewValue { get; }
-        public int ModifySuccess { get; }
+        public int ModifyResult { get; }
     }
 }

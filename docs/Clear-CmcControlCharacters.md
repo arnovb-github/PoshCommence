@@ -51,6 +51,19 @@ Clear-CmcControlCharacters -CategoryName Account -LogDir C:\TEMP
 
 Recommended usage. The first command will do a dry run. A logfile of pending changes will be written to 'C:\TEMP' in Json format. Json is a way to concisely represent control characters in text format and it will allow you to do analysis by reading it back into objects if so desired.
 
+### Example 5
+```powershell
+Get-CmcCategories | Clear-CmcControlCharacters -CategoryName Account -WhatIf -LogDir C:\TEMP
+```
+
+Analyze the entire database by piping all categories to the cmdlet. A logfile of pending changes will be written to 'C:\TEMP' in Json format. Json is a way to concisely represent control characters in text format and it will allow you to do analysis by reading it back into objects if so desired.
+
+### Example 6
+```powershell
+Get-CmcCategories | Clear-CmcControlCharacters -CategoryName Account -LogDir C:\TEMP -Force
+```
+
+You are absoluty certain you want to clean up all categories, so you pass in all category names and you override the confirmation with `-Force`.
 ## PARAMETERS
 
 ### -CategoryName
