@@ -45,6 +45,7 @@ namespace PoshCommence.CmdLets
 
         [Parameter(Mandatory = true, Position = 0, ValueFromPipelineByPropertyName = true)]
         [ArgumentCompleter(typeof(CategoryNameArgumentCompleter))]
+        [Alias("c")]
         public string CategoryName
         {
             get { return categoryName; }
@@ -53,6 +54,7 @@ namespace PoshCommence.CmdLets
         private string categoryName;
 
         [Parameter(Position = 1)]
+        [Alias("l")]
         public string LogDir
         {
             get { return logDir; }
@@ -64,6 +66,7 @@ namespace PoshCommence.CmdLets
 
         [Parameter]
         [ValidateRange(1, 1000)]
+        [Alias("m")]
         public int MaxRows // Should only be changed when debugging, set it to 1 in that case.
         {
             get { return maxRows; }
@@ -161,7 +164,7 @@ namespace PoshCommence.CmdLets
             using (var db = new CommenceDatabase())
             using (var cur = db.GetCursor(categoryName, CmcCursorType.Category, CmcOptionFlags.UseThids))
             {
-                rules = GetColumnReplacementRulesForCategory(this.CategoryName);
+                rules = GetReplacementRulesForCategory(this.CategoryName);
                 // use the keys in rules to limit our cursor
                 // the keys represent the fieldnames to be processed
                 cur.Columns.AddDirectColumns(rules.Keys.ToArray());
@@ -254,7 +257,7 @@ namespace PoshCommence.CmdLets
             return retval;
         }
 
-        private Dictionary<string, Dictionary<char, string>> GetColumnReplacementRulesForCategory(string categoryName)
+        private Dictionary<string, Dictionary<char, string>> GetReplacementRulesForCategory(string categoryName)
         {
             var retval = new Dictionary<string, Dictionary<char, string>>();
             using (var db = new CommenceDatabase())
@@ -368,18 +371,25 @@ namespace PoshCommence.CmdLets
 
         private IEnumerable<PSObject> GetSummaryFromLog(ChangeLog log)
         {
-            // flatten and group FieldModification objects
-            // we lose the row ids
-            var groups = log.ModifiedRows.Values.SelectMany(d => d)
-                       .GroupBy(p => p.CategoryName);
-            foreach (var g in groups)
+            if (!log.ModifiedRows.Any())
             {
-                int affectedRowCount = log.ModifiedRows.Keys.Count(w => log.ModifiedRows[w].Any(a => a.CategoryName.Equals(g.Key)));
-                var o = new PSObject();
-                o.Members.Add(new PSNoteProperty("Category", g.Key));
-                o.Members.Add(new PSNoteProperty("Affected rows", affectedRowCount));
-                o.Members.Add(new PSNoteProperty("Affected fields", g.Count()));
-                yield return o;
+                yield return new PSObject("No unexpected control characters found.");
+            }
+            else
+            {
+                // flatten and group FieldModification objects
+                // we lose the row ids
+                var groups = log.ModifiedRows.Values.SelectMany(d => d)
+                        .GroupBy(p => p.CategoryName);
+                foreach (var g in groups)
+                {
+                    int affectedRowCount = log.ModifiedRows.Keys.Count(w => log.ModifiedRows[w].Any(a => a.CategoryName.Equals(g.Key)));
+                    var o = new PSObject();
+                    o.Members.Add(new PSNoteProperty("Category", g.Key));
+                    o.Members.Add(new PSNoteProperty("Affected rows", affectedRowCount));
+                    o.Members.Add(new PSNoteProperty("Affected fields", g.Count()));
+                    yield return o;
+                }
             }
         }
     }
