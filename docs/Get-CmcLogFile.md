@@ -17,13 +17,13 @@ Get-CmcLogFile [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Returns a `FileInfo` object pointing to Commence's active.log file.
+Returns a `PSObject` object pointing to Commence's active.log file.
 
 ## EXAMPLES
 
 ### Example 1
 ```powershell
-PS C:\> Get-Content (Get-CmcLogFile).FullName -Tail 10
+Get-CmcLogFile | Get-Content -Tail 10
 ```
 
 Returns the last 10 lines of the Commence log file.

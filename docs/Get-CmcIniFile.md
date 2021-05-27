@@ -17,13 +17,13 @@ Get-CmcIniFile [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Returns a `FileInfo` object pointing to Commence's data.ini settings file.
+Returns a `PSobject` object pointing to Commence's data.ini settings file.
 
 ## EXAMPLES
 
 ### Example 1
 ```powershell
-PS C:\> Get-Content (Get-CmcIniFile).FullName
+Get-CmcIniFile | Get-Content
 ```
 
 Gets the contents of the file.
