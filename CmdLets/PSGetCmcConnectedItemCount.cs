@@ -34,7 +34,7 @@ namespace PoshCommence.CmdLets
         set { toCategory = value; }
         }
 
-        // value of the item to count connections for
+        // value of the item to count connections from
         private string fromItem;
         [Parameter(Position = 3)]
         public string FromItem
