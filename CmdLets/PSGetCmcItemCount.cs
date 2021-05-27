@@ -17,19 +17,30 @@ namespace PoshCommence.CmdLets
             set { categoryName = value; }
         }
 
-        // TODO: would it be useful to also include a way to return the item count for a view?
+        private ICommenceDatabase db;
 
+        protected override void BeginProcessing()
+        {
+            db = new CommenceDatabase();
+        }
         protected override void ProcessRecord()
         {
-            using (var db = new CommenceDatabase())
+            var retval = new 
             {
-                //var retval = new 
-                //{
-                //    CategoryName = this.CategoryName,
-                //    RowCount = db.GetItemCount(CategoryName)
-                //};
-                WriteObject(db.GetItemCount(CategoryName));
-            }
+                CategoryName = this.CategoryName,
+                ItemCount = db.GetItemCount(CategoryName)
+            };
+            WriteObject(retval);
+        }
+        
+        protected override void EndProcessing()
+        {
+            db.Close();
+        }
+
+        protected override void StopProcessing()
+        {
+            db.Close();
         }
     }
 }

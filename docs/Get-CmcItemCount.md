@@ -30,10 +30,17 @@ Returns the number of items in category 'Account'.
 
 ### Example 2
 ```powershell
-Get-CmcCategories -pv cat | Get-CmcItemCount | % { Write-Output $cat.CategoryName $_ }
+Get-CmcCategories | Get-CmcItemCount
 ```
 
 Display all categorynames and their item count.
+
+### Example 3
+```powershell
+Get-CmcCategories | Get-CmcItemCount | Measure-Object -Property ItemCount -Sum
+```
+
+Count all items in the database.
 
 ## PARAMETERS
 
@@ -61,7 +68,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## OUTPUTS
 
-### System.Int32
+### Object
 ## NOTES
 
 ## RELATED LINKS
