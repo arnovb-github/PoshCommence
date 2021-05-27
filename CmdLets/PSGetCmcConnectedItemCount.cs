@@ -35,7 +35,6 @@ namespace PoshCommence.CmdLets
         }
 
         // value of the item to count connections for
-        // this parameter is optional
         private string fromItem;
         [Parameter(Position = 3)]
         public string FromItem
