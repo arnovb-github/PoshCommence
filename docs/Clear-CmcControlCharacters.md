@@ -18,7 +18,7 @@ Clear-CmcControlCharacters [-CategoryName] <String> [[-LogDir] <String>] [-MaxRo
 ```
 
 ## DESCRIPTION
-Commence in some cases allows for entering control characters in fields where there should be none. In various cases this can be troublesome. This cmdlet clears or changes any control characters from fields which should not contain them. This cmdlet changes values in the Commence database. Take appropriate precautions to prevent potential data loss. Also, it is recommended that you start the Commence process with the /noagents command line parameter prior to running this cmdlet, or Commence may lock up and crash.
+Commence allows for entering control characters in fields where there should be none. This can cause issues in various scenarios. This cmdlet clears or changes any control characters from fields which should not contain them. This cmdlet makes changes to the Commence database so take appropriate precautions to prevent potential data loss. It is *strongly* recommended that you start the Commence application with the /noagents command line parameter prior to running this cmdlet, or Commence may lock up and crash.
 
 ## EXAMPLES
 
@@ -27,43 +27,43 @@ Commence in some cases allows for entering control characters in fields where th
 Clear-CmcControlCharacters Account
 ```
 
-Will prompt user to remove control characters from fields in category 'Account'. A log will be written to '%AppData%\Local\PoshCommence'.
+(Simplest, but see example 2) Will prompt user to remove control characters from fields in category 'Account'. A log will be written to '%AppData%\Local\PoshCommence'.
 
 ### Example 2
 ```powershell
 Clear-CmcControlCharacters -CategoryName Account -WhatIf -LogDir C:\TEMP
 ```
 
-(Recommended to run first) Will do a dummy run on category 'Account', writing potential changes to a log file in 'C:\TEMP'.
+(Recommended usage upon first run) Will do a dummy run on category 'Account' and write suggested changes to a log file in 'C:\TEMP'.
 
 ### Example 3
-```powershell
-Clear-CmcControlCharacters -CategoryName Account -ColumnDelimiter 'VeryBad' -Force
-```
-
-DO NOT DO THIS. Use the `ColumnDelimiter` only if you are an expert user *and* you find that the (hard-coded) default does not work properly. The ColumnDelimiter is NOT some casual CSV thingie, it is used to tell columns apart in a Commence database query. As for `Force`, the name itself implies danger.
-
-### Example 4
 ```powershell
 Clear-CmcControlCharacters -CategoryName Account -WhatIf -LogDir C:\TEMP
 Clear-CmcControlCharacters -CategoryName Account -LogDir C:\TEMP
 ```
 
-Recommended usage. The first command will do a dry run. A logfile of pending changes will be written to 'C:\TEMP' in Json format. Json is a way to concisely represent control characters in text format and it will allow you to do analysis by reading it back into objects if so desired.
+Recommended usage. The first command will do a dry run. A logfile of pending changes will be written to 'C:\TEMP' in Json format. If you are satisfied with the changes, run the second command.
 
-### Example 5
+### Example 4
 ```powershell
 Get-CmcCategories | Clear-CmcControlCharacters -WhatIf -LogDir C:\TEMP
 ```
 
-Analyze the entire database by piping all categories to the cmdlet. A logfile of pending changes will be written to 'C:\TEMP' in Json format. Json is a way to concisely represent control characters in text format and it will allow you to do analysis by reading it back into objects if so desired.
+Analyze all categories in the database by piping them to the cmdlet. A logfile of pending changes will be written to 'C:\TEMP' in Json format.
 
-### Example 6
+### Example 5
 ```powershell
 Get-CmcCategories | Clear-CmcControlCharacters -LogDir C:\TEMP -Force
 ```
 
-You are absoluty certain you want to clean up all categories, so you pass in all category names and you override the confirmation with `-Force`.
+If you are absolutely certain you want to clean up all categories, pass in all category names and override any confirmation.
+
+### Example 6
+```powershell
+Clear-CmcControlCharacters -CategoryName Account -ColumnDelimiter 'VeryBad' -Force
+```
+
+FOR EXPERTS ONLY. Use the `ColumnDelimiter` only if you are an expert user *and* you find that the hard-coded default does not work properly. The ColumnDelimiter is NOT some casual CSV thingie, it is used to tell columns apart in a Commence database query. As for `Force`, the name itself implies danger.
 
 ## PARAMETERS
 
@@ -83,7 +83,7 @@ Accept wildcard characters: False
 ```
 
 ### -ColumnDelimiter
-Do not touch this unless you are a Commence wizard. It is the delimiter passed to a RowSets `GetRow()` method. You only ever need to change this if the default for some reason gives unwanted results. The default is defined in [Vovin.CmcLibNet](https://github.com/arnovb-github/CmcLibNet).
+Do not touch this unless you are a Commence wizard. It is the delimiter passed to a RowSet's `GetRow()` method. You only ever need to change this if the default for some reason gives unwanted results. The default is defined in [Vovin.CmcLibNet](https://github.com/arnovb-github/CmcLibNet).
 
 ```yaml
 Type: String
@@ -158,7 +158,7 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
-Shows what would happen if the cmdlet runs.
+Writes proposed changes to the log file but does not actually make changes to the database.
 
 ```yaml
 Type: SwitchParameter
