@@ -60,10 +60,10 @@ If you are absolutely certain you want to clean up all categories, pass in all c
 
 ### Example 6
 ```powershell
-Clear-CmcControlCharacters -CategoryName Account -ColumnDelimiter 'VeryBad' -Force
+Clear-CmcControlCharacters -CategoryName Account -ColumnDelimiter 'vErYbAD' -Force
 ```
 
-FOR EXPERTS ONLY. Use the `ColumnDelimiter` only if you are an expert user *and* you find that the hard-coded default does not work properly. The ColumnDelimiter is NOT some casual CSV thingie, it is used to tell columns apart in a Commence database query. As for `Force`, the name itself implies danger.
+EXPERTS ONLY. The 'ColumnDelimiter' parameter is **not** some casual CSV thingie, it is used to tell columns apart in a Commence database query. It is very unlikely that anyone should ever have to use the `ColumnDelimiter` parameter, I may in fact remove this option in future versions.
 
 ## PARAMETERS
 
@@ -83,7 +83,7 @@ Accept wildcard characters: False
 ```
 
 ### -ColumnDelimiter
-Do not touch this unless you are a Commence wizard. It is the delimiter passed to a RowSet's `GetRow()` method. You only ever need to change this if the default for some reason gives unwanted results. The default is defined in [Vovin.CmcLibNet](https://github.com/arnovb-github/CmcLibNet).
+Do not touch this unless you are a true Commence wizard. It is the delimiter passed to a RowSet's `GetRow()` method. You only ever need to change this if the default for some reason gives unwanted results. The default is defined in [Vovin.CmcLibNet](https://github.com/arnovb-github/CmcLibNet).
 
 ```yaml
 Type: String
@@ -183,6 +183,6 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ### None
 ## NOTES
-Depending on the Commence version, some Commence fields will accept control characters when they should not. They can either be entered directly in the UI, copy/pasted, or written by the API. Depending on the fieldtype, this can cause unwanted side-effects, ranging from simply not being able to call a URL with a CRLF in it to Commence crashing on enrolls. This cmdlet will strip text-based fields from control characters. Tabs are replaced with spaces. Line endings and carriage returns are either removed completely or replaced with Windows line-endings.
+Some Commence fields will accept control characters when they should not. They can either be entered directly in the UI, copy/pasted, or written by the API. Depending on the fieldtype, this can cause unwanted side-effects, ranging from simply not being able to call a URL containing an unexpected CR/LF in it to Commence crashing on enrolls. This cmdlet will strip control characters from text-based fields. Tabs are replaced with spaces. Line endings and carriage returns are either removed completely or replaced with Windows line-endings.
 
 ## RELATED LINKS
