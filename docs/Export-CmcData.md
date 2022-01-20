@@ -155,7 +155,7 @@ Accept wildcard characters: False
 ```
 
 ### -PreserveAllConnections
-{{ Fill PreserveAllConnections Description }}
+Makes sure all connected items are returned. Comes at a significant performance penalty. Only use it when you have tens of thousands of connected items.
 
 ```yaml
 Type: SwitchParameter
@@ -170,7 +170,7 @@ Accept wildcard characters: False
 ```
 
 ### -SkipConnectedItems
-{{ Fill SkipConnectedItems Description }}
+Will prevent the export enginhe reading connected data.
 
 ```yaml
 Type: SwitchParameter
@@ -241,6 +241,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ### PSObject
 
 ## NOTES
+The `PreserveAllConnections` parameter should be used with caution. It seriously degrades performance because of how the export is performed. Unless you have items with more than 2000 connected items, you do not need to use this parameter.
 
 ## RELATED LINKS
 
