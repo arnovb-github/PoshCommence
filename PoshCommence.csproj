@@ -1,13 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <!-- <TargetFramework>netstandard2.0</TargetFramework> -->
-    <TargetFramework>net472</TargetFramework>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <TargetFramework>net48</TargetFramework>
+    <Deterministic>false</Deterministic>
+    <AssemblyVersion>1.0.*</AssemblyVersion>
     <Authors>Arno van Boven</Authors>
     <Company>Vovin IT Services</Company>
     <Product>Posh Commence Cmdlets</Product>
-    <Copyright>© 2022 - Vovin IT Services</Copyright>
+    <Copyright>© 2021 - 2022 - Vovin IT Services</Copyright>
     <PackageProjectUrl>https://github.com/arnovb-github/PoshCommence</PackageProjectUrl>
     <Description>Powershell cmdlets for Commence RM</Description>
     <Tags>Commence RM;Vovin;CmcLibNet</Tags>
@@ -15,7 +15,7 @@
 
   <ItemGroup>
     <PackageReference Include="PowershellStandard.Library" Version="5.1.1" />
-    <PackageReference Include="Vovin.CmcLibNet" Version="1.0.6" />
+    <PackageReference Include="Vovin.CmcLibNet" Version="1.0.7" />
   </ItemGroup>
 
   <Import Project="..\..\..\Shared\CommenceProcessMonitor\CommenceProcessMonitor\CommenceProcessMonitor.projitems" Label="Shared" />
