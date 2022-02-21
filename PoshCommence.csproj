@@ -7,7 +7,7 @@
     <Authors>Arno van Boven</Authors>
     <Company>Vovin IT Services</Company>
     <Product>Posh Commence Cmdlets</Product>
-    <Copyright>© 2021 - 2022 - Vovin IT Services</Copyright>
+    <Copyright>© 2020 - 2022 - Vovin IT Services</Copyright>
     <PackageProjectUrl>https://github.com/arnovb-github/PoshCommence</PackageProjectUrl>
     <Description>Powershell cmdlets for Commence RM</Description>
     <Tags>Commence RM;Vovin;CmcLibNet</Tags>
