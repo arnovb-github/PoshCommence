@@ -2,8 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net48</TargetFramework>
-    <Deterministic>false</Deterministic>
-    <AssemblyVersion>1.0.*</AssemblyVersion>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <Authors>Arno van Boven</Authors>
     <Company>Vovin IT Services</Company>
     <Product>Posh Commence Cmdlets</Product>
