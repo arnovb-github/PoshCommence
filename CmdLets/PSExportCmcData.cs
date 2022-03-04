@@ -3,7 +3,6 @@ using System.Management.Automation;
 using Vovin.CmcLibNet.Database;
 using Vovin.CmcLibNet.Export;
 
-
 namespace PoshCommence.CmdLets
 {
     /*  This CmdLet comprises a limited set of export features as exposed by Vovin.CmcLibNet.
@@ -42,10 +41,11 @@ namespace PoshCommence.CmdLets
         private IExportSettings _exportOptions = new ExportSettings();
         private string _path;
         [Parameter(Position = 1, Mandatory = true)]
+        [Alias("o")]
         public string OutputPath
         {
-        get { return _path; }
-        set { _path = value; }
+            get { return _path; }
+            set { _path = value; }
         }
 
         [Parameter()]
@@ -114,6 +114,10 @@ namespace PoshCommence.CmdLets
         }
         protected override void ProcessRecord()
         {
+            // Powershell and .Net have a different idea about paths
+            var pr = new PSPathResolver(this.SessionState);
+            _path = pr.ResolvePath(_path);
+
             if (string.IsNullOrEmpty(CategoryName)) // export view
             {
                 ExportByView();
@@ -123,7 +127,7 @@ namespace PoshCommence.CmdLets
                 ExportByCategory();
             }
             WriteVerbose($"File '{_path}' of type '{_exportOptions.ExportFormat}' written to '{_path}'.");
-            var item = InvokeProvider.Item.Get(_path);
+            var item = InvokeProvider.Item.Get(_path); // may fail if not in directory the session started in?
             WriteObject(item, true);
         }
 
