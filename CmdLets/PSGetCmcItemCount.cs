@@ -30,7 +30,14 @@ namespace PoshCommence.CmdLets
                 CategoryName = this.CategoryName,
                 ItemCount = db.GetItemCount(CategoryName)
             };
-            WriteObject(retval);
+            if (retval.ItemCount == -1)
+            {
+                WriteWarning($"Category '{CategoryName}' not found.");
+            }
+            else
+            {
+                WriteObject(retval);
+            }
         }
         
         protected override void EndProcessing()

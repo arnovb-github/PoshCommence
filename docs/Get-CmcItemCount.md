@@ -17,7 +17,7 @@ Get-CmcItemCount [-CategoryName] <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Gets the number of items in a Commence category. A value of -1 means that the category was not found.
+Gets the number of items in a Commence category.
 
 ## EXAMPLES
 
@@ -33,7 +33,7 @@ Returns the number of items in category 'Account'.
 Get-CmcCategories | Get-CmcItemCount
 ```
 
-Display all categorynames and their item count.
+Returns all categorynames and their item count.
 
 ### Example 3
 ```powershell
