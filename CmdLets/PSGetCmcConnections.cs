@@ -10,7 +10,7 @@ namespace PoshCommence.CmdLets
     public class GetCmcConnections : PSCmdlet
     {
         private string categoryName;
-        [Parameter(Position = 0, Mandatory = true)]
+        [Parameter(Position = 0, Mandatory = true, ValueFromPipelineByPropertyName = true)]
         [ArgumentCompleter(typeof(CategoryNameArgumentCompleter))]
         [Alias("c")]  
         public string CategoryName
