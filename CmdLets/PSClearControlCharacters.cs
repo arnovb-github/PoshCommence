@@ -321,22 +321,45 @@ namespace PoshCommence.CmdLets
             }
         }
 
+        // hot path
         private string ReplaceControlCharacters(string str, Dictionary<char, string> replacementString)
         {
             // some speed optimizations: cast to chararray and loop string just once
             char[] c = str.ToCharArray();
-            StringBuilder sb = new StringBuilder();
-            int length = str.Length;
+            int length = c.Length;
+
+            // in the majority of cases, there will be no control characters at all
+            // in that case, we do not have to bother with the stringbuilder stuff
+            bool changeNeeded = false;
             for (int i = 0; i < length; i++)
             {
+                if (c[i] < 31) // is there a control character?
+                {
+                    changeNeeded = true;
+                    break;
+                }
+            }
+            // no changes needed, just return original string
+            if (!changeNeeded) return str;
+
+            // if we haven't returned by now, there are control characters
+            // we will manipulate the return string
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < length; i++)
+            {
+                // keep 'normal' characters
                 if (c[i] > 31)
                 {
                     sb.Append(c[i]);
                     continue;
                 }
+                // ignore all except specified control characters
+                // note that we do not look for \r\n combinations
+                // we let the replacement rules deal with how to process them
+                // we simply keep appending to stringbuilder here, even if it's an empty string we append
                 if (c[i] == 13 || c[i] == 9 || c[i] == 10)
                 {
-                    sb.Append(replacementString[c[i]]); // no key exists check, we simply expect it to be there!
+                    sb.Append(replacementString[c[i]]); // we assume the dictionary entry to be there
                 }
             }
             return sb.ToString();
