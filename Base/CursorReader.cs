@@ -50,7 +50,7 @@ namespace PoshCommence.Base
                     int columnIndex = cur.ColumnCount; // we want to start after last position by default
                     if (relatedColumns != null)
                     {
-                        // make sure we start at 0 if there were no fields provided
+                        // make sure we start at 0 if there were no direct fields provided
                         // we do that because when a cursor is created, by default all columns are included
                         if (fieldNames == null) { columnIndex = 0; } 
                         foreach (var rc in relatedColumns)
@@ -59,8 +59,8 @@ namespace PoshCommence.Base
                                 rc.ConnectionName,
                                 rc.ToCategory,
                                 rc.FieldName);
+                            columnIndex = cur.ColumnCount;
                         }
-                        columnIndex = cur.ColumnCount;
                     }
                     retval = cur.ReadAllRows(); // this may be slow! No CancellationToken possible
                 }
