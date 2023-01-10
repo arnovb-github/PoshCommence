@@ -20,9 +20,9 @@ Examples:
 -when exporting connected data from connections, the delimiter that Commence uses
 is a \n (UNIX-style line-ending). If connected data fields contains a UNIX-style line-ending
 as part of its fieldvalue, this throws off the export. This is most obvious with multi-line fields,
-but URL fields in Commence are also multiline (god knows why).
+but URL fields in Commence are also multiline.
 
--Data Files can contain \t (tab) characters. This throws off enrolls, among other things.
+-Data Files can contain \t (tab) characters. This can crash client enrolls, among other things.
 
 There are probably more examples.
 
@@ -229,10 +229,6 @@ namespace PoshCommence.CmdLets
                     if (!oldValue.Equals(newValue)) // TODO can we make this faster?
                     {
                         var result = ers.ModifyRow(row, column, newValue, CmcOptionFlags.Default); // ModifyRow will truncate strings.
-                        //if (result != 0)
-                        //{
-                        //    throw new CommenceCOMException($"Commence method EditRowSet.ModifyRow() failed on row {row}, column {column}.");
-                        //}
                         retval = true;
                         // add new result to temporary changeset
                         changeResults.Add(new FieldModification(
@@ -342,8 +338,7 @@ namespace PoshCommence.CmdLets
             // no changes needed, just return original string
             if (!changeNeeded) return str;
 
-            // if we haven't returned by now, there are control characters
-            // we will manipulate the return string
+            // if we haven't returned by now, there are control characters to process
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < length; i++)
             {
@@ -354,7 +349,8 @@ namespace PoshCommence.CmdLets
                     continue;
                 }
                 // ignore all except specified control characters
-                // note that we do not look for \r\n combinations
+                // note that we do not look for \r\n combinations,
+                // they may be unwanted.
                 // we let the replacement rules deal with how to process them
                 // we simply keep appending to stringbuilder here, even if it's an empty string we append
                 if (c[i] == 13 || c[i] == 9 || c[i] == 10)
