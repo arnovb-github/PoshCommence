@@ -287,6 +287,14 @@ namespace PoshCommence.Base
         }
         #endregion
 
+        internal static IActiveViewInfo GetActiveViewInfo()
+        {
+            using (var db = new CommenceDatabase())
+            {
+                return db.GetActiveViewInfo();
+            }
+        }
+        
         internal static void ClearAll()
         {
             categoryNames = new List<string>();
