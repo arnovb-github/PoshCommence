@@ -145,7 +145,7 @@ Path and filename to export to.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: o
 
 Required: True
 Position: 1

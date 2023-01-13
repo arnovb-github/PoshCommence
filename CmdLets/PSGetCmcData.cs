@@ -66,7 +66,12 @@ namespace PoshCommence.CmdLets
             set { connectedFields = value; }
         }
 
+        private List<string> columnLabels;
+        [Parameter(ParameterSetName = BY_VIEW)]
+        public SwitchParameter ColumnLabels { get; set;}
+
         private List<string> columnNames;
+
         protected override void BeginProcessing()
         {
             base.BeginProcessing();
@@ -94,7 +99,14 @@ namespace PoshCommence.CmdLets
                 PSObject responseObject = new PSObject();
                 for (int i = 0; i < row.Count; i++) { //row.Count represents the number of columns in the row, except when it only contains indirect fields and the viewtype is Book. What a mess Commence is.
                     // PSNoteProperty: Serves as a property that is a simple name-value pair.
-                    responseObject.Members.Add(new PSNoteProperty(columnNames[i], row[i]));
+                    if (ColumnLabels)
+                    {
+                        responseObject.Members.Add(new PSNoteProperty(columnLabels[i], row[i]));
+                    }
+                    else 
+                    {
+                        responseObject.Members.Add(new PSNoteProperty(columnNames[i], row[i]));
+                    }
                 }
                 WriteObject(responseObject);
             }
@@ -123,7 +135,7 @@ namespace PoshCommence.CmdLets
             return retval;
         }
 
-        private void SetPropertiesByView(string viewName)
+        private void SetPropertiesByView(string viewName) // this is very flawed
         {
             // if we have just a view, everything changes
             // we need to create the fieldnames and the connected fields from the columns in the view.
@@ -138,7 +150,9 @@ namespace PoshCommence.CmdLets
             using (var cur = db.GetCursor(viewName, CmcCursorType.View, CmcOptionFlags.Default))
             {
                 connNames = db.GetConnectionNames(cur.Category);
-                viewColumns = db.GetViewColumnNames(viewName);
+                viewColumns = db.GetViewColumnNames(viewName); // get fields in view by fieldname
+                columnLabels = db.GetViewColumnNames(viewName, CmcOptionFlags.Default).ToList();
+
                 // loop through all columns to determine if they are a direct field or a connection
                 foreach (var vc in viewColumns)
                 {
@@ -161,16 +175,17 @@ namespace PoshCommence.CmdLets
                                 break;
                             }
                         }
+                        directColumns.Add(vc); // no matching connection, field with space must be a direct field
                     }
                     else // a direct column
                     {
                         directColumns.Add(vc);
                     }
                 }
+
                 FieldNames = directColumns?.ToArray();
-                ConnectedFields = connectedColumns?.ToArray(); 
+                ConnectedFields = connectedColumns?.ToArray();
             }
         }
-
     }
 }
