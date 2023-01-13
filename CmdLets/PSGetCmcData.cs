@@ -94,6 +94,15 @@ namespace PoshCommence.CmdLets
                 !string.IsNullOrEmpty(ViewName),
                 UseThids);
 
+            // if columnlabels contain a duplicate,
+            // you get really strange results
+            // before continuing, we should check for that and warn the user
+            if (columnLabels.Distinct().Count() < columnLabels.Count )
+            {
+                WriteWarning("Duplicate columnlabels were detected, output will use columnnames (i.e. fieldnames) instead.");
+                ColumnLabels = false;
+            }
+
             foreach (var row in rows)
             {
                 PSObject responseObject = new PSObject();
