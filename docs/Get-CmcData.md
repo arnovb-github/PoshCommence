@@ -21,7 +21,7 @@ Get-CmcData [-CategoryName] <String> [-FieldNames] <String[]> [-UseThids] [-Filt
 ### ByView
 ```
 Get-CmcData [-ViewName] <String> [[-FieldNames] <String[]>] [-Filters <ICursorFilter[]>]
- [-ConnectedFields <ConnectedField[]>] [<CommonParameters>]
+ [-ConnectedFields <ConnectedField[]>] [-ColumnLabels] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -72,6 +72,21 @@ Aliases: c
 
 Required: True
 Position: 0
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ColumnLabels
+Use columnlabels in the view instead of the fieldnames
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: ByView
+Aliases:
+
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
