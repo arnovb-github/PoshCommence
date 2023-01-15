@@ -31,7 +31,19 @@ Gets the specfied fieldvalues from a Commence category. Can use a category or vi
 
 ### Example 1
 ```powershell
+# return fieldvalues for fields "accountKey" and "businessNumber"
 Get-CmcData Account accountKey, businessNumber
+```
+
+output:
+```
+accountKey                businessNumber
+----------                --------------
+Aviaonics Inc             330-555-1905
+Commence Corporation
+Concorde Aviation Ltd     412-555-7890
+First Class Inc           416-781-1209 
+... 
 ```
 
 Gets the fieldvalues for the 'accountKey' and 'businessNumber' from the 'Account' category.
@@ -78,7 +90,7 @@ Accept wildcard characters: False
 ```
 
 ### -ColumnLabels
-Use columnlabels in the view instead of the fieldnames
+Use columnlabels instead of the fieldnames when a view is read.
 
 ```yaml
 Type: SwitchParameter

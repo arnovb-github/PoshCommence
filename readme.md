@@ -13,264 +13,124 @@ I botch these together whenever I find I have to do too much work in PS to get w
 # CmdLets #
 
 ## Getting help ##
-There is full `Get-Help` for every cmdlet, created with the [PlatyPS](https://www.powershellgallery.com/packages/platyPS/) package.
+Every cmdlet is fully documented, using the [PlatyPS](https://www.powershellgallery.com/packages/platyPS/) package. Simply use `Get-Help [cmdlet]`.
 
 ## Argument completion ##
-There is tab-completion for most parameter values.
+Most parameter values can be tab-completed.
 
-## Exploring the database ##
-Get the name of the currently active Commence database:
+## Available cmdlets ##
+```powershell
+Clear-CmcControlCharacters
+```
+
+Clears control characters in a database. Commence allows for the embedding of control characters in fields where you do not expect them and where they result in flawed exports and other unexoected results. It can be quite a nuisance especially because it can be very hard to find them. Use `Get-Help Clear-CmcControlCharacters` for details.
 
 ```powershell
-Get-CmcDatabaseName [<CommonParameters>]
+Clear-CmcMetadataCache
 ```
 
-Get the Commence _active.log_ file:
+Clears the auto-complete cache. Useful when switching databases. Use `Get-Help Clear-CmcMetadataCache` for details.
 
 ```powershell
-Get-CmcLogFile [<CommonParameters>]
+Export-CmcData
 ```
 
-This will return a `PSObject` object.
-
-### Example:
-```powershell
-# get last 10 lines of log file
-Get-CmcLogFile | Get-Content -Tail 10
-```
-
-Get the Commence _data.ini_ file:
-```powershell
-Get-CmcIniFile [<CommonParameters>]
-```
-
-This will return a `PSObect` object.
-
-### Example
-Get the _data.ini_ file:
-```powershell
-# get contents of data.ini
-Get-CmcIniFile | Get-Content
-```
-
-Get the database directory:
+Probably one of the most useful cmdlets in the module. Use it to export Commence data to a variety of formats. Use `Get-Help Export-CmcData` for details. For advanced exporting see [Vovin.CmcLibNet](https://github.com/arnovb-github/CmcLibNet). 
 
 ```powershell
-Get-CmcDatabaseDirectory [<CommonParameters>]
+Find-CmcView
 ```
 
-This will return a `PSObject` object.
-
-### Example
-```powershell
-"The full database path is " + (Get-CmcDatabaseDirectory).FullName
-```
-
-List all categories:
+Search for Commence views by name, category or viewtype. Use `Get-Help Find-CmcView` for details.
 
 ```powershell
-Get-CmcCategories [<CommonParameters>]
+Get-CmcActiveViewInfo
 ```
 
-### Example
-```powershell
-# list the category names
-Get-CmcCategories | Select-Object -Property Name 
-```
-
-Show all category names.
-
-Get all field definitions from a category:
+Get details on the currently showing view (window) in Commence. Use `Get-Help Get-CmcActiveViewInfo` for details.
 
 ```powershell
-Get-CmcFields [-CategoryName] <string> [<CommonParameters>]
+Get-CmcCategories
 ```
 
-### Example
-```powershell
-(Get-CmcFields Account).Name
-```
-Lists all fieldnames in category Account
-
-Get all connections for a category:
+Get all category definitions from a Commence database. Useful for piping. Use `Get-Help Get-CmcCategories` for details.
 
 ```powershell
-Get-CmcConnections [-CategoryName] <string> [<CommonParameters>]
+Get-CmcConnectedField
 ```
 
-This is self-explanatory. Note that connection names in Commence are case-sensitive.
-
-Get item count for a category:
-```powershell
-Get-CmcItemCount [-CategoryName] <string> [<CommonParameters>]
-```
-This is self-explanatory.
-
-## Getting Views
-`Find-CmcView` returns all Commence views. You can filter the view list:
-
-### Example
-```powershell
-Find-CmcView 'peop' -CategoryName Contact -Type Report
-```
-
-Will output view of type 'Report' in category 'Contact' that contain the string 'peop' in the name. All parameters support tab-completion.
-
-You can pipe results to `Open-CmcView`:
-### Example
-```powershell
-Find-CmcView 'All Accounts' | Open-CmcView
-```
-Will open view 'All Accounts'.
-
-When you pipe more than one view to `Open-CmcView` it will open up to the first 5.
-
-## Getting data ##
-`Get-CmcData` will return fieldvalues from categories or views.
-
-### Example:
+Constructs a connected field to retrieve from a Commence category or view. You would use this when defining filters. Use `Get-Help Get-CmcConnectedField` for details. Also see `Get-CmcFilter`.
 
 ```powershell
-# return fieldvalues for fields "accountKey" and "businessNumber"
-Get-CmcData Account accountKey, businessNumber
+Get-CmcConnectedItemCount
 ```
 
-output:
-```
-accountKey                businessNumber
-----------                --------------
-Aviaonics Inc             330-555-1905
-Commence Corporation
-Concorde Aviation Ltd     412-555-7890
-First Class Inc           416-781-1209 
-... 
-```
-
-### Syntax for categories:
-```powershell
-Get-CmcData [-CategoryName] <string> [-FieldNames] <string[]> [-UseThids] [-Filters <ICursorFilter[]>] [-ConnectedFields <ConnectedField>] [<CommonParameters>]
-```
-
-### Syntax for views:
-```powershell
-Get-CmcData [-ViewName] <string> [-FieldNames] <string[]> [-Filters <ICursorFilter[]>] [-ConnectedFields <ConnectedField[]>] [<CommonParameters>]
-```
-
-### Get THIDs ###
-If you want THIDs, specify the `-UseThids` switch. You get an additional column with the name 'THID' for every row.
-
-### Related columns ###
-Providing related columns involves some more work. These are the columns you would set by the `<cursor>.SetRelatedColumn()` method in the Commence API.
-
-### Example
-```powershell
-# create object directly
-$rc1 = [PoshCommence.ConnectedField]::New('Relates to', 'Contact','accountKey')
-# or better: use the cmdlet for it
-$rc2 = Get-CmcConnectedField 'Relates to', 'Contact','emailBusiness'
-```
-**Important**: connection names in Commence are case-sensitive!
-
-This is the fastest way to get related data, but it should be noted that you get related data just as the Commence API returns them. Depending on whether you read from a cursor or a view and depending on the viewtype, related columns are a `\n` or comma-delimited string. This can make processing related data quite hard. It is probably easier to use [Export-CmcData](Export-CmcData.md) and read the resulting file content, because the export engine splits connected data. Use XML or Json format.
-
-### Filters ###
-You can also supply filters with `-Filters`. Use the `Get-CmcFilter`. This is a cmdlet that has a dynamic parameterset for every type of filter:
-
-FilterType Field (F):
+Counts the number connected items for a given item. Useful when you have specified a connection to be 'Allow At Most 1 Connected Item' but the database does not respect that. Use `Get-Help Get-CmcConnectedItemCount` for details.
 
 ```powershell
-Get-CmcFilter [-ClauseNumber] <Int32> [-FilterType] <FilterType> [-Except] [-OrFilter] -FieldName <String> -Qualifier <FilterQualifier> -FieldValue <String> [-FieldValue2 <String>] [-MatchCase] [<CommonParameters>]
+Get-CmcConnections
 ```
 
-FilterType ConnectionToItem (CTI):
-```powershell
-Get-CmcFilter [-ClauseNumber] <Int32> [-FilterType] <FilterType> [-Connection] <String> [-ToCategoryName] <String> [-Item] <String> [-Except] [-OrFilter] [<CommonParameters>]
-```
-
-FilterType ConnectionToCategoryToItem (CTCTI):
-```powershell
-Get-CmcFilter [-ClauseNumber] <Int32> [-FilterType] <FilterType> [-Connection] <String> [-ToCategoryName] <String> [-Connection2] <String> [-ToCategoryName2] <String> [-Item] <String> [-Except] [-OrFilter] [<CommonParameters>]
-```
-
-FilterType ConnectionToCategoryField (CTCF):
-```powershell
-Get-CmcFilter [-ClauseNumber] <int> [-FilterType] <FilterType> [-Connection] <string> [-ToCategoryName] <string> [-FieldName] <string> [-Qualifier] <FilterQualifier> [-FieldValue] <string> [[-FieldValue2] <string>] [-Except] [-OrFilter] [-MatchCase] [<CommonParameters>]
-```
-
-### Example
-Usage example: set the first filter a a `Field (F)` filter for items where the 'accountKey' field does not contain 'avio', case-sensitive:
+Get the connections to a category. Use `Get-Help Get-CmcConnections` for details.
 
 ```powershell
-$filter = Get-CmcFilter 1 -FilterType Field accountKey Contains avio -Except -MatchCase -Verbose
+Get-CmcData
 ```
 
-**Important**: You specify the filter conjunction in the filters themselves. __This is different from how you do it in Commence!__ The default is **AND**. Set the `-OrFilter` switch for **OR**. There is no need to specify the filter conjunction separately. 
-
-The `Get-CmcFilter` cmcdlet does **not** check for correctness of the parameters (for example: is a qualifier can be appliewd to the supplied field), but there is a cmdlet to try out filters:
-
-`Test-CmcFilter [-Category] <string> [-Filter] <ICursorFilter> [<CommonParameters>]`
-
-This will tell you if Commence accepts the filter as valid, regardless of results. Using this cmdlet in a production environment is not recommended, because it is very resource-expensive.
-
-## Count connected items ##
-This can be useful for example when the database specifies at most a single connection, but multiple connections exist. (Commence does not always enforce that setting).
+Probably one of the most useful cmdlets in the module. This elaborate cmdlet allows for retrieval of Commence data. Basically this is the command-line method of obtaining Commence database items. Use `Get-Help Get-CmcData` for details.
 
 ```powershell
-Get-CmcConnectedItemCount [-FromCategory] <string> [-ConnectionName] <string> [-ToCategory] <string> [[-FromItem] <string>] [[-ClarifySeparator] <string>] [[-ClarifyValue] <string>] [<CommonParameters>]
+Get-CmcDatabaseDirectory
 ```
 
-### Example
-Finding all items in the _Account_ category that have more than 1 connection to the _Contact_ category:
+Returns the directory of the currently active Commence database. Use `Get-Help Get-CmcDatabaseDirectory` for details.
 
 ```powershell
-Get-CmcConnectedItemCount Account 'Relates to' Contact | Where-Object { $_.Count -gt 1 } | Select-Object -Property Itemname, Count
+Get-CmcDatabaseName
 ```
 
-You can check the connection count for a known item by specifying the itemname as the `-FromItem` parameter. A return value of `-1` means that the item was not found.
+Returns the name of the currently active Commence database. Use `Get-Help Get-CmcDatabaseName` for details.
 
-## Exporting ##
-The `Export-CmcData` cmdlet allows you to do simple exporting directly from the command-line. For advanced exporting see [Vovin.CmcLibNet](https://github.com/arnovb-github/CmcLibNet). 
-
-### Syntax for ByCategory
 ```powershell
-Export-CmcData [-CategoryName] <String> [-OutputPath] <String> [-ExportFormat <ExportFormat>]  [-Filters <ICursorFilter[]>] [-FieldNames <String[]>] [-SkipConnectedItems] [-UseThids]  [-PreserveAllConnections] [<CommonParameters>]
+Get-CmcDbSize
 ```
 
-### Syntax for ByView
+Returns the size in bytes of the currently active Commence database. Use `Get-Help Get-CmcDbSize` for details.
+
+
 ```powershell
-Export-CmcData [-ViewName] <String> [-OutputPath] <String> [-ExportFormat <ExportFormat>] [-SkipConnectedItems] [-PreserveAllConnections] [-UseColumnNames] [<CommonParameters>]
+Get-CmcFields
 ```
 
-### Example
+Returns field information (name, type, etc.)on a category. Use `Get-Help Get-CmcFields` for details.
+
 ```powershell
-Export-CmcData Account accounts.xml
+Get-CmcFilter
 ```
-Export the entire 'Account' category to  file 'account.xml'.
+Allows for construction of filters to be applied when reading data. This is quite an complex cmcdlet, be sure to also check out the examples. Use `Get-Help Get-CmcFilter` for details.
 
-### Example
-Advanced example: export address fields and list of Sales person of items in _Account_ that have 'Wing' in their name or are connected to _salesTeam_ item 'Team 1' to a Json file.
 ```powershell
-# create array of filters
-$filters = @((Get-CmcFilterF 1 accountKey 0 Wing),
-            (Get-CmcFilterCTI 2 'Relates to' 'salesTeam' 'Team 1' -OrFilter))
-# perform the export
-Export-CmcData Account accounts.json -ExportFormat Json -Filters $filters -FieldNames accountKey, Address, City, zipPostal, Country, 'Relates to Employee'
+Get-CmcIniFile
 ```
-If you are not interested in connected values you can specify `-SkipConnectedItems`, which will significantly boost performance. The `-UseThids` switch will give you thids. You can use it if you know what they are :).
+Gets a `PSObject` pointing to the _data.ini_ file (where Commence RM stores some of its settings). Use `Get-Help Get-CmcIniFile` for details.
 
-### Example
-Exporting a view:
 ```powershell
-Export-CmcView -v 'Contact List' -OutputPath contactlist.xml
+Get-CmcLogFile 
 ```
+Gets a `PSObject` pointing to the _active.log_ file. Use `Get-Help Get-CmcLogFile` for details.
 
-Exports view 'Contact List` to file 'contactlist.xml' using default settings.
-
-### Getting preferences
-`Get-CmcPreferences` allows for reading some of the preferences you can set in Commence.
-
-### Example
 ```powershell
-Get-CmcPreference Me
+Get-CmcPreference 
 ```
-Returns the '(-Me-)' item.
+Gets some preference settings from Commence RM, notably the (-Me-) item the the (-Me-) category and some file locations. Use `Get-Help Get-CmcPreference` for details.
+
+```powershell
+Open-CmcView 
+```
+Typically used in conjunction with [Find-CmcView](Find-CmcView.md). Opens the specified view(s) in Commence RM and puts the window focus on Commence RM. Use `Get-Help Open-CmcView` for details.
+
+```powershell
+Test-CmcFilter
+```
+
+Used to check if a filter created with `Get-CmcFilter` is syntactically correct (i.e, no portions were omitted when creating them). Use of this cmdlet in production environments is discouraged because it is a resource intensive operation. Use `Get-Help Test-CmcFilter` for details.

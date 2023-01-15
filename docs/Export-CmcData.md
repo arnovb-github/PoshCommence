@@ -170,7 +170,7 @@ Accept wildcard characters: False
 ```
 
 ### -SkipConnectedItems
-Will prevent the export enginhe reading connected data.
+Will prevent the export engine reading connected data. Will boost performance considerably.
 
 ```yaml
 Type: SwitchParameter
