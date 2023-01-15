@@ -5,15 +5,13 @@ A collection of Powershell cmdlets for use with the Commence RM API. Requires [V
 
 The most useful cmdlets are probably `Get-CmcData`, which allows you to extract fieldvalues without having to create a view in Commence and `Export-CmcData`, which allows you to export data without having to define an Export Template in Commence. Keep in mind that the Commence API is quite slow.
 
-All examples that specify a categoryname, fieldname, viewname, etc. are for the _Tutorial_ database present in all Commence installations under *Help*.
-
 ## Background ##
 I botch these together whenever I find I have to do too much work in PS to get what I want. For example, in a project I was working on I needed to retrieve the Name field values for a category repeatedly. Just a few lines of code, but a single cmdLet is even easier.
 
 # CmdLets #
 
 ## Getting help ##
-Every cmdlet is fully documented, using the [PlatyPS](https://www.powershellgallery.com/packages/platyPS/) package. Simply use `Get-Help [cmdlet]`.
+Every cmdlet is fully documented, using the [PlatyPS](https://www.powershellgallery.com/packages/platyPS/) package. Simply use `Get-Help [cmdlet]`. All examples that specify a categoryname, fieldname, viewname, etc. are for the _Tutorial_ database present in all Commence installations under *Help*.
 
 ## Argument completion ##
 Most parameter values can be tab-completed.
