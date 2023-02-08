@@ -52,7 +52,8 @@ Export-CmcData -c Account -FieldNames $fields -Filters $filter -ConnectedFields 
 
 Export specified fields to a Json file
 
-Advanced example (using _Tutorial database_): export 
+Advanced example (using _Tutorial database_): 
+export
 
 ### Example 3 (View)
 ```powershell

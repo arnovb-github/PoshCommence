@@ -123,7 +123,7 @@ Get-CmcPreference
 Gets some preference settings from Commence RM, notably the (-Me-) item the the (-Me-) category and some file locations. Use `Get-Help Get-CmcPreference` for details.
 
 ```powershell
-Open-CmcView 
+Open-CmcView
 ```
 Typically used in conjunction with [Find-CmcView](Find-CmcView.md). Opens the specified view(s) in Commence RM and puts the window focus on Commence RM. Use `Get-Help Open-CmcView` for details.
 
