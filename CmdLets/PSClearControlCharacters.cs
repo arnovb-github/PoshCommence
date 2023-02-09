@@ -227,6 +227,7 @@ namespace PoshCommence.CmdLets
                     // rules.Values.ElementAt(c) contains the dictionary of rules for character replacement.
                     var newValue = ReplaceControlCharacters(oldValue, rules.Values.ElementAt(column));
                     if (!oldValue.Equals(newValue)) // TODO can we make this faster?
+                    //if (string.CompareOrdinal(oldValue, newValue) != 0) // this is supposedly fast but barely seems to make a difference. Equals is the safer choice
                     {
                         var result = ers.ModifyRow(row, column, newValue, CmcOptionFlags.Default); // ModifyRow will truncate strings.
                         retval = true;
@@ -236,7 +237,6 @@ namespace PoshCommence.CmdLets
                             // notice we pass rowValues[0] as the itemname
                             // that is because the Name field is always the first field to be returned from Commence,
                             // and it is also always present in our test.
-                            // it is therefore a little brittle.
                             rowValues[0], // itemname
                             rules.Keys.ElementAt(column), // fieldname
                             oldValue,
@@ -390,7 +390,8 @@ namespace PoshCommence.CmdLets
             foreach (var g in groups)
             {
                 // LINQ magic. I will not remember how I did this but it gets me there
-                int affectedRowCount = log.ModifiedRows.Keys.Count(w => log.ModifiedRows[w].Any(a => a.CategoryName.Equals(g.Key)));
+                int affectedRowCount = log.ModifiedRows.Keys
+                    .Count(w => log.ModifiedRows[w].Any(a => a.CategoryName.Equals(g.Key)));
                 var o = new PSObject();
                 o.Members.Add(new PSNoteProperty("Category", g.Key));
                 o.Members.Add(new PSNoteProperty("Affected rows", affectedRowCount));
