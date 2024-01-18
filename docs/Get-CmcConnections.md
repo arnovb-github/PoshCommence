@@ -17,7 +17,7 @@ Get-CmcConnections [-CategoryName] <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Returns the connectionnames and their categoryname to the specfied category in Commence.
+Returns the connectionnames and their categoryname to the specified category in Commence.
 
 ## EXAMPLES
 
