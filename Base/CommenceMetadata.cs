@@ -19,17 +19,18 @@ namespace PoshCommence.Base
         // but building this list takes a lot of DDE requests,
         // which is why we also have the viewNames dictionary.
         private static List<IViewDef> viewList = new List<IViewDef>();
+        private static IDatabaseSchema schema;
         private static IEnumerable<string> viewTypes;
         private static IDictionary<string, IEnumerable<string>> fieldNames = new Dictionary<string, IEnumerable<string>>();
         private static IDictionary<string, IEnumerable<ICommenceConnection>> connections = new Dictionary<string, IEnumerable<ICommenceConnection>>();
-        private static readonly IDictionary<CommenceFieldType, IEnumerable<FilterQualifier>> validFieldQualifiers;
+        //private static readonly IDictionary<CommenceFieldType, IEnumerable<FilterQualifier>> validFieldQualifiers;
 
         static CommenceMetadata()
         {
             // https://github.com/arnovb-github/CommenceProcessMonitor
             var monitor = new CommenceProcessMonitor.ProcessMonitor(); 
             monitor.CommenceDatabaseChanged += Monitor_CommenceDatabaseChanged;
-            validFieldQualifiers = CreateValidFieldQualifiers();
+            //validFieldQualifiers = CreateValidFieldQualifiers();
         }
 
         private static void Monitor_CommenceDatabaseChanged(object sender, CommenceProcessMonitor.CommenceDatabaseChangedArgs e)
@@ -48,110 +49,110 @@ namespace PoshCommence.Base
             it would kind of make sense to have to provide the underling category as well.
             I am currently in two minds about this.
         */
-        private static IDictionary<CommenceFieldType, IEnumerable<FilterQualifier>> CreateValidFieldQualifiers()
-        {
-            // this just populates a static list
-            var retval = new Dictionary<CommenceFieldType, IEnumerable<FilterQualifier>>();
-            retval.Add(CommenceFieldType.Name, new List<FilterQualifier>() {
-                FilterQualifier.Between,
-                FilterQualifier.Blank,
-                FilterQualifier.Contains,
-                FilterQualifier.DoesNotContain,
-                FilterQualifier.EqualTo,
-                // notice the absence of HasDuplicates
-            });
-            retval.Add(CommenceFieldType.Calculation, new List<FilterQualifier>() {
-                FilterQualifier.Between,
-                FilterQualifier.EqualTo,
-                FilterQualifier.GreaterThan,
-                FilterQualifier.LessThan,
-                FilterQualifier.NotEqualTo
-            });
-            retval.Add(CommenceFieldType.Checkbox, new List<FilterQualifier>() {
-                FilterQualifier.Checked,
-                FilterQualifier.False,
-                FilterQualifier.No,
-                FilterQualifier.NotChecked,
-                FilterQualifier.One,
-                FilterQualifier.True,
-                FilterQualifier.Yes,
-                FilterQualifier.Zero
-            });
-            retval.Add(CommenceFieldType.Datafile, new List<FilterQualifier>()); // Data File fields cannot be filtered
-            retval.Add(CommenceFieldType.Date, new List<FilterQualifier>() {
-                FilterQualifier.After,
-                FilterQualifier.Before,
-                FilterQualifier.Between,
-                FilterQualifier.Blank,
-                FilterQualifier.On
-            });
-            retval.Add(CommenceFieldType.Email, new List<FilterQualifier>() {
-                FilterQualifier.After,
-                FilterQualifier.Before,
-                FilterQualifier.Between,
-                FilterQualifier.Blank,
-                FilterQualifier.On
-            });
-            retval.Add(CommenceFieldType.ExcelCell, new List<FilterQualifier>());
-            retval.Add(CommenceFieldType.Image, new List<FilterQualifier>());                                      
-            retval.Add(CommenceFieldType.Number, new List<FilterQualifier>() {
-                FilterQualifier.Between,
-                FilterQualifier.EqualTo,
-                FilterQualifier.GreaterThan,
-                FilterQualifier.LessThan,
-                FilterQualifier.NotEqualTo
-            });
-            retval.Add(CommenceFieldType.Selection, new List<FilterQualifier>() {
-                FilterQualifier.EqualTo,
-                FilterQualifier.NotEqualTo
-            });
-            retval.Add(CommenceFieldType.Sequence, new List<FilterQualifier>() {
-                FilterQualifier.Between,
-                FilterQualifier.EqualTo,
-                FilterQualifier.GreaterThan,
-                FilterQualifier.LessThan,
-                FilterQualifier.NotEqualTo
-            });
-            retval.Add(CommenceFieldType.Telephone, new List<FilterQualifier>() {
-                FilterQualifier.Blank,
-                FilterQualifier.Contains,
-                FilterQualifier.DoesNotContain,
-                FilterQualifier.EqualTo
-            });
-            retval.Add(CommenceFieldType.Text, new List<FilterQualifier>() {
-                FilterQualifier.Between,
-                FilterQualifier.Blank,
-                FilterQualifier.Contains,
-                FilterQualifier.DoesNotContain,
-                FilterQualifier.EqualTo,
-            });
-            retval.Add(CommenceFieldType.Time, new List<FilterQualifier>() {
-                FilterQualifier.After,
-                FilterQualifier.After,
-                FilterQualifier.Before,
-                FilterQualifier.Between,
-                FilterQualifier.Blank,
-            });                           
-            retval.Add(CommenceFieldType.URL, new List<FilterQualifier>() {
-                FilterQualifier.Contains,
-                FilterQualifier.DoesNotContain,
-                FilterQualifier.Between,
-                FilterQualifier.Blank
-            });            
-            return retval;
-        }
+        //private static IDictionary<CommenceFieldType, IEnumerable<FilterQualifier>> CreateValidFieldQualifiers()
+        //{
+        //    // this just populates a static list
+        //    var retval = new Dictionary<CommenceFieldType, IEnumerable<FilterQualifier>>();
+        //    retval.Add(CommenceFieldType.Name, new List<FilterQualifier>() {
+        //        FilterQualifier.Between,
+        //        FilterQualifier.Blank,
+        //        FilterQualifier.Contains,
+        //        FilterQualifier.DoesNotContain,
+        //        FilterQualifier.EqualTo,
+        //        // notice the absence of HasDuplicates
+        //    });
+        //    retval.Add(CommenceFieldType.Calculation, new List<FilterQualifier>() {
+        //        FilterQualifier.Between,
+        //        FilterQualifier.EqualTo,
+        //        FilterQualifier.GreaterThan,
+        //        FilterQualifier.LessThan,
+        //        FilterQualifier.NotEqualTo
+        //    });
+        //    retval.Add(CommenceFieldType.Checkbox, new List<FilterQualifier>() {
+        //        FilterQualifier.Checked,
+        //        FilterQualifier.False,
+        //        FilterQualifier.No,
+        //        FilterQualifier.NotChecked,
+        //        FilterQualifier.One,
+        //        FilterQualifier.True,
+        //        FilterQualifier.Yes,
+        //        FilterQualifier.Zero
+        //    });
+        //    retval.Add(CommenceFieldType.Datafile, new List<FilterQualifier>()); // Data File fields cannot be filtered
+        //    retval.Add(CommenceFieldType.Date, new List<FilterQualifier>() {
+        //        FilterQualifier.After,
+        //        FilterQualifier.Before,
+        //        FilterQualifier.Between,
+        //        FilterQualifier.Blank,
+        //        FilterQualifier.On
+        //    });
+        //    retval.Add(CommenceFieldType.Email, new List<FilterQualifier>() {
+        //        FilterQualifier.After,
+        //        FilterQualifier.Before,
+        //        FilterQualifier.Between,
+        //        FilterQualifier.Blank,
+        //        FilterQualifier.On
+        //    });
+        //    retval.Add(CommenceFieldType.ExcelCell, new List<FilterQualifier>());
+        //    retval.Add(CommenceFieldType.Image, new List<FilterQualifier>());                                      
+        //    retval.Add(CommenceFieldType.Number, new List<FilterQualifier>() {
+        //        FilterQualifier.Between,
+        //        FilterQualifier.EqualTo,
+        //        FilterQualifier.GreaterThan,
+        //        FilterQualifier.LessThan,
+        //        FilterQualifier.NotEqualTo
+        //    });
+        //    retval.Add(CommenceFieldType.Selection, new List<FilterQualifier>() {
+        //        FilterQualifier.EqualTo,
+        //        FilterQualifier.NotEqualTo
+        //    });
+        //    retval.Add(CommenceFieldType.Sequence, new List<FilterQualifier>() {
+        //        FilterQualifier.Between,
+        //        FilterQualifier.EqualTo,
+        //        FilterQualifier.GreaterThan,
+        //        FilterQualifier.LessThan,
+        //        FilterQualifier.NotEqualTo
+        //    });
+        //    retval.Add(CommenceFieldType.Telephone, new List<FilterQualifier>() {
+        //        FilterQualifier.Blank,
+        //        FilterQualifier.Contains,
+        //        FilterQualifier.DoesNotContain,
+        //        FilterQualifier.EqualTo
+        //    });
+        //    retval.Add(CommenceFieldType.Text, new List<FilterQualifier>() {
+        //        FilterQualifier.Between,
+        //        FilterQualifier.Blank,
+        //        FilterQualifier.Contains,
+        //        FilterQualifier.DoesNotContain,
+        //        FilterQualifier.EqualTo,
+        //    });
+        //    retval.Add(CommenceFieldType.Time, new List<FilterQualifier>() {
+        //        FilterQualifier.After,
+        //        FilterQualifier.After,
+        //        FilterQualifier.Before,
+        //        FilterQualifier.Between,
+        //        FilterQualifier.Blank,
+        //    });                           
+        //    retval.Add(CommenceFieldType.URL, new List<FilterQualifier>() {
+        //        FilterQualifier.Contains,
+        //        FilterQualifier.DoesNotContain,
+        //        FilterQualifier.Between,
+        //        FilterQualifier.Blank
+        //    });            
+        //    return retval;
+        //}
 
-        internal static bool IsQualifierValidForField(ICursorFilter filter)
-        {
-            switch (filter.GetType())
-            {
-                case ICursorFilterTypeF f:
-                    return false;
-                case ICursorFilterTypeCTCF ctcf:
-                    return false;
-            }
-            return false;
-        }
+        //internal static bool IsQualifierValidForField(ICursorFilter filter)
+        //{
+        //    switch (filter.GetType())
+        //    {
+        //        case ICursorFilterTypeF f:
+        //            return false;
+        //        case ICursorFilterTypeCTCF ctcf:
+        //            return false;
+        //    }
+        //    return false;
+        //}
 
         #region Categories
         internal static IEnumerable<string> Categories
@@ -236,7 +237,7 @@ namespace PoshCommence.Base
                     viewList.Add(db.GetViewDefinition(viewName));
                 }
             }
-            viewTypes = viewList.Select(s => s.Type).Distinct();
+            viewTypes = viewList.Select(s => s.Type).Distinct(); // not the quickest way but ensures only actually used types are returned.
         }
         #endregion
 
@@ -287,6 +288,25 @@ namespace PoshCommence.Base
         }
         #endregion
 
+        #region Schema
+        internal static IDatabaseSchema DatabaseSchema
+        {
+            get
+            { 
+                if (schema == null)
+                {
+                    // basically the complete commence database definition dump
+                    // this may take quite some time to compile
+                    using (var db = new CommenceDatabase())
+                    {
+                        schema = db.GetDatabaseSchema(new MetaDataOptions() { Format = MetaDataFormat.Xml, IncludeFormXml = true, IncludeFormScript = false});
+                    }
+                }
+                return schema;
+            }
+        }
+        #endregion
+
         internal static IActiveViewInfo GetActiveViewInfo()
         {
             using (var db = new CommenceDatabase())
@@ -302,6 +322,7 @@ namespace PoshCommence.Base
             viewNames = new Dictionary<string, string>();
             viewList = new List<IViewDef>();
             connections = new Dictionary<string, IEnumerable<ICommenceConnection>>();
+            schema = null;
         }
       
     }

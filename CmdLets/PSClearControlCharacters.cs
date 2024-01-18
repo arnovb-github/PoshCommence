@@ -226,8 +226,7 @@ namespace PoshCommence.CmdLets
                     var oldValue = rowValues[column];
                     // rules.Values.ElementAt(c) contains the dictionary of rules for character replacement.
                     var newValue = ReplaceControlCharacters(oldValue, rules.Values.ElementAt(column));
-                    if (!oldValue.Equals(newValue)) // TODO can we make this faster?
-                    //if (string.CompareOrdinal(oldValue, newValue) != 0) // this is supposedly fast but barely seems to make a difference. Equals is the safer choice
+                    if (!oldValue.Equals(newValue)) // Equals is pretty fast and probably the best choice
                     {
                         var result = ers.ModifyRow(row, column, newValue, CmcOptionFlags.Default); // ModifyRow will truncate strings.
                         retval = true;

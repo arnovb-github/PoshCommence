@@ -20,7 +20,7 @@ namespace PoshCommence.CmdLets
         }
 
         private string categoryName;
-        [Parameter]
+        [Parameter()]
         [Alias("c")]
         [ArgumentCompleter(typeof(CategoryNameArgumentCompleter))]
         public string CategoryName
