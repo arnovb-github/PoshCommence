@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
-using System.Text;
 using System.Xml.Linq;
-using System.Threading.Tasks;
 using Vovin.CmcLibNet.Database;
 using Vovin.CmcLibNet.Database.Metadata;
 using PoshCommence.Base;
-using System.Windows.Media;
 
 namespace PoshCommence.CmdLets
 {
-    [Cmdlet(VerbsCommon.Find, "CmcFieldInForms", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsCommon.Find, "CmcFieldInForms")]
     public class PSFindFieldInForms : PSCmdlet
     {
         private IDatabaseSchema schema;
@@ -73,7 +69,8 @@ namespace PoshCommence.CmdLets
                         if (con.ToCategory.Equals(categoryName))
                         {
                             // parse forms in connected category
-                            foreach (var o in ParseFormsForField(cat.Forms, this.fieldName))
+                            // look for full connection name, the actual fieldname is not used
+                            foreach (var o in ParseFormsForField(cat.Forms, con.FullName))
                             {
                                 retval.Add(o);
                             };
@@ -84,18 +81,25 @@ namespace PoshCommence.CmdLets
             WriteObject(retval);
         }
 
-        private IEnumerable<object> ParseFormsForField(IEnumerable<CommenceFormMetaData> forms, string fieldName)
+        private IEnumerable<PSObject> ParseFormsForField(IEnumerable<CommenceFormMetaData> forms, string fieldName)
         {
             foreach (var f in forms)
             {
                 XElement root = XElement.Parse(f.Xml);
-                if (root.Descendants("DATAFIELD").Any(w => w.Value.Equals(fieldName)))
+                var nodes = root.Descendants("DATAFIELD").Where(w => w.Value.Equals(fieldName));
+                foreach (var n in nodes)
                 {
+                    string xpath = $"/{string.Join("/", n.AncestorsAndSelf().Reverse().Select(a => a.Name.LocalName).ToArray())}[text()='{fieldName}]";
                     // return an anonymous object
                     // note that there is no way to return the caption for a field because
                     // the form XML does not specify a relationship between datafield and caption,
                     // they are just controls with a position
-                    yield return new { f.Category, f.Name };
+                    var o = new PSObject();
+                    o.Members.Add(new PSNoteProperty("Category", f.Category));
+                    o.Members.Add(new PSNoteProperty("Form Name", f.Name));
+                    o.Members.Add(new PSNoteProperty("File", f.Path));
+                    o.Members.Add(new PSNoteProperty("XPath", xpath));
+                    yield return o;
                 };
             }
         }
