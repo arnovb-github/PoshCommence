@@ -110,7 +110,7 @@ namespace PoshCommence.CmdLets
         IEnumerable<string> categoryNames;
         protected override void ProcessRecord()
         {
-            // do not process categories that arent in the database
+            // do not process categories that aren't in the database
             if (!categoryNames.Contains(this.CategoryName))
             {
                 WriteWarning($"Skipped category '{this.CategoryName}': it does not exist in the database.");
@@ -121,8 +121,8 @@ namespace PoshCommence.CmdLets
                 if (Force || ShouldContinue("Do you want to continue?",
                     $"Remove control characters from text-fields in category '{this.CategoryName}'." +
                     $" This action cannot be undone.\n" +
-                    $"It is recommended that you disable workgroup syncing and backup your database before you run this command.\n" +
-                    $"It is also recommended you start the Commence process with the /noagents command line parameter."))
+                    $"It is strongly recommended that you disable workgroup syncing and backup your database before you run this command.\n" +
+                    $"It is also strongly recommended you (re-)start the Commence process with the '/noagents' command line parameter. "))
                 {
                     try
                     {
