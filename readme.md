@@ -36,6 +36,17 @@ Export-CmcData
 Probably one of the most useful cmdlets in the module. Use it to export Commence data to a variety of formats. Use `Get-Help Export-CmcData` for details. For advanced exporting see [Vovin.CmcLibNet](https://github.com/arnovb-github/CmcLibNet). 
 
 ```powershell
+Find-CmcDuplicates
+```
+
+Returns if a category contains duplicate values for a given field. Use `Get-Help Find-CmcDuplicates` for details.
+
+```powershell
+Find-CmcFieldInForms
+```
+
+Returns the Item Detail Forms names where a field is being used on. Use `Get-Help Find-CmcFieldInForms` for details.
+```powershell
 Find-CmcView
 ```
 
