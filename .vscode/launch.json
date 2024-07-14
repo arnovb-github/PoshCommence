@@ -35,7 +35,7 @@
                 "-NoExit",
                 "-NoProfile",
                 "-Command",
-                "Import-Module ${workspaceFolder}/bin/Debug/net48/PoshCommence.dll;Get-CmcActiveViewInfo"
+                "Import-Module ${workspaceFolder}/bin/Debug/net48/PoshCommence.dll;Get-CmcData -c Account -FieldNames accountKey"
             ],
             "cwd": "${workspaceFolder}",
             "stopAtEntry": false,

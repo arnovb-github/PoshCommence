@@ -68,6 +68,7 @@ namespace PoshCommence.CmdLets
 
         private List<string> columnLabels;
         [Parameter(ParameterSetName = BY_VIEW)]
+        [ValidateNotNullOrEmpty]
         public SwitchParameter ColumnLabels { get; set;}
 
         private List<string> columnNames;
@@ -97,7 +98,7 @@ namespace PoshCommence.CmdLets
             // if columnlabels contain a duplicate,
             // you get really strange results
             // before continuing, we should check for that and warn the user
-            if (columnLabels.Distinct().Count() < columnLabels.Count )
+            if (!(columnLabels is null) && columnLabels.Distinct().Count() < columnLabels.Count )
             {
                 WriteWarning("Duplicate columnlabels were detected, output will use columnnames (i.e. fieldnames) instead.");
                 ColumnLabels = false;
